@@ -81,19 +81,19 @@ const Index = () => {
       {/* Main Content */}
       <main className="px-4 py-4 overflow-hidden">
         <div className="h-full">
-          {/* First Section - Chat Dialog */}
-          <div className="h-2/3 min-h-[300px]">
+          {/* First Section - Chat Dialog and Activity Dashboard */}
+          <div className="h-full min-h-[500px]">
             <div className="p-4 h-full flex flex-col">
-              <WellnessChat 
-                profile={profile} 
-                userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
-              />
+              <div className="flex-1">
+                <WellnessChat 
+                  profile={profile} 
+                  userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
+                />
+              </div>
+              <div className="mt-4">
+                <ActivityDashboard />
+              </div>
             </div>
-          </div>
-
-          {/* Second Section - Activity Dashboard */}
-          <div className="h-1/3 min-h-[200px]">
-            <ActivityDashboard />
           </div>
         </div>
       </main>
