@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +53,10 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// KindCue custom colors
+				warmth: 'hsl(var(--warmth))',
+				encouragement: 'hsl(var(--encouragement))',
+				safety: 'hsl(var(--safety))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +67,19 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-warm': 'var(--gradient-warm)',
+				'gradient-encouragement': 'var(--gradient-encouragement)',
+				'gradient-safety': 'var(--gradient-safety)'
+			},
+			boxShadow: {
+				'gentle': 'var(--shadow-gentle)',
+				'warm': 'var(--shadow-warm)'
+			},
+			transitionTimingFunction: {
+				'gentle': 'cubic-bezier(0.4, 0, 0.2, 1)',
+				'warm': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

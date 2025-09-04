@@ -2,41 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* KindCue Design System - Compassionate, gentle, and nurturing
+All colors MUST be HSL for proper theming.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Warm, nurturing background palette */
+    --background: 35 25% 98%;
+    --foreground: 25 15% 25%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Gentle card surfaces */
+    --card: 35 30% 97%;
+    --card-foreground: 25 15% 25%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Soft popover surfaces */
+    --popover: 35 30% 97%;
+    --popover-foreground: 25 15% 25%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Sage green primary - calming and nurturing */
+    --primary: 145 25% 45%;
+    --primary-foreground: 35 25% 98%;
+    --primary-glow: 145 35% 65%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm cream secondary */
+    --secondary: 35 20% 92%;
+    --secondary-foreground: 25 15% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Gentle muted tones */
+    --muted: 35 15% 94%;
+    --muted-foreground: 25 8% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Soft coral accent - encouraging */
+    --accent: 15 60% 75%;
+    --accent-foreground: 25 15% 25%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Gentle warning tones (no harsh reds) */
+    --destructive: 10 45% 60%;
+    --destructive-foreground: 35 25% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Soft borders and inputs */
+    --border: 35 15% 88%;
+    --input: 35 15% 90%;
+    --ring: 145 25% 45%;
 
-    --radius: 0.5rem;
+    /* Generous rounded corners for warmth */
+    --radius: 1rem;
+
+    /* Custom KindCue tokens */
+    --warmth: 35 40% 85%;
+    --encouragement: 15 55% 70%; 
+    --safety: 145 30% 50%;
+    --gentle-shadow: 145 25% 45%;
+
+    /* Gradients for gentle depth */
+    --gradient-warm: linear-gradient(135deg, hsl(var(--background)), hsl(var(--warmth)));
+    --gradient-encouragement: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--encouragement)));
+    --gradient-safety: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+
+    /* Shadows for gentle elevation */
+    --shadow-gentle: 0 4px 20px -4px hsl(var(--gentle-shadow) / 0.15);
+    --shadow-warm: 0 8px 32px -8px hsl(var(--gentle-shadow) / 0.2);
+
+    /* Transitions for smooth, calming interactions */
+    --transition-gentle: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-warm: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     --sidebar-background: 0 0% 98%;
 
