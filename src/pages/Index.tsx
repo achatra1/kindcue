@@ -80,7 +80,7 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="px-4 py-4 overflow-hidden">
-        <div className="h-full space-y-1">
+        <div className="h-full">
           {/* First Section - Chat Dialog */}
           <div className="h-2/3 min-h-[300px]">
             <div className="p-4 h-full flex flex-col">
