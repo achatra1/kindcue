@@ -137,7 +137,7 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
         <img 
           src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
           alt="KindCue Logo" 
-          className="h-8 w-auto"
+          className="h-16 w-auto"
         />
       </div>
       
