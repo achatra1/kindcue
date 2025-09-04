@@ -50,8 +50,11 @@ const Index = () => {
       <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Heart className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-semibold text-foreground">KindCue</h1>
+            <img 
+              src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+              alt="KindCue Logo" 
+              className="h-8 w-auto"
+            />
           </div>
           
           <div className="flex items-center gap-4">

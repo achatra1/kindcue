@@ -132,6 +132,15 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
+      {/* Logo in top left */}
+      <div className="absolute top-4 left-4">
+        <img 
+          src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+          alt="KindCue Logo" 
+          className="h-8 w-auto"
+        />
+      </div>
+      
       <Card className="w-full max-w-2xl p-6 bg-card/95 backdrop-blur-sm border-border/50">
         <div className="space-y-6">
           {/* Bot Message */}

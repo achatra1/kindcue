@@ -102,11 +102,23 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-warm p-4">
+      {/* Logo in top left */}
+      <div className="absolute top-4 left-4">
+        <img 
+          src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+          alt="KindCue Logo" 
+          className="h-8 w-auto"
+        />
+      </div>
+      
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-4">
-            <Heart className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold text-foreground">KindCue</h1>
+            <img 
+              src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+              alt="KindCue Logo" 
+              className="h-10 w-auto"
+            />
           </div>
           <p className="text-muted-foreground">
             Your compassionate wellness companion
