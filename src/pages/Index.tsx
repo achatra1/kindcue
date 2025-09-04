@@ -79,33 +79,35 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="px-4 py-4 overflow-hidden">
-        <div className="h-full space-y-4">
+        <div className="h-full space-y-6">
           {/* First Section - Chat Dialog */}
           <div className="h-1/3 min-h-[250px]">
-            <WellnessChat 
-              profile={profile} 
-              userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
-            />
+            <div className="p-4 h-full flex flex-col">
+              <WellnessChat 
+                profile={profile} 
+                userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
+              />
+            </div>
           </div>
 
           {/* Second Section - Placeholder */}
           <div className="h-1/3 min-h-[200px]">
-            <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
+            <div className="p-4 h-full flex items-center justify-center">
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-foreground mb-2">Section 2</h3>
                 <p className="text-muted-foreground text-sm">Coming soon...</p>
               </div>
-            </Card>
+            </div>
           </div>
 
           {/* Third Section - Placeholder */}
           <div className="h-1/3 min-h-[200px]">
-            <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
+            <div className="p-4 h-full flex items-center justify-center">
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-foreground mb-2">Section 3</h3>
                 <p className="text-muted-foreground text-sm">Coming soon...</p>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </main>

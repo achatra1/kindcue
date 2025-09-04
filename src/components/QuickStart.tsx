@@ -282,7 +282,7 @@ Keep the same format as before with References section at the end.`,
   );
 
   return (
-    <Card className="p-3 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
+    <div className="h-full flex flex-col">
       {/* Main Title */}
       <div className="mb-2 text-center">
         <h3 className="text-sm font-bold text-foreground flex items-center justify-center gap-2">
@@ -385,7 +385,7 @@ Keep the same format as before with References section at the end.`,
 
       {step === 'result' && workoutSuggestion && (
         <div className="flex-1 flex flex-col space-y-3">
-          <div className="bg-muted/50 rounded-lg p-3 flex-1 overflow-y-auto">
+          <div className="bg-muted/30 rounded-lg p-3 flex-1 overflow-y-auto">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="h-4 w-4 text-primary" />
               <p className="text-foreground font-medium text-sm">Your Personalized Workout</p>
@@ -428,9 +428,9 @@ Keep the same format as before with References section at the end.`,
       )}
 
       {step === 'feedback' && (
-        <div className="flex-1 flex flex-col space-y-3">
-          {/* Show current workout context */}
-          <div className="bg-primary/10 rounded-lg p-3 border border-primary/20">
+          <div className="flex-1 flex flex-col space-y-3">
+            {/* Show current workout context */}
+            <div className="bg-primary/5 rounded-lg p-3 border border-primary/10">
             <p className="text-foreground font-medium text-sm mb-1">
               {workoutTitle && `Modifying: ${workoutTitle}`}
             </p>
@@ -441,7 +441,7 @@ Keep the same format as before with References section at the end.`,
             )}
           </div>
           
-          <div className="bg-muted/50 rounded-lg p-3">
+          <div className="bg-muted/30 rounded-lg p-3">
             <p className="text-foreground font-medium mb-2 text-sm">
               How can we improve this workout for you?
             </p>
@@ -487,6 +487,6 @@ Keep the same format as before with References section at the end.`,
           </Button>
         </div>
       )}
-    </Card>
+    </div>
   );
 };
