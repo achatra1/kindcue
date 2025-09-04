@@ -82,7 +82,7 @@ const Index = () => {
       <main className="px-4 py-4 overflow-hidden">
         <div className="h-full space-y-6">
           {/* First Section - Chat Dialog */}
-          <div className="h-1/3 min-h-[250px]">
+          <div className="h-2/3 min-h-[300px]">
             <div className="p-4 h-full flex flex-col">
               <WellnessChat 
                 profile={profile} 
@@ -92,7 +92,7 @@ const Index = () => {
           </div>
 
           {/* Second Section - Activity Dashboard */}
-          <div className="h-2/3 min-h-[400px]">
+          <div className="h-1/3 min-h-[200px]">
             <ActivityDashboard />
           </div>
         </div>
