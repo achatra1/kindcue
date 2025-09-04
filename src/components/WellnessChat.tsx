@@ -86,9 +86,6 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
               <p className="text-foreground font-medium mb-4">
                 🎉 Ready to make today amazing, {profile?.display_name || userName}?
               </p>
-              <p className="text-foreground font-medium mb-3">
-                How are you feeling today?
-              </p>
               <p className="text-muted-foreground text-sm">
                 Share whatever's on your mind - your energy level, mood, any physical sensations, or what you need right now.
               </p>
