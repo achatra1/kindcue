@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          activity_type: string
+          created_at: string
+          duration: number | null
+          id: string
+          logged_at: string
+          notes: string | null
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          created_at?: string
+          duration?: number | null
+          id?: string
+          logged_at?: string
+          notes?: string | null
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          created_at?: string
+          duration?: number | null
+          id?: string
+          logged_at?: string
+          notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          created_at: string
+          display_name: string | null
+          favorite_workouts: string[] | null
+          fitness_level: string | null
+          id: string
+          preferred_workout_duration: number | null
+          updated_at: string
+          user_id: string
+          wellness_goals: string[] | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          favorite_workouts?: string[] | null
+          fitness_level?: string | null
+          id?: string
+          preferred_workout_duration?: number | null
+          updated_at?: string
+          user_id: string
+          wellness_goals?: string[] | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          favorite_workouts?: string[] | null
+          fitness_level?: string | null
+          id?: string
+          preferred_workout_duration?: number | null
+          updated_at?: string
+          user_id?: string
+          wellness_goals?: string[] | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
