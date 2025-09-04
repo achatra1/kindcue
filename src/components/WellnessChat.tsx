@@ -21,14 +21,11 @@ interface WellnessChatProps {
 }
 
 export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
-  const [step, setStep] = useState<'greeting' | 'input' | 'generating' | 'result'>('greeting');
+  const [step, setStep] = useState<'input' | 'generating' | 'result'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
   const { toast } = useToast();
 
-  const handleStartChat = () => {
-    setStep('input');
-  };
 
   const handleSubmitFeeling = async () => {
     if (!userInput.trim()) return;
@@ -75,7 +72,7 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
   };
 
   const handleStartOver = () => {
-    setStep('greeting');
+    setStep('input');
     setUserInput('');
     setWorkoutSuggestion('');
   };
@@ -88,28 +85,15 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
       </div>
 
       <div className="space-y-4">
-        {step === 'greeting' && (
+        {step === 'input' && (
           <div className="space-y-4">
             <div className="bg-muted/50 rounded-lg p-4">
               <p className="text-foreground font-medium">
                 🎉 Kudos for showing up today, {profile?.display_name || userName}!
               </p>
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground mt-2 mb-4">
                 Taking time for your wellness is a beautiful act of self-care. You're already winning by being here.
               </p>
-            </div>
-            <Button 
-              onClick={handleStartChat}
-              className="w-full bg-gradient-encouragement hover:opacity-90"
-            >
-              Let's Check In
-            </Button>
-          </div>
-        )}
-
-        {step === 'input' && (
-          <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
               <p className="text-foreground font-medium mb-3">
                 How are you feeling today?
               </p>
