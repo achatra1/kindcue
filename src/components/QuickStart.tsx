@@ -53,12 +53,12 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
     selected: string; 
     onSelect: (value: string) => void; 
   }) => (
-    <div className="space-y-1">
-      <div className="flex items-center gap-1">
+    <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 min-w-0 shrink-0">
         <Icon className="h-3 w-3 text-primary" />
-        <span className="text-xs font-medium text-foreground">{title}</span>
+        <span className="text-xs font-medium text-foreground">{title}:</span>
       </div>
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-1 min-w-0">
         {options.map((option) => (
           <Badge
             key={option}
