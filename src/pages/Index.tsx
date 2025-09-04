@@ -17,11 +17,6 @@ const Index = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const navigate = useNavigate();
 
-  const handleQuickStart = (preferences: any) => {
-    // TODO: Generate workout based on quick start preferences
-    console.log('Quick start preferences:', preferences);
-  };
-
   useEffect(() => {
     if (!loading && !user) {
       navigate('/auth');
@@ -103,7 +98,7 @@ const Index = () => {
               <div className="h-1/3 min-h-[200px]">
                 <QuickStart 
                   profile={profile}
-                  onQuickStart={handleQuickStart}
+                  userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
                 />
               </div>
 
