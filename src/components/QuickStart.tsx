@@ -53,7 +53,7 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
     selected: string; 
     onSelect: (value: string) => void; 
   }) => (
-    <div className="space-y-2">
+    <div className="space-y-1">
       <div className="flex items-center gap-1">
         <Icon className="h-3 w-3 text-primary" />
         <span className="text-xs font-medium text-foreground">{title}</span>
@@ -78,21 +78,21 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
   );
 
   return (
-    <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
+    <Card className="p-3 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
       {/* Main Title */}
-      <div className="mb-3 text-center">
+      <div className="mb-2 text-center">
         <h3 className="text-sm font-bold text-foreground flex items-center justify-center gap-2">
           <Zap className="h-4 w-4 text-primary" />
           Quick Start
         </h3>
       </div>
       
-      <div className="flex-1 grid grid-cols-2 gap-4">
+      <div className="flex-1 grid grid-cols-2 gap-3">
         {/* Left Half - Customize */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h4 className="text-sm font-medium text-foreground">Customize</h4>
           
-          <div className="space-y-3">
+          <div className="space-y-2">
             <ChipGroup
               title="Time"
               icon={Clock}
@@ -136,7 +136,7 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
         </div>
 
         {/* Right Half - Favorites */}
-        <div className="space-y-3 border-l border-border pl-4">
+        <div className="space-y-2 border-l border-border pl-3">
           <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
             <Heart className="h-4 w-4 text-primary" />
             Favorites
