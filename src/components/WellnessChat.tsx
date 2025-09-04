@@ -83,11 +83,8 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
         {step === 'input' && (
           <div className="space-y-4">
             <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-foreground font-medium">
-                🎉 Kudos for showing up today, {profile?.display_name || userName}!
-              </p>
-              <p className="text-muted-foreground mt-2 mb-4">
-                Taking time for your wellness is a beautiful act of self-care. You're already winning by being here.
+              <p className="text-foreground font-medium mb-4">
+                🎉 Ready to make today amazing, {profile?.display_name || userName}?
               </p>
               <p className="text-foreground font-medium mb-3">
                 How are you feeling today?
