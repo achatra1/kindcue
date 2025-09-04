@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import OnboardingChat from '@/components/OnboardingChat';
 import { WellnessChat } from '@/components/WellnessChat';
+import { QuickStart } from '@/components/QuickStart';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { LogOut, Loader2 } from 'lucide-react';
@@ -15,6 +16,11 @@ const Index = () => {
   const { profile, loading: profileLoading, isFirstTimeUser } = useProfile(user?.id);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const navigate = useNavigate();
+
+  const handleQuickStart = (preferences: any) => {
+    // TODO: Generate workout based on quick start preferences
+    console.log('Quick start preferences:', preferences);
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -93,14 +99,12 @@ const Index = () => {
                 />
               </div>
 
-              {/* Second Section - Placeholder */}
+              {/* Second Section - Quick Start */}
               <div className="h-1/3 min-h-[200px]">
-                <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Section 2</h3>
-                    <p className="text-muted-foreground text-sm">Coming soon...</p>
-                  </div>
-                </Card>
+                <QuickStart 
+                  profile={profile}
+                  onQuickStart={handleQuickStart}
+                />
               </div>
 
               {/* Third Section - Placeholder */}
