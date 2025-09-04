@@ -253,7 +253,7 @@ Keep the same format as before with References section at the end.`,
       <div className="flex-1 overflow-y-auto space-y-3">
         {step === 'input' && (
           <div className="space-y-3">
-            <div className="bg-muted/30 rounded-lg p-3">
+            <div className="bg-muted/30 rounded-lg p-3 text-center">
               <p className="text-foreground font-medium text-sm mb-2">
                 🎉 Ready to make today amazing, {profile?.display_name || userName}?
               </p>
