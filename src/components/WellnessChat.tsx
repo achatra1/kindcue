@@ -58,7 +58,7 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
       }
 
       const data = await response.json();
-      setWorkoutSuggestion(data.message);
+      setWorkoutSuggestion(data.response || data.message || 'No workout suggestion received');
       setStep('result');
     } catch (error) {
       console.error('Error generating workout:', error);
@@ -121,12 +121,12 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
 
         {step === 'result' && workoutSuggestion && (
           <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
+            <div className="bg-muted/50 rounded-lg p-4 max-h-96 overflow-y-auto">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="h-5 w-5 text-primary" />
                 <p className="text-foreground font-medium">Your Personalized Workout</p>
               </div>
-              <div className="text-muted-foreground whitespace-pre-wrap">
+              <div className="text-muted-foreground whitespace-pre-wrap text-sm leading-relaxed">
                 {workoutSuggestion}
               </div>
             </div>
