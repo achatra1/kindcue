@@ -185,15 +185,15 @@ Keep the same format as before with References section at the end.`,
   };
 
   return (
-    <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50 h-full">
-      <div className="space-y-4">
+    <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
+      <div className="flex-1 overflow-y-auto space-y-3">
         {step === 'input' && (
-          <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-foreground font-medium mb-4">
+          <div className="space-y-3">
+            <div className="bg-muted/50 rounded-lg p-3">
+              <p className="text-foreground font-medium text-sm mb-2">
                 🎉 Ready to make today amazing, {profile?.display_name || userName}?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs">
                 Share whatever's on your mind - your energy level, mood, any physical sensations, or what you need right now.
               </p>
             </div>
@@ -201,43 +201,43 @@ Keep the same format as before with References section at the end.`,
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="I'm feeling energetic and ready to move... or maybe I'm tired and need something gentle..."
-              className="min-h-[100px]"
+              className="min-h-[60px] text-sm"
             />
             <Button 
               onClick={handleSubmitFeeling}
               disabled={!userInput.trim()}
-              className="w-full gap-2"
+              className="w-full gap-2 text-sm"
             >
-              <Send className="h-4 w-4" />
+              <Send className="h-3 w-3" />
               Get My Personalized Workout
             </Button>
           </div>
         )}
 
         {(step === 'generating' || step === 'improving') && (
-          <div className="space-y-4 text-center py-8">
-            <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
-            <p className="text-foreground font-medium">
+          <div className="space-y-3 text-center py-6">
+            <Loader2 className="h-6 w-6 animate-spin text-primary mx-auto" />
+            <p className="text-foreground font-medium text-sm">
               {step === 'generating' ? 'Creating your perfect workout...' : 'Improving your workout...'}
             </p>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-xs">
               {step === 'generating' ? 'Based on how you\'re feeling and your preferences' : 'Taking your feedback into account'}
             </p>
           </div>
         )}
 
         {step === 'result' && workoutSuggestion && (
-          <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4 max-h-96 overflow-y-auto">
-              <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="h-5 w-5 text-primary" />
-                <p className="text-foreground font-medium">Your Personalized Workout</p>
+          <div className="space-y-3 flex-1 flex flex-col">
+            <div className="bg-muted/50 rounded-lg p-3 flex-1 overflow-y-auto">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <p className="text-foreground font-medium text-sm">Your Personalized Workout</p>
               </div>
-              <div className="text-muted-foreground whitespace-pre-wrap text-sm leading-relaxed">
+              <div className="text-muted-foreground whitespace-pre-wrap text-xs leading-relaxed">
                 {workoutSuggestion}
               </div>
               {references.length > 0 && (
-                <div className="mt-4 pt-3 border-t border-border">
+                <div className="mt-3 pt-2 border-t border-border">
                   <button 
                     className="text-xs text-muted-foreground hover:text-foreground underline transition-colors"
                     onClick={() => {
@@ -253,16 +253,16 @@ Keep the same format as before with References section at the end.`,
                 </div>
               )}
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2 shrink-0">
               <Button 
-                className="flex-1 bg-gradient-safety hover:opacity-90"
+                className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
               >
                 Start Workout
               </Button>
               <Button 
                 variant="secondary"
                 onClick={() => setStep('feedback')}
-                className="flex-1"
+                className="flex-1 text-sm"
               >
                 Modify Workout
               </Button>
@@ -271,12 +271,12 @@ Keep the same format as before with References section at the end.`,
         )}
 
         {step === 'feedback' && (
-          <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-foreground font-medium mb-3">
+          <div className="space-y-3">
+            <div className="bg-muted/50 rounded-lg p-3">
+              <p className="text-foreground font-medium mb-2 text-sm">
                 How can we improve this workout for you?
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs">
                 Share what you'd like to change - different exercises, duration, intensity, or any other preferences.
               </p>
             </div>
@@ -284,22 +284,22 @@ Keep the same format as before with References section at the end.`,
               value={feedbackInput}
               onChange={(e) => setFeedbackInput(e.target.value)}
               placeholder="I'd prefer exercises I can do sitting down... or maybe something more challenging..."
-              className="min-h-[80px]"
+              className="min-h-[60px] text-sm"
             />
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <Button 
                 variant="outline"
                 onClick={() => setStep('result')}
-                className="flex-1"
+                className="flex-1 text-sm"
               >
                 Cancel
               </Button>
               <Button 
                 onClick={handleFeedback}
                 disabled={!feedbackInput.trim()}
-                className="flex-1 gap-2"
+                className="flex-1 gap-1 text-sm"
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-3 w-3" />
                 Improve Workout
               </Button>
             </div>

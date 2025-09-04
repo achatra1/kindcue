@@ -55,38 +55,38 @@ const Index = () => {
         <AppSidebar />
         
         <div className="flex-1 flex flex-col">
-          <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm">
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-              <div className="flex items-center gap-3">
+          <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm shrink-0">
+            <div className="px-4 py-3 flex justify-between items-center">
+              <div className="flex items-center gap-2">
                 <SidebarTrigger />
                 <img 
                   src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
                   alt="KindCue Logo" 
-                  className="h-16 w-auto"
+                  className="h-12 w-auto"
                 />
               </div>
               
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-muted-foreground">
-                  Welcome back, {user.user_metadata?.display_name || profile?.display_name || user.email}
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground hidden sm:block">
+                  {user.user_metadata?.display_name || profile?.display_name || user.email}
                 </span>
                 <Button
                   onClick={signOut}
                   variant="outline"
                   size="sm"
-                  className="gap-2"
+                  className="gap-1"
                 >
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
+                  <LogOut className="h-3 w-3" />
+                  <span className="hidden sm:inline">Sign Out</span>
                 </Button>
               </div>
             </div>
           </header>
 
-          <main className="flex-1 container mx-auto px-4 py-8">
-            <div className="grid grid-rows-3 gap-8 h-full min-h-[calc(100vh-200px)]">
+          <main className="flex-1 px-4 py-4 overflow-hidden">
+            <div className="h-full space-y-4">
               {/* First Section - Chat Dialog */}
-              <div className="row-span-1">
+              <div className="h-1/3 min-h-[250px]">
                 <WellnessChat 
                   profile={profile} 
                   userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
@@ -94,21 +94,21 @@ const Index = () => {
               </div>
 
               {/* Second Section - Placeholder */}
-              <div className="row-span-1">
-                <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
+              <div className="h-1/3 min-h-[200px]">
+                <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Section 2</h3>
-                    <p className="text-muted-foreground">Coming soon...</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Section 2</h3>
+                    <p className="text-muted-foreground text-sm">Coming soon...</p>
                   </div>
                 </Card>
               </div>
 
               {/* Third Section - Placeholder */}
-              <div className="row-span-1">
-                <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
+              <div className="h-1/3 min-h-[200px]">
+                <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex items-center justify-center">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Section 3</h3>
-                    <p className="text-muted-foreground">Coming soon...</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Section 3</h3>
+                    <p className="text-muted-foreground text-sm">Coming soon...</p>
                   </div>
                 </Card>
               </div>
