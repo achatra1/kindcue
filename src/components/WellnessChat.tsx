@@ -79,11 +79,6 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
 
   return (
     <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50 h-full">
-      <div className="flex items-center gap-3 mb-6">
-        <MessageCircle className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-foreground">Daily Check-in</h2>
-      </div>
-
       <div className="space-y-4">
         {step === 'input' && (
           <div className="space-y-4">
