@@ -52,15 +52,15 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm shrink-0">
         <div className="px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex-1 flex justify-center">
             <img 
               src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
               alt="KindCue Logo" 
-              className="h-12 w-auto"
+              className="h-24 w-auto"
             />
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="absolute right-4 flex items-center gap-2">
             <span className="text-xs text-muted-foreground hidden sm:block">
               {user.user_metadata?.display_name || profile?.display_name || user.email}
             </span>
