@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import OnboardingChat from '@/components/OnboardingChat';
 import { WellnessChat } from '@/components/WellnessChat';
+import { ActivityDashboard } from '@/components/ActivityDashboard';
 import { LogOut, Loader2 } from 'lucide-react';
 
 const Index = () => {
@@ -90,24 +91,9 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Second Section - Placeholder */}
-          <div className="h-1/3 min-h-[200px]">
-            <div className="p-4 h-full flex items-center justify-center">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-foreground mb-2">Section 2</h3>
-                <p className="text-muted-foreground text-sm">Coming soon...</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Third Section - Placeholder */}
-          <div className="h-1/3 min-h-[200px]">
-            <div className="p-4 h-full flex items-center justify-center">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-foreground mb-2">Section 3</h3>
-                <p className="text-muted-foreground text-sm">Coming soon...</p>
-              </div>
-            </div>
+          {/* Second Section - Activity Dashboard */}
+          <div className="h-2/3 min-h-[400px]">
+            <ActivityDashboard />
           </div>
         </div>
       </main>
