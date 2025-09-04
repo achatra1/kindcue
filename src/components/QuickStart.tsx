@@ -79,15 +79,18 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
 
   return (
     <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
-      <div className="flex-1 space-y-4">
-        {/* Quick Start Section */}
+      <div className="flex-1 grid grid-cols-2 gap-4">
+        {/* Left Half - Quick Start */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <Zap className="h-4 w-4 text-primary" />
-            Quick Start
-          </h3>
+          <div>
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <Zap className="h-4 w-4 text-primary" />
+              Quick Start
+            </h3>
+            <p className="text-xs text-muted-foreground">Customize</p>
+          </div>
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-3">
             <ChipGroup
               title="Time"
               icon={Clock}
@@ -119,27 +122,27 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
               selected={selectedIntensity}
               onSelect={setSelectedIntensity}
             />
+            
+            <Button 
+              onClick={handleQuickStart}
+              disabled={!isComplete}
+              className="w-full text-sm bg-gradient-safety hover:opacity-90"
+            >
+              Start Quick Workout
+            </Button>
           </div>
-          
-          <Button 
-            onClick={handleQuickStart}
-            disabled={!isComplete}
-            className="w-full text-sm bg-gradient-safety hover:opacity-90"
-          >
-            Start Quick Workout
-          </Button>
         </div>
 
-        {/* Favorite Workouts Section */}
-        <div className="space-y-2 border-t border-border pt-3">
-          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+        {/* Right Half - Favorites */}
+        <div className="space-y-3 border-l border-border pl-4">
+          <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <Heart className="h-4 w-4 text-primary" />
-            Favorite Workouts
+            Favorites
           </h4>
           
           {profile?.favorite_workouts && profile.favorite_workouts.length > 0 ? (
             <div className="space-y-1">
-              {profile.favorite_workouts.slice(0, 3).map((workout: string, index: number) => (
+              {profile.favorite_workouts.slice(0, 4).map((workout: string, index: number) => (
                 <Button
                   key={index}
                   variant="ghost"
@@ -149,12 +152,12 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
                   <span className="truncate">{workout}</span>
                 </Button>
               ))}
-              {profile.favorite_workouts.length > 3 && (
+              {profile.favorite_workouts.length > 4 && (
                 <Button
                   variant="ghost"
                   className="w-full text-xs text-muted-foreground p-2 h-auto"
                 >
-                  +{profile.favorite_workouts.length - 3} more favorites
+                  +{profile.favorite_workouts.length - 4} more favorites
                 </Button>
               )}
             </div>
