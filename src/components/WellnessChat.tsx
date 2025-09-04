@@ -24,6 +24,7 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
   const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
+  const [references, setReferences] = useState<string[]>([]);
   const [feedbackInput, setFeedbackInput] = useState('');
   const { toast } = useToast();
 
@@ -55,7 +56,8 @@ IMPORTANT: Format your response EXACTLY as follows:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
 3. Summary Card (2-3 encouraging sentences)
-4. Ask 1-2 questions if you need clarification
+4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
+5. References (2-3 credible sources)
 
 Example format:
 **Gentle Morning Stretch Flow**
@@ -67,7 +69,12 @@ Example format:
 
 This gentle routine will help you ease into your day with mindful movement. Perfect for when you need something nurturing and restorative.
 
-Questions: Would you prefer to stay seated, or is moving to the floor comfortable for you?`,
+Need floor space or prefer seated?
+
+References:
+- Mayo Clinic: Stretching Guidelines
+- American Council on Exercise: Flexibility Training
+- Harvard Health: Benefits of Stretching`,
           userContext
         }),
       });
@@ -77,7 +84,18 @@ Questions: Would you prefer to stay seated, or is moving to the floor comfortabl
       }
 
       const data = await response.json();
-      setWorkoutSuggestion(data.response || data.message || 'No workout suggestion received');
+      const fullResponse = data.response || data.message || 'No workout suggestion received';
+      
+      // Extract references if they exist
+      const referencesMatch = fullResponse.match(/References?:\s*([\s\S]*?)$/i);
+      const extractedReferences = referencesMatch ? 
+        referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
+      
+      // Remove references from main content
+      const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      
+      setWorkoutSuggestion(cleanedResponse);
+      setReferences(extractedReferences);
       setStep('result');
     } catch (error) {
       console.error('Error generating workout:', error);
@@ -120,7 +138,10 @@ IMPORTANT: Format your improved response EXACTLY as follows:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
 3. Summary Card (2-3 encouraging sentences)
-4. Ask 1-2 questions if you need more clarification`,
+4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
+5. References (2-3 credible sources)
+
+Keep the same format as before with References section at the end.`,
           userContext
         }),
       });
@@ -130,7 +151,18 @@ IMPORTANT: Format your improved response EXACTLY as follows:
       }
 
       const data = await response.json();
-      setWorkoutSuggestion(data.response || data.message || 'No improved workout received');
+      const fullResponse = data.response || data.message || 'No improved workout received';
+      
+      // Extract references if they exist
+      const referencesMatch = fullResponse.match(/References?:\s*([\s\S]*?)$/i);
+      const extractedReferences = referencesMatch ? 
+        referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
+      
+      // Remove references from main content
+      const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      
+      setWorkoutSuggestion(cleanedResponse);
+      setReferences(extractedReferences);
       setFeedbackInput('');
       setStep('result');
     } catch (error) {
@@ -148,6 +180,7 @@ IMPORTANT: Format your improved response EXACTLY as follows:
     setStep('input');
     setUserInput('');
     setWorkoutSuggestion('');
+    setReferences([]);
     setFeedbackInput('');
   };
 
@@ -203,6 +236,22 @@ IMPORTANT: Format your improved response EXACTLY as follows:
               <div className="text-muted-foreground whitespace-pre-wrap text-sm leading-relaxed">
                 {workoutSuggestion}
               </div>
+              {references.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-border">
+                  <button 
+                    className="text-xs text-muted-foreground hover:text-foreground underline transition-colors"
+                    onClick={() => {
+                      toast({
+                        title: "References",
+                        description: references.join(' • '),
+                        duration: 5000,
+                      });
+                    }}
+                  >
+                    View References ({references.length})
+                  </button>
+                </div>
+              )}
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
