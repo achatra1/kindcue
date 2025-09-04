@@ -273,7 +273,7 @@ Keep the same format as before with References section at the end.`,
                 onClick={() => setStep('feedback')}
                 className="w-full"
               >
-                Provide Feedback
+                Modify Workout
               </Button>
             </div>
           </div>
