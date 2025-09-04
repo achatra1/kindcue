@@ -50,7 +50,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-warm pb-20">
       {/* Header */}
-      <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm shrink-0">
+      <header className="bg-card/80 backdrop-blur-sm shrink-0">
         <div className="px-4 py-3 flex justify-between items-center">
           <div className="flex-1 flex justify-center">
             <img 
