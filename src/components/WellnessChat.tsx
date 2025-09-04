@@ -24,6 +24,8 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
   const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
+  const [workoutTitle, setWorkoutTitle] = useState('');
+  const [workoutSummary, setWorkoutSummary] = useState('');
   const [references, setReferences] = useState<string[]>([]);
   const [feedbackInput, setFeedbackInput] = useState('');
   const { toast } = useToast();
@@ -94,6 +96,36 @@ References:
       // Remove references from main content
       const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
       
+      // Extract title (first line with **title** format)
+      const titleMatch = cleanedResponse.match(/\*\*(.*?)\*\*/);
+      const extractedTitle = titleMatch ? titleMatch[1] : '';
+      
+      // Extract summary (text after exercises, before questions)
+      const lines = cleanedResponse.split('\n');
+      let summaryLines: string[] = [];
+      let inSummary = false;
+      
+      for (const line of lines) {
+        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
+          inSummary = false;
+          continue;
+        }
+        if (!line.trim().startsWith('**') && !line.trim().startsWith('•') && !line.trim().startsWith('-') && line.trim() && !inSummary) {
+          const isQuestion = line.toLowerCase().includes('?') && (line.toLowerCase().includes('prefer') || line.toLowerCase().includes('need') || line.toLowerCase().includes('comfortable'));
+          if (!isQuestion) {
+            inSummary = true;
+          }
+        }
+        if (inSummary && line.trim() && !line.toLowerCase().includes('?')) {
+          summaryLines.push(line.trim());
+        }
+        if (line.toLowerCase().includes('?')) {
+          break;
+        }
+      }
+      
+      setWorkoutTitle(extractedTitle);
+      setWorkoutSummary(summaryLines.join(' '));
       setWorkoutSuggestion(cleanedResponse);
       setReferences(extractedReferences);
       setStep('result');
@@ -161,6 +193,36 @@ Keep the same format as before with References section at the end.`,
       // Remove references from main content
       const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
       
+      // Extract title (first line with **title** format)
+      const titleMatch = cleanedResponse.match(/\*\*(.*?)\*\*/);
+      const extractedTitle = titleMatch ? titleMatch[1] : '';
+      
+      // Extract summary (text after exercises, before questions)
+      const lines = cleanedResponse.split('\n');
+      let summaryLines: string[] = [];
+      let inSummary = false;
+      
+      for (const line of lines) {
+        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
+          inSummary = false;
+          continue;
+        }
+        if (!line.trim().startsWith('**') && !line.trim().startsWith('•') && !line.trim().startsWith('-') && line.trim() && !inSummary) {
+          const isQuestion = line.toLowerCase().includes('?') && (line.toLowerCase().includes('prefer') || line.toLowerCase().includes('need') || line.toLowerCase().includes('comfortable'));
+          if (!isQuestion) {
+            inSummary = true;
+          }
+        }
+        if (inSummary && line.trim() && !line.toLowerCase().includes('?')) {
+          summaryLines.push(line.trim());
+        }
+        if (line.toLowerCase().includes('?')) {
+          break;
+        }
+      }
+      
+      setWorkoutTitle(extractedTitle);
+      setWorkoutSummary(summaryLines.join(' '));
       setWorkoutSuggestion(cleanedResponse);
       setReferences(extractedReferences);
       setFeedbackInput('');
@@ -180,6 +242,8 @@ Keep the same format as before with References section at the end.`,
     setStep('input');
     setUserInput('');
     setWorkoutSuggestion('');
+    setWorkoutTitle('');
+    setWorkoutSummary('');
     setReferences([]);
     setFeedbackInput('');
   };
@@ -272,6 +336,18 @@ Keep the same format as before with References section at the end.`,
 
         {step === 'feedback' && (
           <div className="space-y-3">
+            {/* Show current workout context */}
+            <div className="bg-primary/10 rounded-lg p-3 border border-primary/20">
+              <p className="text-foreground font-medium text-sm mb-1">
+                {workoutTitle && `Modifying: ${workoutTitle}`}
+              </p>
+              {workoutSummary && (
+                <p className="text-muted-foreground text-xs">
+                  {workoutSummary}
+                </p>
+              )}
+            </div>
+            
             <div className="bg-muted/50 rounded-lg p-3">
               <p className="text-foreground font-medium mb-2 text-sm">
                 How can we improve this workout for you?
