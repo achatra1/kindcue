@@ -79,16 +79,18 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
 
   return (
     <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
+      {/* Main Title */}
+      <div className="mb-3">
+        <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+          <Zap className="h-4 w-4 text-primary" />
+          Quick Start
+        </h3>
+      </div>
+      
       <div className="flex-1 grid grid-cols-2 gap-4">
-        {/* Left Half - Quick Start */}
+        {/* Left Half - Customize */}
         <div className="space-y-3">
-          <div>
-            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-              <Zap className="h-4 w-4 text-primary" />
-              Quick Start
-            </h3>
-            <p className="text-xs text-muted-foreground">Customize</p>
-          </div>
+          <h4 className="text-sm font-medium text-foreground">Customize</h4>
           
           <div className="space-y-3">
             <ChipGroup
@@ -135,7 +137,7 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
 
         {/* Right Half - Favorites */}
         <div className="space-y-3 border-l border-border pl-4">
-          <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+          <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
             <Heart className="h-4 w-4 text-primary" />
             Favorites
           </h4>
