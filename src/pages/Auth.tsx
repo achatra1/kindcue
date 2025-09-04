@@ -6,11 +6,86 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/useAuth';
-import { Loader2, Heart } from 'lucide-react';
+import { Loader2, Heart, Eye, EyeOff, Check, X } from 'lucide-react';
+
+interface PasswordRequirement {
+  label: string;
+  test: (password: string) => boolean;
+}
+
+const passwordRequirements: PasswordRequirement[] = [
+  { label: 'At least 8 characters', test: (p) => p.length >= 8 },
+  { label: 'Contains uppercase letter', test: (p) => /[A-Z]/.test(p) },
+  { label: 'Contains lowercase letter', test: (p) => /[a-z]/.test(p) },
+  { label: 'Contains number', test: (p) => /\d/.test(p) },
+  { label: 'Contains special character', test: (p) => /[!@#$%^&*(),.?":{}|<>]/.test(p) }
+];
 
 const Auth = () => {
   const { user, loading, signIn, signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [signupPassword, setSignupPassword] = useState('');
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string): boolean => {
+    return passwordRequirements.every(req => req.test(password));
+  };
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormErrors({});
+    
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const displayName = formData.get('displayName') as string;
+
+    // Validate email
+    if (!validateEmail(email)) {
+      setFormErrors(prev => ({...prev, email: 'Please enter a valid email address'}));
+      return;
+    }
+
+    // Validate password complexity
+    if (!validatePassword(password)) {
+      setFormErrors(prev => ({...prev, password: 'Password does not meet complexity requirements'}));
+      return;
+    }
+
+    setIsSubmitting(true);
+    await signUp(email, password, displayName);
+    setIsSubmitting(false);
+  };
+
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormErrors({});
+    
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    // Basic validation
+    if (!validateEmail(email)) {
+      setFormErrors(prev => ({...prev, signinEmail: 'Please enter a valid email address'}));
+      return;
+    }
+
+    if (password.length < 1) {
+      setFormErrors(prev => ({...prev, signinPassword: 'Password is required'}));
+      return;
+    }
+
+    setIsSubmitting(true);
+    await signIn(email, password);
+    setIsSubmitting(false);
+  };
 
   // Redirect if already authenticated
   if (user) {
@@ -24,31 +99,6 @@ const Auth = () => {
       </div>
     );
   }
-
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
-    await signIn(email, password);
-    setIsSubmitting(false);
-  };
-
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const displayName = formData.get('displayName') as string;
-
-    await signUp(email, password, displayName);
-    setIsSubmitting(false);
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-warm p-4">
@@ -89,18 +139,42 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
+                      className={formErrors.signinEmail ? 'border-destructive' : ''}
                     />
+                    {formErrors.signinEmail && (
+                      <p className="text-sm text-destructive">{formErrors.signinEmail}</p>
+                    )}
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="signin-password">Password</Label>
-                    <Input
-                      id="signin-password"
-                      name="password"
-                      type="password"
-                      required
-                      disabled={isSubmitting}
-                    />
+                    <div className="relative">
+                      <Input
+                        id="signin-password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        disabled={isSubmitting}
+                        className={formErrors.signinPassword ? 'border-destructive pr-10' : 'pr-10'}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={isSubmitting}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
+                    {formErrors.signinPassword && (
+                      <p className="text-sm text-destructive">{formErrors.signinPassword}</p>
+                    )}
                   </div>
                 </CardContent>
 
@@ -151,19 +225,66 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
+                      className={formErrors.email ? 'border-destructive' : ''}
                     />
+                    {formErrors.email && (
+                      <p className="text-sm text-destructive">{formErrors.email}</p>
+                    )}
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="signup-password">Password</Label>
-                    <Input
-                      id="signup-password"
-                      name="password"
-                      type="password"
-                      placeholder="Choose a secure password"
-                      required
-                      disabled={isSubmitting}
-                    />
+                    <div className="relative">
+                      <Input
+                        id="signup-password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Choose a secure password"
+                        required
+                        disabled={isSubmitting}
+                        value={signupPassword}
+                        onChange={(e) => setSignupPassword(e.target.value)}
+                        className={formErrors.password ? 'border-destructive pr-10' : 'pr-10'}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={isSubmitting}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
+                    
+                    {/* Password Requirements */}
+                    <div className="space-y-1">
+                      <p className="text-xs text-muted-foreground">Password must contain:</p>
+                      {passwordRequirements.map((req, index) => {
+                        const isValid = req.test(signupPassword);
+                        return (
+                          <div key={index} className="flex items-center gap-2 text-xs">
+                            {isValid ? (
+                              <Check className="h-3 w-3 text-primary" />
+                            ) : (
+                              <X className="h-3 w-3 text-muted-foreground" />
+                            )}
+                            <span className={isValid ? 'text-primary' : 'text-muted-foreground'}>
+                              {req.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    
+                    {formErrors.password && (
+                      <p className="text-sm text-destructive">{formErrors.password}</p>
+                    )}
                   </div>
                 </CardContent>
 
