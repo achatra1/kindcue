@@ -21,9 +21,10 @@ interface WellnessChatProps {
 }
 
 export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
-  const [step, setStep] = useState<'input' | 'generating' | 'result'>('input');
+  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
+  const [feedbackInput, setFeedbackInput] = useState('');
   const { toast } = useToast();
 
 
@@ -48,7 +49,25 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: `Based on how I'm feeling today: "${userInput}", please suggest a personalized workout that matches my current state and preferences.`,
+          message: `Based on how I'm feeling today: "${userInput}", please suggest a personalized workout. 
+
+IMPORTANT: Format your response EXACTLY as follows:
+1. Short Title (max 8 words)
+2. Exercise List (one exercise per line with duration/reps)
+3. Summary Card (2-3 encouraging sentences)
+4. Ask 1-2 questions if you need clarification
+
+Example format:
+**Gentle Morning Stretch Flow**
+
+• Neck rolls - 2 minutes
+• Shoulder shrugs - 1 minute  
+• Cat-cow pose - 3 minutes
+• Child's pose - 5 minutes
+
+This gentle routine will help you ease into your day with mindful movement. Perfect for when you need something nurturing and restorative.
+
+Questions: Would you prefer to stay seated, or is moving to the floor comfortable for you?`,
           userContext
         }),
       });
@@ -71,10 +90,65 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
     }
   };
 
+  const handleFeedback = async () => {
+    if (!feedbackInput.trim()) return;
+    
+    setStep('improving');
+    
+    try {
+      const userContext = {
+        name: profile?.display_name || userName,
+        bio: profile?.bio,
+        wellness_goals: profile?.wellness_goals,
+        fitness_level: profile?.fitness_level,
+        favorite_workouts: profile?.favorite_workouts,
+        preferred_workout_duration: profile?.preferred_workout_duration
+      };
+
+      const response = await fetch('https://qbzaiixsalxkoaguqbfo.supabase.co/functions/v1/chat-gpt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: `Please improve this workout based on my feedback: "${feedbackInput}"
+
+Previous workout:
+${workoutSuggestion}
+
+IMPORTANT: Format your improved response EXACTLY as follows:
+1. Short Title (max 8 words)
+2. Exercise List (one exercise per line with duration/reps)
+3. Summary Card (2-3 encouraging sentences)
+4. Ask 1-2 questions if you need more clarification`,
+          userContext
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to improve workout suggestion');
+      }
+
+      const data = await response.json();
+      setWorkoutSuggestion(data.response || data.message || 'No improved workout received');
+      setFeedbackInput('');
+      setStep('result');
+    } catch (error) {
+      console.error('Error improving workout:', error);
+      toast({
+        title: "Something went wrong",
+        description: "We couldn't improve your workout suggestion. Please try again.",
+        variant: "destructive",
+      });
+      setStep('result');
+    }
+  };
+
   const handleStartOver = () => {
     setStep('input');
     setUserInput('');
     setWorkoutSuggestion('');
+    setFeedbackInput('');
   };
 
   return (
@@ -107,14 +181,14 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
           </div>
         )}
 
-        {step === 'generating' && (
+        {(step === 'generating' || step === 'improving') && (
           <div className="space-y-4 text-center py-8">
             <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
             <p className="text-foreground font-medium">
-              Creating your perfect workout...
+              {step === 'generating' ? 'Creating your perfect workout...' : 'Improving your workout...'}
             </p>
             <p className="text-muted-foreground text-sm">
-              Based on how you're feeling and your preferences
+              {step === 'generating' ? 'Based on how you\'re feeling and your preferences' : 'Taking your feedback into account'}
             </p>
           </div>
         )}
@@ -130,18 +204,63 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
                 {workoutSuggestion}
               </div>
             </div>
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline" 
+                  onClick={handleStartOver}
+                  className="flex-1"
+                >
+                  New Workout
+                </Button>
+                <Button 
+                  className="flex-1 bg-gradient-safety hover:opacity-90"
+                >
+                  Start Workout
+                </Button>
+              </div>
+              <Button 
+                variant="secondary"
+                onClick={() => setStep('feedback')}
+                className="w-full"
+              >
+                Provide Feedback
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {step === 'feedback' && (
+          <div className="space-y-4">
+            <div className="bg-muted/50 rounded-lg p-4">
+              <p className="text-foreground font-medium mb-3">
+                How can we improve this workout for you?
+              </p>
+              <p className="text-muted-foreground text-sm">
+                Share what you'd like to change - different exercises, duration, intensity, or any other preferences.
+              </p>
+            </div>
+            <Textarea
+              value={feedbackInput}
+              onChange={(e) => setFeedbackInput(e.target.value)}
+              placeholder="I'd prefer exercises I can do sitting down... or maybe something more challenging..."
+              className="min-h-[80px]"
+            />
             <div className="flex gap-3">
               <Button 
-                variant="outline" 
-                onClick={handleStartOver}
+                variant="outline"
+                onClick={() => setStep('result')}
                 className="flex-1"
               >
-                Try Again
+                Cancel
               </Button>
               <Button 
-                className="flex-1 bg-gradient-safety hover:opacity-90"
+                onClick={handleFeedback}
+                disabled={!feedbackInput.trim()}
+                className="flex-1 gap-2"
               >
-                Start Workout
+                <Send className="h-4 w-4" />
+                Improve Workout
               </Button>
             </div>
           </div>
