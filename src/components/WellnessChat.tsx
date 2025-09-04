@@ -253,16 +253,16 @@ Keep the same format as before with References section at the end.`,
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex gap-3">
               <Button 
-                className="w-full bg-gradient-safety hover:opacity-90"
+                className="flex-1 bg-gradient-safety hover:opacity-90"
               >
                 Start Workout
               </Button>
               <Button 
                 variant="secondary"
                 onClick={() => setStep('feedback')}
-                className="w-full"
+                className="flex-1"
               >
                 Modify Workout
               </Button>
