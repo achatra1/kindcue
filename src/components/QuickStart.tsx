@@ -80,8 +80,8 @@ export const QuickStart = ({ profile, onQuickStart }: QuickStartProps) => {
   return (
     <Card className="p-4 bg-card/95 backdrop-blur-sm border-border/50 h-full flex flex-col">
       {/* Main Title */}
-      <div className="mb-3">
-        <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+      <div className="mb-3 text-center">
+        <h3 className="text-sm font-bold text-foreground flex items-center justify-center gap-2">
           <Zap className="h-4 w-4 text-primary" />
           Quick Start
         </h3>
