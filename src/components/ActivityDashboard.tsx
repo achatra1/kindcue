@@ -1,34 +1,47 @@
-import { Activity, Calendar, Target, TrendingUp } from 'lucide-react';
+import { Clock, Calendar, Heart, BarChart3 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 export const ActivityDashboard = () => {
+  const navigate = useNavigate();
+
+  const handleDashboardClick = () => {
+    navigate('/activity-logs');
+  };
+
   return (
     <div className="p-4 h-full">
-      <Card className="p-4 h-full">
+      <Card 
+        className="p-4 h-full cursor-pointer hover:bg-muted/50 transition-colors" 
+        onClick={handleDashboardClick}
+      >
         <div className="grid grid-cols-2 gap-3 h-full">
-          {/* Quick Stats */}
+          {/* Active Hours */}
           <div className="flex flex-col items-center justify-center">
-            <Activity className="h-6 w-6 text-primary mb-1" />
-            <h3 className="text-base font-semibold text-foreground mb-0.5">7</h3>
-            <p className="text-xs text-muted-foreground text-center">Workouts This Week</p>
+            <Clock className="h-6 w-6 text-primary mb-1" />
+            <h3 className="text-base font-semibold text-foreground mb-0.5">2.5h</h3>
+            <p className="text-xs text-muted-foreground text-center">Active Hours Today</p>
           </div>
 
-          <div className="flex flex-col items-center justify-center">
-            <Target className="h-6 w-6 text-primary mb-1" />
-            <h3 className="text-base font-semibold text-foreground mb-0.5">3/5</h3>
-            <p className="text-xs text-muted-foreground text-center">Weekly Goal</p>
-          </div>
-
+          {/* Streak */}
           <div className="flex flex-col items-center justify-center">
             <Calendar className="h-6 w-6 text-primary mb-1" />
             <h3 className="text-base font-semibold text-foreground mb-0.5">12</h3>
             <p className="text-xs text-muted-foreground text-center">Day Streak</p>
           </div>
 
+          {/* Mood Check-in */}
           <div className="flex flex-col items-center justify-center">
-            <TrendingUp className="h-6 w-6 text-primary mb-1" />
-            <h3 className="text-base font-semibold text-foreground mb-0.5">+15%</h3>
-            <p className="text-xs text-muted-foreground text-center">Progress This Month</p>
+            <Heart className="h-6 w-6 text-primary mb-1" />
+            <h3 className="text-base font-semibold text-foreground mb-0.5">😊</h3>
+            <p className="text-xs text-muted-foreground text-center">Today's Mood</p>
+          </div>
+
+          {/* View Details */}
+          <div className="flex flex-col items-center justify-center">
+            <BarChart3 className="h-6 w-6 text-primary mb-1" />
+            <h3 className="text-base font-semibold text-foreground mb-0.5">View</h3>
+            <p className="text-xs text-muted-foreground text-center">Activity Logs</p>
           </div>
         </div>
       </Card>
