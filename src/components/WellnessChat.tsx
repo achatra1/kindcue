@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { MessageCircle, Send, Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { WorkoutSession } from '@/components/WorkoutSession';
+import { VoiceWorkoutSession } from '@/components/VoiceWorkoutSession';
 
 interface Profile {
   display_name: string | null;
@@ -23,7 +24,7 @@ interface WellnessChatProps {
 }
 
 export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) => {
-  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout'>('input');
+  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout' | 'voice-workout'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
   const [workoutTitle, setWorkoutTitle] = useState('');
@@ -43,6 +44,10 @@ export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) =
     setWorkoutTitle('');
     setWorkoutSummary('');
     setReferences([]);
+  };
+
+  const handleStartVoiceWorkout = () => {
+    setStep('voice-workout');
   };
 
 
@@ -342,10 +347,17 @@ Keep the same format as before with References section at the end.`,
               </Button>
               <Button 
                 variant="secondary"
-                onClick={() => setStep('feedback')}
-                className="flex-1 text-sm"
+                onClick={handleStartVoiceWorkout}
+                className="flex-1 text-sm gap-2"
               >
-                Modify Workout
+                🎤 Voice Coach
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => setStep('feedback')}
+                className="text-sm"
+              >
+                Modify
               </Button>
             </div>
           </div>
@@ -397,6 +409,16 @@ Keep the same format as before with References section at the end.`,
               </Button>
             </div>
           </div>
+        )}
+
+        {step === 'voice-workout' && (
+          <VoiceWorkoutSession
+            workoutTitle={workoutTitle}
+            workoutSuggestion={workoutSuggestion}
+            userId={userId}
+            onComplete={handleWorkoutComplete}
+            onCancel={() => setStep('result')}
+          />
         )}
 
         {step === 'workout' && (
