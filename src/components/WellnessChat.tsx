@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { MessageCircle, Send, Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { WorkoutSession } from '@/components/WorkoutSession';
 
 interface Profile {
   display_name: string | null;
@@ -18,10 +19,11 @@ interface Profile {
 interface WellnessChatProps {
   profile: Profile | null;
   userName: string;
+  userId: string;
 }
 
-export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
-  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving'>('input');
+export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) => {
+  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
   const [workoutTitle, setWorkoutTitle] = useState('');
@@ -29,6 +31,19 @@ export const WellnessChat = ({ profile, userName }: WellnessChatProps) => {
   const [references, setReferences] = useState<string[]>([]);
   const [feedbackInput, setFeedbackInput] = useState('');
   const { toast } = useToast();
+
+  const handleStartWorkout = () => {
+    setStep('workout');
+  };
+
+  const handleWorkoutComplete = () => {
+    setStep('input');
+    setUserInput('');
+    setWorkoutSuggestion('');
+    setWorkoutTitle('');
+    setWorkoutSummary('');
+    setReferences([]);
+  };
 
 
   const handleSubmitFeeling = async () => {
@@ -246,6 +261,7 @@ Keep the same format as before with References section at the end.`,
     setWorkoutSummary('');
     setReferences([]);
     setFeedbackInput('');
+
   };
 
   return (
@@ -320,6 +336,7 @@ Keep the same format as before with References section at the end.`,
             <div className="flex gap-2 shrink-0">
               <Button 
                 className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
+                onClick={handleStartWorkout}
               >
                 Start Workout
               </Button>
@@ -380,6 +397,16 @@ Keep the same format as before with References section at the end.`,
               </Button>
             </div>
           </div>
+        )}
+
+        {step === 'workout' && (
+          <WorkoutSession
+            workoutTitle={workoutTitle}
+            workoutSuggestion={workoutSuggestion}
+            userId={userId}
+            onComplete={handleWorkoutComplete}
+            onCancel={() => setStep('result')}
+          />
         )}
       </div>
     </div>

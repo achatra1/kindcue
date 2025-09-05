@@ -88,6 +88,7 @@ const Index = () => {
                 <WellnessChat 
                   profile={profile} 
                   userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
+                  userId={user.id}
                 />
               </div>
               <div className="mt-4">
