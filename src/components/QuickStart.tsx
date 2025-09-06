@@ -573,9 +573,9 @@ Keep the same format as before with References section at the end.`,
       )}
 
       {step === 'feedback' && (
-          <div className="flex-1 flex flex-col space-y-3">
-            {/* Show current workout context */}
-            <div className="bg-primary/5 rounded-lg p-3 border border-primary/10">
+        <div className="flex-1 flex flex-col space-y-3">
+          {/* Show current workout context */}
+          <div className="bg-primary/5 rounded-lg p-3 border border-primary/10">
             <p className="text-foreground font-medium text-sm mb-1">
               {workoutTitle && `Modifying: ${workoutTitle}`}
             </p>
