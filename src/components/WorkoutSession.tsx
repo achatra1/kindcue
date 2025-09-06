@@ -64,27 +64,10 @@ export const WorkoutSession = ({
   };
 
   const handleMarkComplete = () => {
-    if (time < 60) {
-      toast({
-        title: "Workout too short",
-        description: "Please workout for at least 1 minute before completing.",
-        variant: "destructive",
-      });
-      return;
-    }
     setShowFeedback(true);
   };
 
   const handleComplete = async () => {
-    if (time < 60) {
-      toast({
-        title: "Workout too short",
-        description: "Please workout for at least 1 minute before completing.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsSaving(true);
     try {
       // Save to activity logs
