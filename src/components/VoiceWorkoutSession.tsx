@@ -142,9 +142,16 @@ export const VoiceWorkoutSession = ({
 
         <Card className="p-4 max-w-md">
           <h4 className="font-medium text-foreground mb-2">Your Workout Preview:</h4>
-          <p className="text-sm text-muted-foreground line-clamp-3">
-            {workoutSummary || workoutTitle}
-          </p>
+          <div className="text-sm text-muted-foreground space-y-1">
+            {workoutSuggestion.split('\n')
+              .filter(line => line.trim().startsWith('•') || line.trim().startsWith('-'))
+              .map((exercise, index) => (
+                <div key={index} className="flex justify-between items-center">
+                  <span>{exercise.replace(/^[•-]\s*/, '')}</span>
+                </div>
+              ))
+            }
+          </div>
         </Card>
 
         <div className="flex gap-3 w-full max-w-md">
