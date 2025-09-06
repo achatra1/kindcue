@@ -183,9 +183,8 @@ export const WorkoutSession = ({
           <div className="text-center">
             <h4 className="font-semibold text-foreground mb-4">How was your workout?</h4>
             
-            {/* Mark Favorite */}
+            {/* Add to Favorites */}
             <div className="space-y-2 mb-4">
-              <label className="text-sm font-medium text-foreground">Mark as Favorite</label>
               <Button
                 variant={isFavorite ? "default" : "outline"}
                 onClick={() => setIsFavorite(!isFavorite)}
@@ -203,17 +202,17 @@ export const WorkoutSession = ({
 
             {/* Mood Check-in */}
             <div className="space-y-2 mb-4">
-              <label className="text-sm font-medium text-foreground">How do you feel? (1-5)</label>
-              <div className="flex gap-1 justify-center">
-                {[1, 2, 3, 4, 5].map((rating) => (
+              <label className="text-sm font-medium text-foreground">How do you feel:</label>
+              <div className="flex gap-2 justify-center">
+                {['Sad', 'Happy', 'Amazing'].map((mood, index) => (
                   <Button
-                    key={rating}
-                    variant={moodRating >= rating ? "default" : "outline"}
+                    key={mood}
+                    variant={moodRating === index + 1 ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setMoodRating(rating)}
-                    className="w-8 h-8 p-0 text-xs"
+                    onClick={() => setMoodRating(index + 1)}
+                    className="px-3 py-1 text-xs"
                   >
-                    {rating}
+                    {mood}
                   </Button>
                 ))}
               </div>
