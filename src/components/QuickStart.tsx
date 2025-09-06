@@ -106,7 +106,7 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
 IMPORTANT: Format your response EXACTLY as follows:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
-3. Summary Card (2-3 encouraging sentences)
+3. One short encouraging motivational line (maximum 15 words)
 4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
 5. References (2-3 credible sources)
 
@@ -227,7 +227,7 @@ ${workoutSuggestion}
 IMPORTANT: Format your improved response EXACTLY as follows:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
-3. Summary Card (2-3 encouraging sentences)
+3. One short encouraging motivational line (maximum 15 words)
 4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
 5. References (2-3 credible sources)
 
