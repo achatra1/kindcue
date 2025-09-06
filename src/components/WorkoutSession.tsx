@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Pause, Square, Clock, CheckCircle } from 'lucide-react';
+import { Play, Pause, Square, Clock, CheckCircle, Heart, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -25,7 +25,9 @@ export const WorkoutSession = ({
   const [time, setTime] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [feedback, setFeedback] = useState('');
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [moodRating, setMoodRating] = useState(0);
+  const [workoutRating, setWorkoutRating] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
@@ -91,7 +93,7 @@ export const WorkoutSession = ({
           user_id: userId,
           activity_type: workoutTitle || 'Custom Workout',
           duration: Math.floor(time / 60), // Convert to minutes
-          notes: feedback || `Completed: ${workoutSuggestion.substring(0, 100)}...`,
+          notes: `${isFavorite ? '⭐ Favorite workout! ' : ''}Mood: ${moodRating}/5, Effectiveness: ${workoutRating}/5 - ${workoutSuggestion.substring(0, 50)}...`,
           logged_at: new Date().toISOString()
         });
 
@@ -179,19 +181,62 @@ export const WorkoutSession = ({
       {showFeedback && (
         <Card className="p-4 space-y-4">
           <div className="text-center">
-            <h4 className="font-semibold text-foreground mb-2">How did your workout feel?</h4>
-            <div className="flex gap-2 justify-center mb-4">
-              {['😤', '😰', '😊', '💪', '🔥'].map((emoji, index) => (
-                <Button
-                  key={emoji}
-                  variant="outline"
-                  className="text-2xl h-12 w-12 p-0"
-                  onClick={() => setFeedback(`${emoji} ${['Challenging', 'Tough', 'Good', 'Strong', 'Amazing'][index]} workout!`)}
-                >
-                  {emoji}
-                </Button>
-              ))}
+            <h4 className="font-semibold text-foreground mb-4">How was your workout?</h4>
+            
+            {/* Mark Favorite */}
+            <div className="space-y-2 mb-4">
+              <label className="text-sm font-medium text-foreground">Mark as Favorite</label>
+              <Button
+                variant={isFavorite ? "default" : "outline"}
+                onClick={() => setIsFavorite(!isFavorite)}
+                className="gap-2 w-full"
+              >
+                <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+                {isFavorite ? 'Added to Favorites' : 'Add to Favorites'}
+              </Button>
+              {isFavorite && (
+                <p className="text-xs text-muted-foreground">
+                  View your favorites on the home page
+                </p>
+              )}
             </div>
+
+            {/* Mood Check-in */}
+            <div className="space-y-2 mb-4">
+              <label className="text-sm font-medium text-foreground">How do you feel? (1-5)</label>
+              <div className="flex gap-1 justify-center">
+                {[1, 2, 3, 4, 5].map((rating) => (
+                  <Button
+                    key={rating}
+                    variant={moodRating >= rating ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setMoodRating(rating)}
+                    className="w-8 h-8 p-0 text-xs"
+                  >
+                    {rating}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Workout Effectiveness Rating */}
+            <div className="space-y-2 mb-4">
+              <label className="text-sm font-medium text-foreground">Workout Effectiveness (1-5 stars)</label>
+              <div className="flex gap-1 justify-center">
+                {[1, 2, 3, 4, 5].map((rating) => (
+                  <Button
+                    key={rating}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setWorkoutRating(rating)}
+                    className="w-8 h-8 p-0"
+                  >
+                    <Star className={`h-4 w-4 ${workoutRating >= rating ? 'fill-current text-yellow-500' : 'text-muted-foreground'}`} />
+                  </Button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex gap-2">
               <Button 
                 variant="outline" 
