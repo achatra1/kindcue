@@ -119,39 +119,63 @@ Keep the same format with References section at the end.`,
         referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
       
       // Remove references from main content
-      const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      let cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
       
-      // Extract title (first line with **title** format)
-      const titleMatch = cleanedResponse.match(/\*\*(.*?)\*\*/);
-      const extractedTitle = titleMatch ? titleMatch[1] : '';
+      // Extract title (first line with **title** format or numbered title)
+      const titleMatch = cleanedResponse.match(/(?:\d+\.\s*)?(?:Short Title[:\s]*)?(?:\*\*)?(.*?)(?:\*\*)?$/m);
+      const extractedTitle = titleMatch ? titleMatch[1].trim() : '';
+      
+      // Remove the title line from content
+      cleanedResponse = cleanedResponse.replace(/(?:\d+\.\s*)?(?:Short Title[:\s]*)?(?:\*\*)?(.*?)(?:\*\*)?$/m, '').trim();
+      
+      // Clean up numbering and headers
+      cleanedResponse = cleanedResponse
+        .replace(/\d+\.\s*(?:Short Title|Exercise List|Summary Card)[:\s]*/gi, '') // Remove numbered headers
+        .replace(/Exercise List[:\s]*/gi, '') // Remove "Exercise List" header
+        .replace(/Summary Card[:\s]*/gi, '') // Remove "Summary Card" header
+        .replace(/^\d+\.\s*/gm, '') // Remove numbering from beginning of lines
+        .trim();
       
       // Extract summary (text after exercises, before questions)
       const lines = cleanedResponse.split('\n');
       let summaryLines: string[] = [];
-      let inSummary = false;
+      let exerciseLines: string[] = [];
+      let inExercises = true;
       
       for (const line of lines) {
-        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
-          inSummary = false;
-          continue;
+        const trimmedLine = line.trim();
+        if (!trimmedLine) continue;
+        
+        // If line starts with bullet point or dash, it's an exercise
+        if (trimmedLine.match(/^[-•]\s/)) {
+          exerciseLines.push(trimmedLine);
+          inExercises = true;
+        } 
+        // If it's not an exercise and we were in exercises, switch to summary
+        else if (inExercises && !trimmedLine.includes('?')) {
+          inExercises = false;
+          summaryLines.push(trimmedLine);
         }
-        if (!line.trim().startsWith('**') && !line.trim().startsWith('•') && !line.trim().startsWith('-') && line.trim() && !inSummary) {
-          const isQuestion = line.toLowerCase().includes('?') && (line.toLowerCase().includes('prefer') || line.toLowerCase().includes('need') || line.toLowerCase().includes('comfortable'));
-          if (!isQuestion) {
-            inSummary = true;
-          }
+        // Continue collecting summary lines
+        else if (!inExercises && !trimmedLine.includes('?')) {
+          summaryLines.push(trimmedLine);
         }
-        if (inSummary && line.trim() && !line.toLowerCase().includes('?')) {
-          summaryLines.push(line.trim());
-        }
-        if (line.toLowerCase().includes('?')) {
+        // Stop at questions
+        else if (trimmedLine.includes('?')) {
           break;
         }
       }
       
+      // Combine exercises and summary
+      const formattedContent = [
+        ...exerciseLines,
+        '',
+        ...summaryLines
+      ].filter(line => line.trim()).join('\n');
+      
       setWorkoutTitle(extractedTitle);
       setWorkoutSummary(summaryLines.join(' '));
-      setWorkoutSuggestion(cleanedResponse);
+      setWorkoutSuggestion(formattedContent);
       setReferences(extractedReferences);
       setStep('result');
     } catch (error) {
@@ -216,39 +240,63 @@ Keep the same format as before with References section at the end.`,
         referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
       
       // Remove references from main content
-      const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      let cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
       
-      // Extract title (first line with **title** format)
-      const titleMatch = cleanedResponse.match(/\*\*(.*?)\*\*/);
-      const extractedTitle = titleMatch ? titleMatch[1] : '';
+      // Extract title (first line with **title** format or numbered title)
+      const titleMatch = cleanedResponse.match(/(?:\d+\.\s*)?(?:Short Title[:\s]*)?(?:\*\*)?(.*?)(?:\*\*)?$/m);
+      const extractedTitle = titleMatch ? titleMatch[1].trim() : '';
+      
+      // Remove the title line from content
+      cleanedResponse = cleanedResponse.replace(/(?:\d+\.\s*)?(?:Short Title[:\s]*)?(?:\*\*)?(.*?)(?:\*\*)?$/m, '').trim();
+      
+      // Clean up numbering and headers
+      cleanedResponse = cleanedResponse
+        .replace(/\d+\.\s*(?:Short Title|Exercise List|Summary Card)[:\s]*/gi, '') // Remove numbered headers
+        .replace(/Exercise List[:\s]*/gi, '') // Remove "Exercise List" header
+        .replace(/Summary Card[:\s]*/gi, '') // Remove "Summary Card" header
+        .replace(/^\d+\.\s*/gm, '') // Remove numbering from beginning of lines
+        .trim();
       
       // Extract summary (text after exercises, before questions)
       const lines = cleanedResponse.split('\n');
       let summaryLines: string[] = [];
-      let inSummary = false;
+      let exerciseLines: string[] = [];
+      let inExercises = true;
       
       for (const line of lines) {
-        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
-          inSummary = false;
-          continue;
+        const trimmedLine = line.trim();
+        if (!trimmedLine) continue;
+        
+        // If line starts with bullet point or dash, it's an exercise
+        if (trimmedLine.match(/^[-•]\s/)) {
+          exerciseLines.push(trimmedLine);
+          inExercises = true;
+        } 
+        // If it's not an exercise and we were in exercises, switch to summary
+        else if (inExercises && !trimmedLine.includes('?')) {
+          inExercises = false;
+          summaryLines.push(trimmedLine);
         }
-        if (!line.trim().startsWith('**') && !line.trim().startsWith('•') && !line.trim().startsWith('-') && line.trim() && !inSummary) {
-          const isQuestion = line.toLowerCase().includes('?') && (line.toLowerCase().includes('prefer') || line.toLowerCase().includes('need') || line.toLowerCase().includes('comfortable'));
-          if (!isQuestion) {
-            inSummary = true;
-          }
+        // Continue collecting summary lines
+        else if (!inExercises && !trimmedLine.includes('?')) {
+          summaryLines.push(trimmedLine);
         }
-        if (inSummary && line.trim() && !line.toLowerCase().includes('?')) {
-          summaryLines.push(line.trim());
-        }
-        if (line.toLowerCase().includes('?')) {
+        // Stop at questions
+        else if (trimmedLine.includes('?')) {
           break;
         }
       }
       
+      // Combine exercises and summary
+      const formattedContent = [
+        ...exerciseLines,
+        '',
+        ...summaryLines
+      ].filter(line => line.trim()).join('\n');
+      
       setWorkoutTitle(extractedTitle);
       setWorkoutSummary(summaryLines.join(' '));
-      setWorkoutSuggestion(cleanedResponse);
+      setWorkoutSuggestion(formattedContent);
       setReferences(extractedReferences);
       setFeedbackInput('');
       setStep('result');
@@ -449,11 +497,14 @@ Keep the same format as before with References section at the end.`,
 
       {step === 'result' && workoutSuggestion && (
         <div className="flex-1 flex flex-col space-y-3 min-h-0">
-          <div className="bg-muted/30 rounded-lg p-4 flex-1 overflow-y-auto min-h-[200px]">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <p className="text-foreground font-medium text-sm">Your Personalized Workout</p>
+          {/* Workout Title as Header */}
+          {workoutTitle && (
+            <div className="text-center">
+              <h2 className="text-lg font-semibold text-foreground">{workoutTitle}</h2>
             </div>
+          )}
+          
+          <div className="bg-muted/30 rounded-lg p-4 flex-1 overflow-y-auto min-h-[200px]">
             <div className="text-foreground whitespace-pre-wrap text-sm leading-relaxed">
               {workoutSuggestion}
             </div>
