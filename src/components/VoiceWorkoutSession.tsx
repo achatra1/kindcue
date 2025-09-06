@@ -166,7 +166,7 @@ export const VoiceWorkoutSession = ({
             onClick={handleStartVoiceWorkout}
             className="flex-1 gap-2"
           >
-            <Phone className="h-4 w-4" />
+            <Dumbbell className="h-4 w-4" />
             Start
           </Button>
         </div>
