@@ -24,7 +24,7 @@ interface WellnessChatProps {
 }
 
 export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) => {
-  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout' | 'voice-workout'>('input');
+  const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout' | 'voice-workout' | 'workout-options'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
   const [workoutTitle, setWorkoutTitle] = useState('');
@@ -341,16 +341,9 @@ Keep the same format as before with References section at the end.`,
             <div className="flex gap-2 shrink-0">
               <Button 
                 className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
-                onClick={handleStartWorkout}
+                onClick={() => setStep('workout-options')}
               >
                 Start Workout
-              </Button>
-              <Button 
-                variant="secondary"
-                onClick={handleStartVoiceWorkout}
-                className="flex-1 text-sm gap-2"
-              >
-                🎤 Voice Coach
               </Button>
               <Button 
                 variant="outline"
@@ -408,6 +401,47 @@ Keep the same format as before with References section at the end.`,
                 Improve Workout
               </Button>
             </div>
+          </div>
+        )}
+
+        {step === 'workout-options' && (
+          <div className="space-y-3">
+            <div className="bg-muted/30 rounded-lg p-3">
+              <p className="text-foreground font-medium mb-2 text-sm">
+                How would you like to do your workout?
+              </p>
+              <p className="text-muted-foreground text-xs">
+                Choose your preferred workout experience
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Button 
+                className="w-full bg-gradient-safety hover:opacity-90 text-sm py-6"
+                onClick={handleStartWorkout}
+              >
+                <div className="text-center">
+                  <div className="font-medium">At my own pace!</div>
+                  <div className="text-xs opacity-90">Self-guided workout with timer</div>
+                </div>
+              </Button>
+              <Button 
+                variant="secondary"
+                onClick={handleStartVoiceWorkout}
+                className="w-full text-sm py-6 gap-2"
+              >
+                <div className="text-center">
+                  <div className="font-medium">🎤 Let's Go Coach!</div>
+                  <div className="text-xs opacity-90">Voice-guided workout assistant</div>
+                </div>
+              </Button>
+            </div>
+            <Button 
+              variant="outline"
+              onClick={() => setStep('result')}
+              className="w-full text-sm"
+            >
+              Back to Workout
+            </Button>
           </div>
         )}
 
