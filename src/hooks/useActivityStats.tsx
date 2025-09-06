@@ -27,6 +27,22 @@ export const useActivityStats = (userId: string | undefined) => {
       }
 
       try {
+        // Fetch app sessions for total active hours
+        const { data: sessions, error: sessionsError } = await supabase
+          .from('app_sessions')
+          .select('duration_minutes')
+          .eq('user_id', userId)
+          .not('duration_minutes', 'is', null);
+
+        if (sessionsError) {
+          console.error('Error fetching app sessions:', sessionsError);
+        }
+
+        // Calculate total active hours from app sessions
+        const totalMinutes = sessions?.reduce((sum, session) => sum + (session.duration_minutes || 0), 0) || 0;
+        const totalActiveHours = Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal
+
+        // Fetch activity logs for other stats
         const { data: activities, error } = await supabase
           .from('activity_logs')
           .select('duration, notes, logged_at')
@@ -44,9 +60,8 @@ export const useActivityStats = (userId: string | undefined) => {
           return;
         }
 
-        // Calculate total active hours
-        const totalMinutes = activities.reduce((sum, activity) => sum + (activity.duration || 0), 0);
-        const totalActiveHours = Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal
+        // Calculate total active hours was already calculated above from sessions
+        // (keeping this comment for clarity)
 
         // Calculate days since last workout
         const lastWorkoutDate = new Date(activities[0].logged_at);
