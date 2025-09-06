@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/integrations/supabase/client';
-import { Activity, Plus, Calendar, Clock, LogOut, Loader2 } from 'lucide-react';
+import { Activity, Calendar, Clock, LogOut, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface ActivityLog {
@@ -125,10 +125,6 @@ const ActivityLogs = () => {
               <Activity className="h-8 w-8 text-primary" />
               <h1 className="text-3xl font-bold text-foreground">Activity Logs</h1>
             </div>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
-              Log Activity
-            </Button>
           </div>
 
           {activitiesLoading ? (
@@ -140,12 +136,8 @@ const ActivityLogs = () => {
               <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2 text-foreground">No activities logged yet</h3>
               <p className="text-muted-foreground mb-4">
-                Start tracking your wellness journey by logging your first activity.
+                Complete workouts through the app to see your activity history here.
               </p>
-              <Button className="gap-2">
-                <Plus className="h-4 w-4" />
-                Log Your First Activity
-              </Button>
             </Card>
           ) : (
             <div className="space-y-4">
