@@ -234,25 +234,6 @@ export const VoiceWorkoutSession = ({
         )}
       </div>
 
-      {/* Workout Stats */}
-      <Card className="p-4">
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div>
-            <div className="text-lg font-semibold text-foreground">{completedExercises}</div>
-            <div className="text-xs text-muted-foreground">Exercises</div>
-          </div>
-          <div>
-            <div className="text-lg font-semibold text-foreground">{formatTime(totalDuration)}</div>
-            <div className="text-xs text-muted-foreground">Total Time</div>
-          </div>
-          <div>
-            <div className="text-lg font-semibold text-foreground">
-              {isListening ? 'ON' : 'OFF'}
-            </div>
-            <div className="text-xs text-muted-foreground">Microphone</div>
-          </div>
-        </div>
-      </Card>
 
       {/* Recent Messages */}
       {messages.length > 0 && (
