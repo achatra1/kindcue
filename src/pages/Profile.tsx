@@ -216,6 +216,9 @@ const Profile = () => {
                     disabled
                     className="bg-muted"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    Contact support to change your email address
+                  </p>
                 </div>
 
                 <div className="space-y-2">
@@ -228,82 +231,64 @@ const Profile = () => {
                     placeholder="How should we address you?"
                   />
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  Password & Security
-                  {!isEditingPassword ? (
-                    <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-2">
-                      <Edit className="h-3 w-3" />
-                      Change Password
-                    </Button>
-                  ) : (
-                    <div className="flex gap-2">
-                      <Button onClick={handlePasswordSave} size="sm" className="gap-2">
-                        <Save className="h-3 w-3" />
-                        Save
-                      </Button>
-                      <Button onClick={handlePasswordCancel} variant="outline" size="sm" className="gap-2">
-                        <X className="h-3 w-3" />
-                        Cancel
-                      </Button>
-                    </div>
-                  )}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="current_email">Email Address</Label>
-                  <Input
-                    id="current_email"
-                    value={user?.email || ''}
-                    disabled
-                    className="bg-muted"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Contact support to change your email address
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <Label>Password</Label>
+                    {!isEditingPassword ? (
+                      <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-2">
+                        <Edit className="h-3 w-3" />
+                        Change Password
+                      </Button>
+                    ) : (
+                      <div className="flex gap-2">
+                        <Button onClick={handlePasswordSave} size="sm" className="gap-2">
+                          <Save className="h-3 w-3" />
+                          Save
+                        </Button>
+                        <Button onClick={handlePasswordCancel} variant="outline" size="sm" className="gap-2">
+                          <X className="h-3 w-3" />
+                          Cancel
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {isEditingPassword && (
+                    <>
+                      <div className="space-y-2">
+                        <Label htmlFor="new_password">New Password</Label>
+                        <Input
+                          id="new_password"
+                          type="password"
+                          value={passwordData.newPassword}
+                          onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                          placeholder="Enter new password"
+                          minLength={6}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="confirm_password">Confirm New Password</Label>
+                        <Input
+                          id="confirm_password"
+                          type="password"
+                          value={passwordData.confirmPassword}
+                          onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                          placeholder="Confirm new password"
+                          minLength={6}
+                        />
+                      </div>
+
+                      <p className="text-xs text-muted-foreground">
+                        Password must be at least 6 characters long
+                      </p>
+                    </>
+                  )}
                 </div>
-
-                {isEditingPassword && (
-                  <>
-                    <div className="space-y-2">
-                      <Label htmlFor="new_password">New Password</Label>
-                      <Input
-                        id="new_password"
-                        type="password"
-                        value={passwordData.newPassword}
-                        onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
-                        placeholder="Enter new password"
-                        minLength={6}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="confirm_password">Confirm New Password</Label>
-                      <Input
-                        id="confirm_password"
-                        type="password"
-                        value={passwordData.confirmPassword}
-                        onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                        placeholder="Confirm new password"
-                        minLength={6}
-                      />
-                    </div>
-
-                    <p className="text-xs text-muted-foreground">
-                      Password must be at least 6 characters long
-                    </p>
-                  </>
-                )}
               </CardContent>
             </Card>
-          </div>
 
-          <div className="grid gap-6 md:grid-cols-1">
             <Card>
               <CardHeader>
                 <CardTitle>Wellness Preferences</CardTitle>
