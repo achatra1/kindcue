@@ -443,6 +443,7 @@ Keep the same format as before with References section at the end.`,
           <VoiceWorkoutSession
             workoutTitle={workoutTitle}
             workoutSuggestion={workoutSuggestion}
+            workoutSummary={workoutSummary}
             userId={userId}
             onComplete={handleWorkoutComplete}
             onCancel={() => setStep('result')}

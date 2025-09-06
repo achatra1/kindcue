@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface VoiceWorkoutSessionProps {
   workoutTitle: string;
   workoutSuggestion: string;
+  workoutSummary?: string;
   userId: string;
   onComplete: () => void;
   onCancel: () => void;
@@ -17,6 +18,7 @@ interface VoiceWorkoutSessionProps {
 export const VoiceWorkoutSession = ({ 
   workoutTitle, 
   workoutSuggestion, 
+  workoutSummary,
   userId, 
   onComplete, 
   onCancel 
@@ -141,7 +143,7 @@ export const VoiceWorkoutSession = ({
         <Card className="p-4 max-w-md">
           <h4 className="font-medium text-foreground mb-2">Your Workout Preview:</h4>
           <p className="text-sm text-muted-foreground line-clamp-3">
-            {workoutTitle}
+            {workoutSummary || workoutTitle}
           </p>
         </Card>
 
