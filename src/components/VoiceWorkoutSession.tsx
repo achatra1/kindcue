@@ -160,14 +160,14 @@ export const VoiceWorkoutSession = ({
             onClick={onCancel}
             className="flex-1"
           >
-            Back to Text
+            Back
           </Button>
           <Button 
             onClick={handleStartVoiceWorkout}
             className="flex-1 gap-2"
           >
             <Phone className="h-4 w-4" />
-            Connect to Maya
+            Start
           </Button>
         </div>
       </div>
