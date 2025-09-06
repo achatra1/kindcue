@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,9 +21,10 @@ interface WellnessChatProps {
   profile: Profile | null;
   userName: string;
   userId: string;
+  onStepChange?: (step: string) => void;
 }
 
-export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) => {
+export const WellnessChat = ({ profile, userName, userId, onStepChange }: WellnessChatProps) => {
   const [step, setStep] = useState<'input' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout' | 'voice-workout' | 'workout-options'>('input');
   const [userInput, setUserInput] = useState('');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
@@ -32,6 +33,11 @@ export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) =
   const [references, setReferences] = useState<string[]>([]);
   const [feedbackInput, setFeedbackInput] = useState('');
   const { toast } = useToast();
+
+  // Notify parent of step changes
+  useEffect(() => {
+    onStepChange?.(step);
+  }, [step, onStepChange]);
 
   const handleStartWorkout = () => {
     setStep('workout');

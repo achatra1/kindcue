@@ -13,6 +13,7 @@ const Index = () => {
   const { user, loading, signOut } = useAuth();
   const { profile, loading: profileLoading, isFirstTimeUser } = useProfile(user?.id);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [wellnessChatStep, setWellnessChatStep] = useState('input');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,11 +90,14 @@ const Index = () => {
                   profile={profile} 
                   userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
                   userId={user.id}
+                  onStepChange={setWellnessChatStep}
                 />
               </div>
-              <div className="mt-4">
-                <ActivityDashboard />
-              </div>
+              {wellnessChatStep === 'input' && (
+                <div className="mt-4">
+                  <ActivityDashboard />
+                </div>
+              )}
             </div>
           </div>
         </div>
