@@ -104,34 +104,62 @@ export const WorkoutSession = ({
 
       // Save to favorites if marked as favorite
       if (isFavorite) {
-        const { error: favoriteError } = await supabase
+        // First check if this workout already exists in favorites
+        const { data: existingFavorite, error: checkError } = await supabase
           .from('favorite_workouts')
-          .insert({
-            user_id: userId,
-            workout_title: workoutTitle || 'Custom Workout',
-            workout_content: workoutSuggestion,
-            workout_duration: Math.floor(time / 60)
-          });
+          .select('id')
+          .eq('user_id', userId)
+          .eq('workout_title', workoutTitle || 'Custom Workout')
+          .eq('workout_content', workoutSuggestion)
+          .maybeSingle();
 
-        if (favoriteError) {
-          // If it's a duplicate or limit reached, inform user
-          if (favoriteError.message.includes('duplicate') || favoriteError.code === '23505') {
+        if (checkError) {
+          console.error('Error checking existing favorites:', checkError);
+        }
+
+        if (existingFavorite) {
+          toast({
+            title: "Already in favorites! ⭐",
+            description: "This workout is already saved in your favorites.",
+            variant: "default",
+          });
+        } else {
+          // Insert new favorite
+          const { error: favoriteError } = await supabase
+            .from('favorite_workouts')
+            .insert({
+              user_id: userId,
+              workout_title: workoutTitle || 'Custom Workout',
+              workout_content: workoutSuggestion,
+              workout_duration: Math.floor(time / 60)
+            });
+
+          if (favoriteError) {
+            console.error('Error saving favorite:', favoriteError);
             toast({
-              title: "Already in favorites",
-              description: "This workout is already in your favorites.",
+              title: "Error saving favorite",
+              description: "Please try again.",
+              variant: "destructive",
             });
           } else {
-            // Check if we hit the 8-workout limit (the trigger should handle deletion)
-            toast({
-              title: "Added to favorites! 🌟",
-              description: "Your oldest favorite was removed to make room for this one (8 max).",
-            });
+            // Check if we reached the limit (the trigger handles deletion automatically)
+            const { data: favoriteCount } = await supabase
+              .from('favorite_workouts')
+              .select('id', { count: 'exact' })
+              .eq('user_id', userId);
+
+            if (favoriteCount && favoriteCount.length >= 8) {
+              toast({
+                title: "Added to favorites! 🌟",
+                description: "Your oldest favorite was removed to make room (8 max).",
+              });
+            } else {
+              toast({
+                title: "Added to favorites! 🌟",
+                description: "You can find this workout in your Quick Start favorites.",
+              });
+            }
           }
-        } else {
-          toast({
-            title: "Added to favorites! 🌟",
-            description: "You can find this workout in your Quick Start favorites.",
-          });
         }
       }
 
