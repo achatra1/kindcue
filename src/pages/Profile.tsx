@@ -349,18 +349,6 @@ const Profile = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bio">Your Fitness Goals and Life Journey</Label>
-                  <Textarea
-                    id="bio"
-                    value={formData.bio}
-                    onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
-                    disabled={!isEditingWellness}
-                    placeholder="Share your fitness goals, wellness journey, and what motivates you..."
-                    className="min-h-[120px]"
-                  />
-                </div>
-
-                <div className="space-y-2">
                   <Label htmlFor="fitness_level">Fitness Level</Label>
                   <Input
                     id="fitness_level"
@@ -381,6 +369,18 @@ const Profile = () => {
                     disabled={!isEditingWellness}
                     min="5"
                     max="120"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="bio">Your Fitness Goals and Life Journey</Label>
+                  <Textarea
+                    id="bio"
+                    value={formData.bio}
+                    onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
+                    disabled={!isEditingWellness}
+                    placeholder="Share your fitness goals, wellness journey, and what motivates you..."
+                    className="min-h-[120px]"
                   />
                 </div>
               </CardContent>
