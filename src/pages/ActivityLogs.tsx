@@ -8,6 +8,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { Activity, Calendar, Clock, LogOut, Loader2, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { ActivityDashboard } from '@/components/ActivityDashboard';
 
 interface ActivityLog {
   id: string;
@@ -146,6 +147,11 @@ const ActivityLogs = () => {
       {/* Main Content */}
       <main className="px-4 py-6">
         <div className="space-y-6">
+          {/* Activity Dashboard */}
+          <div className="h-64">
+            <ActivityDashboard />
+          </div>
+          
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Activity className="h-8 w-8 text-primary" />
