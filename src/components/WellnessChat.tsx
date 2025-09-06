@@ -337,7 +337,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
             <div className="flex gap-2 shrink-0">
               <Button 
                 className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
-                onClick={() => setStep('workout-options')}
+                onClick={handleStartWorkout}
               >
                 Start Workout
               </Button>
@@ -400,40 +400,6 @@ At the end, add 2-3 credible references as clickable markdown links in this form
           </div>
         )}
 
-        {step === 'workout-options' && (
-          <div className="space-y-3">
-            <div className="bg-muted/30 rounded-lg p-3">
-              <p className="text-foreground font-medium mb-2 text-sm">
-                How would you like to do your workout?
-              </p>
-              <p className="text-muted-foreground text-xs">
-                Choose your preferred workout experience
-              </p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <Button 
-                className="w-full bg-gradient-safety hover:opacity-90 text-sm py-6"
-                onClick={handleStartWorkout}
-              >
-                At my own pace!
-              </Button>
-              <Button 
-                variant="secondary"
-                onClick={handleStartVoiceWorkout}
-                className="w-full text-sm py-6 gap-2"
-              >
-                🎤 Let's Go Coach!
-              </Button>
-            </div>
-            <Button 
-              variant="outline"
-              onClick={() => setStep('result')}
-              className="w-full text-sm"
-            >
-              Back to Workout
-            </Button>
-          </div>
-        )}
 
         {step === 'voice-workout' && (
           <VoiceWorkoutSession
