@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Dumbbell, Target, Zap, Heart, Send, Loader2, Sparkles } from 'lucide-react';
+import { Clock, Dumbbell, Target, Zap, Heart, Send, Loader2, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { WorkoutSession } from '@/components/WorkoutSession';
@@ -30,6 +30,7 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
   const [workoutTitle, setWorkoutTitle] = useState('');
   const [workoutSummary, setWorkoutSummary] = useState('');
   const [references, setReferences] = useState<string[]>([]);
+  const [showReferences, setShowReferences] = useState(false);
   const [feedbackInput, setFeedbackInput] = useState('');
   const [favoriteWorkouts, setFavoriteWorkouts] = useState<any[]>([]);
   const { toast } = useToast();
@@ -459,17 +460,28 @@ Keep the same format as before with References section at the end.`,
             {references.length > 0 && (
               <div className="mt-4 pt-3 border-t border-border">
                 <button 
-                  className="text-xs text-muted-foreground hover:text-foreground underline transition-colors"
-                  onClick={() => {
-                    toast({
-                      title: "References",
-                      description: references.join(' • '),
-                      duration: 5000,
-                    });
-                  }}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => setShowReferences(!showReferences)}
                 >
-                  View References ({references.length})
+                  References ({references.length})
+                  {showReferences ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                 </button>
+                {showReferences && (
+                  <div className="mt-2 space-y-1">
+                    {references.map((reference, index) => (
+                      <div key={index} className="text-xs">
+                        <a 
+                          href={`https://www.google.com/search?q=${encodeURIComponent(reference)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          {reference}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
