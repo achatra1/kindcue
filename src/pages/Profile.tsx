@@ -17,7 +17,8 @@ const Profile = () => {
   const { profile, loading: profileLoading } = useProfile(user?.id);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingBasic, setIsEditingBasic] = useState(false);
+  const [isEditingWellness, setIsEditingWellness] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [formData, setFormData] = useState({
     display_name: '',
@@ -45,12 +46,38 @@ const Profile = () => {
     }
   }, [profile]);
 
-  const handleSave = async () => {
+  const handleSaveBasic = async () => {
     try {
       const { error } = await supabase
         .from('profiles')
         .update({
-          display_name: formData.display_name,
+          display_name: formData.display_name
+        })
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Basic Information Updated",
+        description: "Your basic information has been successfully updated.",
+      });
+
+      setIsEditingBasic(false);
+    } catch (error) {
+      console.error('Error updating basic info:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update basic information. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleSaveWellness = async () => {
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
           fitness_level: formData.fitness_level,
           preferred_workout_duration: formData.preferred_workout_duration
         })
@@ -59,16 +86,16 @@ const Profile = () => {
       if (error) throw error;
 
       toast({
-        title: "Profile Updated",
-        description: "Your profile has been successfully updated.",
+        title: "Wellness Preferences Updated",
+        description: "Your wellness preferences have been successfully updated.",
       });
 
-      setIsEditing(false);
+      setIsEditingWellness(false);
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error('Error updating wellness preferences:', error);
       toast({
         title: "Error",
-        description: "Failed to update profile. Please try again.",
+        description: "Failed to update wellness preferences. Please try again.",
         variant: "destructive"
       });
     }
@@ -122,15 +149,25 @@ const Profile = () => {
     setIsEditingPassword(false);
   };
 
-  const handleCancel = () => {
+  const handleCancelBasic = () => {
     if (profile) {
-      setFormData({
-        display_name: profile.display_name || '',
+      setFormData(prev => ({
+        ...prev,
+        display_name: profile.display_name || ''
+      }));
+    }
+    setIsEditingBasic(false);
+  };
+
+  const handleCancelWellness = () => {
+    if (profile) {
+      setFormData(prev => ({
+        ...prev,
         fitness_level: profile.fitness_level || '',
         preferred_workout_duration: profile.preferred_workout_duration || 30
-      });
+      }));
     }
-    setIsEditing(false);
+    setIsEditingWellness(false);
   };
 
   if (loading || profileLoading) {
@@ -177,35 +214,32 @@ const Profile = () => {
 
       {/* Main Content */}
       <main className="px-4 py-6">
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="space-y-6">
             <div className="flex items-center gap-3">
               <User className="h-8 w-8 text-primary" />
               <h1 className="text-3xl font-bold text-foreground">User Profile</h1>
             </div>
-            {!isEditing ? (
-              <Button onClick={() => setIsEditing(true)} className="gap-2">
-                <Edit className="h-4 w-4" />
-                Edit Profile
-              </Button>
-            ) : (
-              <div className="flex gap-2">
-                <Button onClick={handleSave} className="gap-2">
-                  <Save className="h-4 w-4" />
-                  Save
-                </Button>
-                <Button onClick={handleCancel} variant="outline" className="gap-2">
-                  <X className="h-4 w-4" />
-                  Cancel
-                </Button>
-              </div>
-            )}
-          </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Basic Information</CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Basic Information</CardTitle>
+                  {!isEditingBasic ? (
+                    <Button onClick={() => setIsEditingBasic(true)} variant="outline" size="icon">
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Button onClick={handleSaveBasic} size="icon">
+                        <Save className="h-4 w-4" />
+                      </Button>
+                      <Button onClick={handleCancelBasic} variant="outline" size="icon">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -227,7 +261,7 @@ const Profile = () => {
                     id="display_name"
                     value={formData.display_name}
                     onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
-                    disabled={!isEditing}
+                    disabled={!isEditingBasic}
                     placeholder="How should we address you?"
                   />
                 </div>
@@ -291,7 +325,23 @@ const Profile = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle>Wellness Preferences</CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Wellness Preferences</CardTitle>
+                  {!isEditingWellness ? (
+                    <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="icon">
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Button onClick={handleSaveWellness} size="icon">
+                        <Save className="h-4 w-4" />
+                      </Button>
+                      <Button onClick={handleCancelWellness} variant="outline" size="icon">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -300,7 +350,7 @@ const Profile = () => {
                     id="fitness_level"
                     value={formData.fitness_level}
                     onChange={(e) => setFormData(prev => ({ ...prev, fitness_level: e.target.value }))}
-                    disabled={!isEditing}
+                    disabled={!isEditingWellness}
                     placeholder="e.g., Beginner, Intermediate, Advanced"
                   />
                 </div>
@@ -312,7 +362,7 @@ const Profile = () => {
                     type="number"
                     value={formData.preferred_workout_duration}
                     onChange={(e) => setFormData(prev => ({ ...prev, preferred_workout_duration: parseInt(e.target.value) || 30 }))}
-                    disabled={!isEditing}
+                    disabled={!isEditingWellness}
                     min="5"
                     max="120"
                   />
