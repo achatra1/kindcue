@@ -92,20 +92,6 @@ export const VoiceWorkoutSession = ({
     
     setIsSaving(true);
     try {
-      const { error } = await supabase
-        .from('activity_logs')
-        .insert({
-          user_id: userId,
-          activity_type: workoutTitle || 'Voice-Guided Workout',
-          duration: Math.floor(totalDuration / 60),
-          notes: `Voice-guided workout with Maya. Completed ${completedExercises} exercises.`,
-          logged_at: new Date().toISOString()
-        });
-
-      if (error) {
-        throw error;
-      }
-
       toast({
         title: "Amazing work! 🌟",
         description: `You completed your ${formatTime(totalDuration)} workout with Maya!`,
@@ -114,10 +100,10 @@ export const VoiceWorkoutSession = ({
       disconnect();
       onComplete();
     } catch (error) {
-      console.error('Error saving workout:', error);
+      console.error('Error completing workout:', error);
       toast({
-        title: "Error saving workout",
-        description: "Your workout was great, but we couldn't save it. Please try again.",
+        title: "Error completing workout",
+        description: "Your workout was great! Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -147,12 +133,8 @@ export const VoiceWorkoutSession = ({
           </div>
           <div>
             <h3 className="text-xl font-semibold text-foreground mb-2">
-              Meet Maya, Your Voice Coach
+              Meet Maya your voice coach
             </h3>
-            <p className="text-muted-foreground text-sm mb-4">
-              Maya will guide you through your personalized workout with real-time coaching, 
-              precise timing, and motivational support.
-            </p>
           </div>
         </div>
 
