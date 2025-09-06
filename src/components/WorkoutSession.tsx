@@ -289,20 +289,6 @@ export const WorkoutSession = ({
           </div>
         </Card>
       )}
-
-      {/* Cancel Button */}
-      {!showFeedback && (
-        <div className="flex gap-2 pt-2">
-          <Button 
-            variant="outline" 
-            onClick={onCancel}
-            className="w-full"
-            disabled={isSaving}
-          >
-            Cancel
-          </Button>
-        </div>
-      )}
     </div>
   );
 };
