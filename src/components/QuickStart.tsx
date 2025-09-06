@@ -40,7 +40,7 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
   const focusOptions = ['Full body', 'Upper body', 'Lower body'];
   const intensityOptions = ['Low', 'Medium', 'High'];
 
-  const isComplete = selectedTime && selectedEquipment && selectedFocus && selectedIntensity;
+  const isComplete = selectedTime || selectedEquipment || selectedFocus || selectedIntensity;
 
   // Fetch favorite workouts from the new favorite_workouts table
   useEffect(() => {
@@ -84,7 +84,16 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
         preferred_workout_duration: profile?.preferred_workout_duration
       };
 
-      const quickStartPreferences = `Time: ${selectedTime}, Equipment: ${selectedEquipment}, Focus: ${selectedFocus}, Intensity: ${selectedIntensity}`;
+      const quickStartPreferences = [
+        selectedTime && `Time: ${selectedTime}`,
+        selectedEquipment && `Equipment: ${selectedEquipment}`,
+        selectedFocus && `Focus: ${selectedFocus}`,
+        selectedIntensity && `Intensity: ${selectedIntensity}`
+      ].filter(Boolean).join(', ');
+
+      const basePrompt = quickStartPreferences 
+        ? `Please create a workout based on my quick start preferences: ${quickStartPreferences}`
+        : `Please create a personalized workout based on my profile and preferences`;
 
       const response = await fetch('https://qbzaiixsalxkoaguqbfo.supabase.co/functions/v1/chat-gpt', {
         method: 'POST',
@@ -92,7 +101,7 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: `Please create a workout based on my quick start preferences: ${quickStartPreferences}
+          message: `${basePrompt}
 
 IMPORTANT: Format your response EXACTLY as follows:
 1. Short Title (max 8 words)
