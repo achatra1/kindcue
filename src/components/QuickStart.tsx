@@ -395,14 +395,6 @@ Keep the same format as before with References section at the end.`,
 
   return (
     <div className="h-full flex flex-col">
-      {/* Main Title */}
-      <div className="mb-2 text-center">
-        <h3 className="text-sm font-bold text-foreground flex items-center justify-center gap-2">
-          <Zap className="h-4 w-4 text-primary" />
-          Quick Start
-        </h3>
-      </div>
-      
       {step === 'selection' && (
         <div className="flex-1 grid grid-cols-2 gap-3">
           {/* Left Half - Customize */}
