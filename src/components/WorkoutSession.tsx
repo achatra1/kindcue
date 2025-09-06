@@ -186,7 +186,11 @@ export const WorkoutSession = ({
       {/* Workout Content */}
       <Card className="p-4 flex-1 overflow-y-auto">
         <div className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
-          {workoutSuggestion}
+          {workoutSuggestion
+            .replace(/^\d+\.\s*/gm, '') // Remove numbered lists
+            .replace(/\*\*References?\*\*:.*$/im, '') // Remove references section
+            .trim()
+          }
         </div>
       </Card>
 
