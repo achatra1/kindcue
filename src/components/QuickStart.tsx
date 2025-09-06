@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Dumbbell, Target, Zap, Heart, Send, Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface QuickStartProps {
   profile: any;
@@ -28,6 +29,7 @@ export const QuickStart = ({ profile, userName }: QuickStartProps) => {
   const [workoutSummary, setWorkoutSummary] = useState('');
   const [references, setReferences] = useState<string[]>([]);
   const [feedbackInput, setFeedbackInput] = useState('');
+  const [favoriteWorkouts, setFavoriteWorkouts] = useState<any[]>([]);
   const { toast } = useToast();
 
   const timeOptions = ['10 min', '20 min', '30 min'];
@@ -36,6 +38,34 @@ export const QuickStart = ({ profile, userName }: QuickStartProps) => {
   const intensityOptions = ['Low', 'Medium', 'High'];
 
   const isComplete = selectedTime && selectedEquipment && selectedFocus && selectedIntensity;
+
+  // Fetch favorite workouts from activity logs
+  useEffect(() => {
+    const fetchFavoriteWorkouts = async () => {
+      if (!profile?.user_id) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('activity_logs')
+          .select('*')
+          .eq('user_id', profile.user_id)
+          .ilike('notes', '%⭐ Favorite workout!%')
+          .order('logged_at', { ascending: false })
+          .limit(6);
+
+        if (error) {
+          console.error('Error fetching favorite workouts:', error);
+          return;
+        }
+
+        setFavoriteWorkouts(data || []);
+      } catch (error) {
+        console.error('Error fetching favorite workouts:', error);
+      }
+    };
+
+    fetchFavoriteWorkouts();
+  }, [profile?.user_id]);
 
   const handleQuickStart = async () => {
     if (!isComplete) return;
@@ -339,24 +369,35 @@ Keep the same format as before with References section at the end.`,
               Favorites
             </h4>
             
-            {profile?.favorite_workouts && profile.favorite_workouts.length > 0 ? (
+            {favoriteWorkouts.length > 0 ? (
               <div className="space-y-1">
-                {profile.favorite_workouts.slice(0, 4).map((workout: string, index: number) => (
+                {favoriteWorkouts.slice(0, 4).map((workout, index) => (
                   <Button
-                    key={index}
+                    key={workout.id}
                     variant="ghost"
                     className="w-full justify-start text-xs p-2 h-auto text-left"
-                    onClick={() => {/* TODO: Load favorite workout */}}
+                    onClick={() => {
+                      // Extract workout info and start it
+                      toast({
+                        title: "Favorite workout selected",
+                        description: workout.activity_type,
+                      });
+                    }}
                   >
-                    <span className="truncate">{workout}</span>
+                    <div className="flex flex-col items-start w-full">
+                      <span className="truncate font-medium">{workout.activity_type}</span>
+                      <span className="text-muted-foreground text-xs">
+                        {workout.duration}min • {new Date(workout.logged_at).toLocaleDateString()}
+                      </span>
+                    </div>
                   </Button>
                 ))}
-                {profile.favorite_workouts.length > 4 && (
+                {favoriteWorkouts.length > 4 && (
                   <Button
                     variant="ghost"
                     className="w-full text-xs text-muted-foreground p-2 h-auto"
                   >
-                    +{profile.favorite_workouts.length - 4} more favorites
+                    +{favoriteWorkouts.length - 4} more favorites
                   </Button>
                 )}
               </div>
