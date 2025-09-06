@@ -309,13 +309,16 @@ At the end, add 2-3 credible references as clickable markdown links in this form
 
         {step === 'result' && workoutSuggestion && (
           <div className="space-y-3 flex-1 flex flex-col">
-            <div className="bg-muted/30 rounded-lg p-3 flex-1 overflow-y-auto">
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <p className="text-foreground font-medium text-sm">Your Personalized Workout</p>
+            {workoutTitle && (
+              <div className="text-center">
+                <h2 className="text-foreground font-semibold text-lg">{workoutTitle}</h2>
               </div>
+            )}
+            <div className="bg-muted/30 rounded-lg p-3 flex-1 overflow-y-auto">
               <div className="text-muted-foreground whitespace-pre-wrap text-xs leading-relaxed">
-                {workoutSuggestion.split(/(\[.*?\]\(.*?\))/g).map((part, index) => {
+                {workoutSuggestion
+                  .replace(/^\d+\.\s*/gm, '') // Remove numbered lists (e.g., "1. " "2. ")
+                  .split(/(\[.*?\]\(.*?\))/g).map((part, index) => {
                   const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
                   if (linkMatch) {
                     return (
