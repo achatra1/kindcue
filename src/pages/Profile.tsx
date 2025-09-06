@@ -330,7 +330,7 @@ const Profile = () => {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Update your fitness goals and life journey details</CardTitle>
+                  <CardTitle>Wellness Preferences</CardTitle>
                   {!isEditingWellness ? (
                     <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="icon">
                       <Edit className="h-4 w-4" />
