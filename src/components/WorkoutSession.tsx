@@ -24,6 +24,8 @@ export const WorkoutSession = ({
   const [isPaused, setIsPaused] = useState(false);
   const [time, setTime] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [feedback, setFeedback] = useState('');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
@@ -59,6 +61,18 @@ export const WorkoutSession = ({
     setIsPaused(false);
   };
 
+  const handleMarkComplete = () => {
+    if (time < 60) {
+      toast({
+        title: "Workout too short",
+        description: "Please workout for at least 1 minute before completing.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setShowFeedback(true);
+  };
+
   const handleComplete = async () => {
     if (time < 60) {
       toast({
@@ -77,7 +91,7 @@ export const WorkoutSession = ({
           user_id: userId,
           activity_type: workoutTitle || 'Custom Workout',
           duration: Math.floor(time / 60), // Convert to minutes
-          notes: `Completed: ${workoutSuggestion.substring(0, 100)}...`,
+          notes: feedback || `Completed: ${workoutSuggestion.substring(0, 100)}...`,
           logged_at: new Date().toISOString()
         });
 
@@ -130,14 +144,16 @@ export const WorkoutSession = ({
       </Card>
 
       {/* Timer Controls */}
-      <div className="flex gap-2 justify-center">
+      <div className="space-y-3">
         {!isActive ? (
-          <Button onClick={handleStart} className="gap-2">
-            <Play className="h-4 w-4" />
-            Start Workout
-          </Button>
+          <div className="flex justify-center">
+            <Button onClick={handleStart} className="gap-2">
+              <Play className="h-4 w-4" />
+              Start Workout
+            </Button>
+          </div>
         ) : (
-          <>
+          <div className="flex gap-2">
             <Button onClick={handlePause} variant="outline" className="gap-2 flex-1">
               <Pause className="h-4 w-4" />
               {isPaused ? 'Resume' : 'Pause'}
@@ -147,29 +163,68 @@ export const WorkoutSession = ({
               Stop
             </Button>
             <Button 
-              onClick={handleComplete}
-              disabled={time < 60 || isSaving}
+              onClick={handleMarkComplete}
+              disabled={isSaving}
               className="gap-2 flex-1"
             >
               <CheckCircle className="h-4 w-4" />
-              {isSaving ? 'Saving...' : 'Mark Complete'}
+              Mark Complete
             </Button>
-          </>
+          </div>
         )}
       </div>
 
 
-      {/* Action Buttons */}
-      <div className="flex gap-2 pt-2">
-        <Button 
-          variant="outline" 
-          onClick={onCancel}
-          className="w-full"
-          disabled={isSaving}
-        >
-          Cancel
-        </Button>
-      </div>
+      {/* Feedback Section */}
+      {showFeedback && (
+        <Card className="p-4 space-y-4">
+          <div className="text-center">
+            <h4 className="font-semibold text-foreground mb-2">How did your workout feel?</h4>
+            <div className="flex gap-2 justify-center mb-4">
+              {['😤', '😰', '😊', '💪', '🔥'].map((emoji, index) => (
+                <Button
+                  key={emoji}
+                  variant="outline"
+                  className="text-2xl h-12 w-12 p-0"
+                  onClick={() => setFeedback(`${emoji} ${['Challenging', 'Tough', 'Good', 'Strong', 'Amazing'][index]} workout!`)}
+                >
+                  {emoji}
+                </Button>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowFeedback(false)}
+                className="flex-1"
+              >
+                Skip
+              </Button>
+              <Button 
+                onClick={handleComplete}
+                disabled={isSaving}
+                className="flex-1"
+              >
+                {isSaving ? 'Saving...' : 'Save Workout'}
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Cancel Button */}
+      {!showFeedback && (
+        <div className="flex gap-2 pt-2">
+          <Button 
+            variant="outline" 
+            onClick={onCancel}
+            className="w-full"
+            disabled={isSaving}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
