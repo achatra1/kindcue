@@ -348,7 +348,7 @@ Keep the same format as before with References section at the end.`,
               <Button 
                 variant="outline"
                 onClick={() => setStep('feedback')}
-                className="text-sm"
+                className="flex-1 text-sm"
               >
                 Modify
               </Button>
