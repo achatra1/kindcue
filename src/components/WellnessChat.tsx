@@ -408,20 +408,12 @@ Keep the same format as before with References section at the end.`,
           <div className="space-y-3">
             <div className="bg-muted/30 rounded-lg p-3">
               <p className="text-foreground font-medium mb-2 text-sm">
-                Meet Maya, your coach
+                How would you like to do your workout?
+              </p>
+              <p className="text-muted-foreground text-xs">
+                Choose your preferred workout experience
               </p>
             </div>
-            
-            {workoutSummary && (
-              <div className="bg-primary/10 rounded-lg p-3 border border-primary/20">
-                <p className="text-foreground font-medium text-sm mb-1">
-                  Your Workout Preview
-                </p>
-                <p className="text-muted-foreground text-xs">
-                  {workoutSummary}
-                </p>
-              </div>
-            )}
             <div className="flex flex-col gap-2">
               <Button 
                 className="w-full bg-gradient-safety hover:opacity-90 text-sm py-6"
