@@ -319,7 +319,7 @@ const Profile = () => {
             </Card>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-1">
             <Card>
               <CardHeader>
                 <CardTitle>Wellness Preferences</CardTitle>
@@ -348,42 +348,6 @@ const Profile = () => {
                     max="120"
                   />
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Activity Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {profile?.wellness_goals && profile.wellness_goals.length > 0 && (
-                  <div className="space-y-2">
-                    <Label>Wellness Goals</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {profile.wellness_goals.map((goal, index) => (
-                        <Badge key={index} variant="secondary" className="capitalize">
-                          {goal.replace('_', ' ')}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {profile?.favorite_workouts && profile.favorite_workouts.length > 0 && (
-                  <div className="space-y-2">
-                    <Label>Legacy Favorite Workouts</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {profile.favorite_workouts.map((workout, index) => (
-                        <Badge key={index} variant="outline" className="capitalize">
-                          {workout.replace('_', ' ')}
-                        </Badge>
-                      ))}
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      New favorites are managed through workout completion
-                    </p>
-                  </div>
-                )}
               </CardContent>
             </Card>
           </div>
