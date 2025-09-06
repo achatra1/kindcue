@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/integrations/supabase/client';
-import { Activity, Calendar, Clock, LogOut, Loader2 } from 'lucide-react';
+import { Activity, Calendar, Clock, LogOut, Loader2, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface ActivityLog {
@@ -24,6 +24,7 @@ const ActivityLogs = () => {
   const navigate = useNavigate();
   const [activities, setActivities] = useState<ActivityLog[]>([]);
   const [activitiesLoading, setActivitiesLoading] = useState(true);
+  const [favoriteWorkouts, setFavoriteWorkouts] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!loading && !user) {
@@ -34,6 +35,7 @@ const ActivityLogs = () => {
   useEffect(() => {
     if (user) {
       fetchActivities();
+      fetchFavoriteWorkouts();
     }
   }, [user]);
 
@@ -59,6 +61,22 @@ const ActivityLogs = () => {
     }
   };
 
+  const fetchFavoriteWorkouts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('favorite_workouts')
+        .select('workout_title')
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+      
+      const favoriteSet = new Set(data?.map(fav => fav.workout_title) || []);
+      setFavoriteWorkouts(favoriteSet);
+    } catch (error) {
+      console.error('Error fetching favorite workouts:', error);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'short',
@@ -76,8 +94,11 @@ const ActivityLogs = () => {
   };
 
   const cleanNotes = (notes: string) => {
-    // Remove the duplicate workout title from notes (e.g., "- **Workout Title**")
-    return notes.replace(/- \*\*.*?\*\*\n\n/g, '').trim();
+    // Remove the duplicate workout title and favorite workout tag from notes
+    return notes
+      .replace(/- \*\*.*?\*\*\n\n/g, '')
+      .replace(/⭐ Favorite workout! /g, '')
+      .trim();
   };
 
   if (loading || profileLoading) {
@@ -152,9 +173,14 @@ const ActivityLogs = () => {
                     {/* Top line: Workout name, duration, date and time */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-foreground">
-                          {activity.activity_type}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium text-foreground">
+                            {activity.activity_type}
+                          </span>
+                          {favoriteWorkouts.has(activity.activity_type) && (
+                            <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                          )}
+                        </div>
                         {activity.duration && (
                           <Badge variant="outline" className="text-xs">
                             {activity.duration}min
