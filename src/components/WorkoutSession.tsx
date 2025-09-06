@@ -140,13 +140,21 @@ export const WorkoutSession = ({
           </Button>
         ) : (
           <>
-            <Button onClick={handlePause} variant="outline" className="gap-2">
+            <Button onClick={handlePause} variant="outline" className="gap-2 flex-1">
               <Pause className="h-4 w-4" />
               {isPaused ? 'Resume' : 'Pause'}
             </Button>
-            <Button onClick={handleStop} variant="outline" className="gap-2">
+            <Button onClick={handleStop} variant="outline" className="gap-2 flex-1">
               <Square className="h-4 w-4" />
               Stop
+            </Button>
+            <Button 
+              onClick={handleComplete}
+              disabled={time < 60 || isSaving}
+              className="gap-2 flex-1"
+            >
+              <CheckCircle className="h-4 w-4" />
+              {isSaving ? 'Saving...' : 'Mark Complete'}
             </Button>
           </>
         )}
@@ -170,18 +178,10 @@ export const WorkoutSession = ({
         <Button 
           variant="outline" 
           onClick={onCancel}
-          className="flex-1"
+          className="w-full"
           disabled={isSaving}
         >
           Cancel
-        </Button>
-        <Button 
-          onClick={handleComplete}
-          disabled={time < 60 || isSaving}
-          className="flex-1 gap-2"
-        >
-          <CheckCircle className="h-4 w-4" />
-          {isSaving ? 'Saving...' : 'Complete Workout'}
         </Button>
       </div>
     </div>
