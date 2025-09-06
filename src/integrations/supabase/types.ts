@@ -44,6 +44,33 @@ export type Database = {
         }
         Relationships: []
       }
+      favorite_workouts: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+          workout_content: string
+          workout_duration: number | null
+          workout_title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+          workout_content: string
+          workout_duration?: number | null
+          workout_title: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+          workout_content?: string
+          workout_duration?: number | null
+          workout_title?: string
+        }
+        Relationships: []
+      }
       mood_logs: {
         Row: {
           created_at: string

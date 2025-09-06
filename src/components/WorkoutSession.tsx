@@ -87,18 +87,52 @@ export const WorkoutSession = ({
 
     setIsSaving(true);
     try {
-      const { error } = await supabase
+      // Save to activity logs
+      const { error: activityError } = await supabase
         .from('activity_logs')
         .insert({
           user_id: userId,
           activity_type: workoutTitle || 'Custom Workout',
           duration: Math.floor(time / 60), // Convert to minutes
-          notes: `${isFavorite ? '⭐ Favorite workout! ' : ''}Mood: ${moodRating}/5, Effectiveness: ${workoutRating}/5 - ${workoutSuggestion.substring(0, 50)}...`,
+          notes: `Mood: ${moodRating}/5, Effectiveness: ${workoutRating}/5 - ${workoutSuggestion.substring(0, 50)}...`,
           logged_at: new Date().toISOString()
         });
 
-      if (error) {
-        throw error;
+      if (activityError) {
+        throw activityError;
+      }
+
+      // Save to favorites if marked as favorite
+      if (isFavorite) {
+        const { error: favoriteError } = await supabase
+          .from('favorite_workouts')
+          .insert({
+            user_id: userId,
+            workout_title: workoutTitle || 'Custom Workout',
+            workout_content: workoutSuggestion,
+            workout_duration: Math.floor(time / 60)
+          });
+
+        if (favoriteError) {
+          // If it's a duplicate or limit reached, inform user
+          if (favoriteError.message.includes('duplicate') || favoriteError.code === '23505') {
+            toast({
+              title: "Already in favorites",
+              description: "This workout is already in your favorites.",
+            });
+          } else {
+            // Check if we hit the 8-workout limit (the trigger should handle deletion)
+            toast({
+              title: "Added to favorites! 🌟",
+              description: "Your oldest favorite was removed to make room for this one (8 max).",
+            });
+          }
+        } else {
+          toast({
+            title: "Added to favorites! 🌟",
+            description: "You can find this workout in your Quick Start favorites.",
+          });
+        }
       }
 
       toast({

@@ -39,19 +39,18 @@ export const QuickStart = ({ profile, userName }: QuickStartProps) => {
 
   const isComplete = selectedTime && selectedEquipment && selectedFocus && selectedIntensity;
 
-  // Fetch favorite workouts from activity logs
+  // Fetch favorite workouts from the new favorite_workouts table
   useEffect(() => {
     const fetchFavoriteWorkouts = async () => {
       if (!profile?.user_id) return;
       
       try {
         const { data, error } = await supabase
-          .from('activity_logs')
+          .from('favorite_workouts')
           .select('*')
           .eq('user_id', profile.user_id)
-          .ilike('notes', '%⭐ Favorite workout!%')
-          .order('logged_at', { ascending: false })
-          .limit(6);
+          .order('created_at', { ascending: false })
+          .limit(8);
 
         if (error) {
           console.error('Error fetching favorite workouts:', error);
@@ -371,23 +370,27 @@ Keep the same format as before with References section at the end.`,
             
             {favoriteWorkouts.length > 0 ? (
               <div className="space-y-1">
-                {favoriteWorkouts.slice(0, 4).map((workout, index) => (
+                {favoriteWorkouts.slice(0, 4).map((workout) => (
                   <Button
                     key={workout.id}
                     variant="ghost"
                     className="w-full justify-start text-xs p-2 h-auto text-left"
                     onClick={() => {
-                      // Extract workout info and start it
+                      // Load the favorite workout content
+                      setWorkoutTitle(workout.workout_title);
+                      setWorkoutSuggestion(workout.workout_content);
+                      setWorkoutSummary(`Favorite workout • ${workout.workout_duration}min`);
+                      setStep('result');
                       toast({
-                        title: "Favorite workout selected",
-                        description: workout.activity_type,
+                        title: "Favorite workout loaded",
+                        description: workout.workout_title,
                       });
                     }}
                   >
                     <div className="flex flex-col items-start w-full">
-                      <span className="truncate font-medium">{workout.activity_type}</span>
+                      <span className="truncate font-medium">{workout.workout_title}</span>
                       <span className="text-muted-foreground text-xs">
-                        {workout.duration}min • {new Date(workout.logged_at).toLocaleDateString()}
+                        {workout.workout_duration}min • {new Date(workout.created_at).toLocaleDateString()}
                       </span>
                     </div>
                   </Button>
