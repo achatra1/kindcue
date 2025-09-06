@@ -60,15 +60,13 @@ const QuickStartPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-6">
-        <div className="h-[calc(100vh-200px)]">
-          <div className="p-4 h-full">
-            <QuickStart 
-              profile={profile}
-              userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
-              userId={user.id}
-            />
-          </div>
+      <main className="px-4 py-6 pb-24">
+        <div className="p-4">
+          <QuickStart 
+            profile={profile}
+            userName={user.user_metadata?.display_name || profile?.display_name || user.email || 'Friend'}
+            userId={user.id}
+          />
         </div>
       </main>
     </div>
