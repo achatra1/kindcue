@@ -419,20 +419,14 @@ Keep the same format as before with References section at the end.`,
                 className="w-full bg-gradient-safety hover:opacity-90 text-sm py-6"
                 onClick={handleStartWorkout}
               >
-                <div className="text-center">
-                  <div className="font-medium">At my own pace!</div>
-                  <div className="text-xs opacity-90">Self-guided workout with timer</div>
-                </div>
+                At my own pace!
               </Button>
               <Button 
                 variant="secondary"
                 onClick={handleStartVoiceWorkout}
                 className="w-full text-sm py-6 gap-2"
               >
-                <div className="text-center">
-                  <div className="font-medium">🎤 Let's Go Coach!</div>
-                  <div className="text-xs opacity-90">Voice-guided workout assistant</div>
-                </div>
+                🎤 Let's Go Coach!
               </Button>
             </div>
             <Button 
