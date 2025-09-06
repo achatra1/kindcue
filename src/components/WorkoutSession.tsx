@@ -298,7 +298,7 @@ export const WorkoutSession = ({
               </div>
             </div>
 
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-2 mt-4 mb-8">
               <Button 
                 variant="outline" 
                 onClick={() => setShowFeedback(false)}
