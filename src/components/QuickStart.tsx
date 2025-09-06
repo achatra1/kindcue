@@ -5,10 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, Dumbbell, Target, Zap, Heart, Send, Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { WorkoutSession } from '@/components/WorkoutSession';
 
 interface QuickStartProps {
   profile: any;
   userName: string;
+  userId: string;
 }
 
 interface QuickStartPreferences {
@@ -18,12 +20,12 @@ interface QuickStartPreferences {
   intensity: string;
 }
 
-export const QuickStart = ({ profile, userName }: QuickStartProps) => {
+export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [selectedEquipment, setSelectedEquipment] = useState<string>('');
   const [selectedFocus, setSelectedFocus] = useState<string>('');
   const [selectedIntensity, setSelectedIntensity] = useState<string>('');
-  const [step, setStep] = useState<'selection' | 'generating' | 'result' | 'feedback' | 'improving'>('selection');
+  const [step, setStep] = useState<'selection' | 'generating' | 'result' | 'feedback' | 'improving' | 'workout'>('selection');
   const [workoutSuggestion, setWorkoutSuggestion] = useState('');
   const [workoutTitle, setWorkoutTitle] = useState('');
   const [workoutSummary, setWorkoutSummary] = useState('');
@@ -260,6 +262,23 @@ Keep the same format as before with References section at the end.`,
     }
   };
 
+  const handleStartWorkout = () => {
+    setStep('workout');
+  };
+
+  const handleWorkoutComplete = () => {
+    setStep('selection');
+    setSelectedTime('');
+    setSelectedEquipment('');
+    setSelectedFocus('');
+    setSelectedIntensity('');
+    setWorkoutSuggestion('');
+    setWorkoutTitle('');
+    setWorkoutSummary('');
+    setReferences([]);
+    setFeedbackInput('');
+  };
+
   const handleStartOver = () => {
     setStep('selection');
     setSelectedTime('');
@@ -454,12 +473,13 @@ Keep the same format as before with References section at the end.`,
               </div>
             )}
           </div>
-          <div className="flex gap-2 shrink-0">
-            <Button 
-              className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
-            >
-              Start Workout
-            </Button>
+            <div className="flex gap-2 shrink-0">
+              <Button 
+                className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
+                onClick={handleStartWorkout}
+              >
+                Start Workout
+              </Button>
             <Button 
               variant="secondary"
               onClick={() => setStep('feedback')}
@@ -517,6 +537,16 @@ Keep the same format as before with References section at the end.`,
             </Button>
           </div>
         </div>
+      )}
+
+      {step === 'workout' && (
+        <WorkoutSession
+          workoutTitle={workoutTitle}
+          workoutSuggestion={workoutSuggestion}
+          userId={userId}
+          onComplete={handleWorkoutComplete}
+          onCancel={handleWorkoutComplete}
+        />
       )}
 
       {/* Centered Start Quick Workout Button - Only show in selection state */}
