@@ -122,10 +122,13 @@ Keep the same format with References section at the end.`,
       const data = await response.json();
       const fullResponse = data.response || data.message || 'No workout suggestion received';
       
-      // Extract references if they exist
-      const referencesMatch = fullResponse.match(/References?:\s*([\s\S]*?)$/i);
+      // Extract references if they exist - look for both numbered and unnumbered references
+      const referencesMatch = fullResponse.match(/(?:\d+\.\s*)?References?:\s*([\s\S]*?)$/i);
       const extractedReferences = referencesMatch ? 
-        referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
+        referencesMatch[1].split('\n')
+          .filter(ref => ref.trim() && (ref.trim().startsWith('-') || ref.trim().startsWith('•') || ref.trim().match(/^\d+\./)))
+          .map(ref => ref.trim().replace(/^[-•]\s*/, '').replace(/^\d+\.\s*/, '').trim())
+          .filter(ref => ref.length > 0) : [];
       
       // Remove references from main content
       let cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
@@ -243,10 +246,13 @@ Keep the same format as before with References section at the end.`,
       const data = await response.json();
       const fullResponse = data.response || data.message || 'No improved workout received';
       
-      // Extract references if they exist
-      const referencesMatch = fullResponse.match(/References?:\s*([\s\S]*?)$/i);
+      // Extract references if they exist - look for both numbered and unnumbered references
+      const referencesMatch = fullResponse.match(/(?:\d+\.\s*)?References?:\s*([\s\S]*?)$/i);
       const extractedReferences = referencesMatch ? 
-        referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
+        referencesMatch[1].split('\n')
+          .filter(ref => ref.trim() && (ref.trim().startsWith('-') || ref.trim().startsWith('•') || ref.trim().match(/^\d+\./)))
+          .map(ref => ref.trim().replace(/^[-•]\s*/, '').replace(/^\d+\.\s*/, '').trim())
+          .filter(ref => ref.length > 0) : [];
       
       // Remove references from main content
       let cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
