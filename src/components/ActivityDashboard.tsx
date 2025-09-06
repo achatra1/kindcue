@@ -49,13 +49,16 @@ export const ActivityDashboard = () => {
               <p className="text-xs text-muted-foreground text-center">Day Streak</p>
             </div>
 
-            {/* Average Mood */}
+            {/* Mood Check-in */}
             <div className="flex flex-col items-center justify-center">
               <Heart className="h-6 w-6 text-primary mb-1" />
               <h3 className="text-base font-semibold text-foreground mb-0.5">
-                {stats.averageMood > 0 ? `${stats.averageMood}/5` : '—'}
+                {stats.averageMood > 0 ? (
+                  stats.averageMood <= 1.5 ? '😢' : 
+                  stats.averageMood <= 2.5 ? '😊' : '🤩'
+                ) : '—'}
               </h3>
-              <p className="text-xs text-muted-foreground text-center">Average Mood</p>
+              <p className="text-xs text-muted-foreground text-center">Mood Check-in</p>
             </div>
 
             {/* Days Since Last Workout */}
