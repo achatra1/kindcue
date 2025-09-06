@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
 import { Play, Pause, Square, Clock, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -24,7 +23,6 @@ export const WorkoutSession = ({
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [time, setTime] = useState(0);
-  const [notes, setNotes] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
@@ -79,7 +77,7 @@ export const WorkoutSession = ({
           user_id: userId,
           activity_type: workoutTitle || 'Custom Workout',
           duration: Math.floor(time / 60), // Convert to minutes
-          notes: notes || `Completed: ${workoutSuggestion.substring(0, 100)}...`,
+          notes: `Completed: ${workoutSuggestion.substring(0, 100)}...`,
           logged_at: new Date().toISOString()
         });
 
@@ -160,18 +158,6 @@ export const WorkoutSession = ({
         )}
       </div>
 
-      {/* Notes Section */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">
-          Workout Notes (Optional)
-        </label>
-        <Textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="How did the workout feel? Any modifications you made?"
-          className="min-h-[60px] text-sm"
-        />
-      </div>
 
       {/* Action Buttons */}
       <div className="flex gap-2 pt-2">
