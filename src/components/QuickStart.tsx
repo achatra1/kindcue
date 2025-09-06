@@ -447,17 +447,17 @@ Keep the same format as before with References section at the end.`,
       )}
 
       {step === 'result' && workoutSuggestion && (
-        <div className="flex-1 flex flex-col space-y-3">
-          <div className="bg-muted/30 rounded-lg p-3 flex-1 overflow-y-auto">
-            <div className="flex items-center gap-2 mb-2">
+        <div className="flex-1 flex flex-col space-y-3 min-h-0">
+          <div className="bg-muted/30 rounded-lg p-4 flex-1 overflow-y-auto min-h-[200px]">
+            <div className="flex items-center gap-2 mb-3">
               <Sparkles className="h-4 w-4 text-primary" />
               <p className="text-foreground font-medium text-sm">Your Personalized Workout</p>
             </div>
-            <div className="text-muted-foreground whitespace-pre-wrap text-xs leading-relaxed">
+            <div className="text-foreground whitespace-pre-wrap text-sm leading-relaxed">
               {workoutSuggestion}
             </div>
             {references.length > 0 && (
-              <div className="mt-3 pt-2 border-t border-border">
+              <div className="mt-4 pt-3 border-t border-border">
                 <button 
                   className="text-xs text-muted-foreground hover:text-foreground underline transition-colors"
                   onClick={() => {
@@ -473,13 +473,13 @@ Keep the same format as before with References section at the end.`,
               </div>
             )}
           </div>
-            <div className="flex gap-2 shrink-0">
-              <Button 
-                className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
-                onClick={handleStartWorkout}
-              >
-                Start Workout
-              </Button>
+          <div className="flex gap-2 shrink-0">
+            <Button 
+              className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
+              onClick={handleStartWorkout}
+            >
+              Start Workout
+            </Button>
             <Button 
               variant="secondary"
               onClick={() => setStep('feedback')}
