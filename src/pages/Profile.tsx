@@ -23,7 +23,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     display_name: '',
     fitness_level: '',
-    preferred_workout_duration: 30
+    preferred_workout_duration: 30,
+    bio: ''
   });
   const [passwordData, setPasswordData] = useState({
     newPassword: '',
@@ -41,7 +42,8 @@ const Profile = () => {
       setFormData({
         display_name: profile.display_name || '',
         fitness_level: profile.fitness_level || '',
-        preferred_workout_duration: profile.preferred_workout_duration || 30
+        preferred_workout_duration: profile.preferred_workout_duration || 30,
+        bio: profile.bio || ''
       });
     }
   }, [profile]);
@@ -79,7 +81,8 @@ const Profile = () => {
         .from('profiles')
         .update({
           fitness_level: formData.fitness_level,
-          preferred_workout_duration: formData.preferred_workout_duration
+          preferred_workout_duration: formData.preferred_workout_duration,
+          bio: formData.bio
         })
         .eq('user_id', user?.id);
 
@@ -164,7 +167,8 @@ const Profile = () => {
       setFormData(prev => ({
         ...prev,
         fitness_level: profile.fitness_level || '',
-        preferred_workout_duration: profile.preferred_workout_duration || 30
+        preferred_workout_duration: profile.preferred_workout_duration || 30,
+        bio: profile.bio || ''
       }));
     }
     setIsEditingWellness(false);
@@ -326,7 +330,7 @@ const Profile = () => {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Wellness Preferences</CardTitle>
+                  <CardTitle>Update your fitness goals and life journey details</CardTitle>
                   {!isEditingWellness ? (
                     <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="icon">
                       <Edit className="h-4 w-4" />
@@ -344,6 +348,18 @@ const Profile = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="bio">Your Fitness Goals and Life Journey</Label>
+                  <Textarea
+                    id="bio"
+                    value={formData.bio}
+                    onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
+                    disabled={!isEditingWellness}
+                    placeholder="Share your fitness goals, wellness journey, and what motivates you..."
+                    className="min-h-[120px]"
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="fitness_level">Fitness Level</Label>
                   <Input
