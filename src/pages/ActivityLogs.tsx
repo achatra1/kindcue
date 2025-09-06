@@ -147,30 +147,31 @@ const ActivityLogs = () => {
           ) : (
             <div className="space-y-4">
               {activities.map((activity) => (
-                <Card key={activity.id} className="p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Badge variant="secondary" className="capitalize">
-                          {activity.activity_type.replace('_', ' ')}
-                        </Badge>
+                <Card key={activity.id} className="p-3">
+                  <div className="space-y-1">
+                    {/* Top line: Workout name, duration, date and time */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-foreground">
+                          {activity.activity_type}
+                        </span>
                         {activity.duration && (
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Clock className="h-3 w-3" />
-                            {activity.duration} minutes
-                          </div>
+                          <Badge variant="outline" className="text-xs">
+                            {activity.duration}min
+                          </Badge>
                         )}
                       </div>
-                      
-                      {activity.notes && (
-                        <p className="text-foreground mb-2">{cleanNotes(activity.notes)}</p>
-                      )}
-                      
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Calendar className="h-3 w-3" />
-                        {formatDate(activity.logged_at)} at {formatTime(activity.logged_at)}
-                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        {formatDate(activity.logged_at)} • {formatTime(activity.logged_at)}
+                      </span>
                     </div>
+                    
+                    {/* Second line: Notes */}
+                    {activity.notes && (
+                      <p className="text-sm text-muted-foreground line-clamp-1">
+                        {cleanNotes(activity.notes)}
+                      </p>
+                    )}
                   </div>
                 </Card>
               ))}
