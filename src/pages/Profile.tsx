@@ -21,7 +21,6 @@ const Profile = () => {
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [formData, setFormData] = useState({
     display_name: '',
-    bio: '',
     fitness_level: '',
     preferred_workout_duration: 30
   });
@@ -40,7 +39,6 @@ const Profile = () => {
     if (profile) {
       setFormData({
         display_name: profile.display_name || '',
-        bio: profile.bio || '',
         fitness_level: profile.fitness_level || '',
         preferred_workout_duration: profile.preferred_workout_duration || 30
       });
@@ -53,7 +51,6 @@ const Profile = () => {
         .from('profiles')
         .update({
           display_name: formData.display_name,
-          bio: formData.bio,
           fitness_level: formData.fitness_level,
           preferred_workout_duration: formData.preferred_workout_duration
         })
@@ -129,7 +126,6 @@ const Profile = () => {
     if (profile) {
       setFormData({
         display_name: profile.display_name || '',
-        bio: profile.bio || '',
         fitness_level: profile.fitness_level || '',
         preferred_workout_duration: profile.preferred_workout_duration || 30
       });
@@ -230,18 +226,6 @@ const Profile = () => {
                     onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
                     disabled={!isEditing}
                     placeholder="How should we address you?"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="bio">Bio</Label>
-                  <Textarea
-                    id="bio"
-                    value={formData.bio}
-                    onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
-                    disabled={!isEditing}
-                    placeholder="Tell us about yourself..."
-                    className="min-h-[100px]"
                   />
                 </div>
               </CardContent>
