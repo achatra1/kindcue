@@ -8,8 +8,8 @@ All colors MUST be HSL for proper theming.
 
 @layer base {
   :root {
-    /* Warm, nurturing background palette */
-    --background: 35 25% 98%;
+    /* Warm, nurturing background palette - matches logo background */
+    --background: 35 15% 92%;
     --foreground: 25 15% 25%;
 
     /* Gentle card surfaces */
