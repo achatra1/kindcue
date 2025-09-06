@@ -77,26 +77,13 @@ export const WellnessChat = ({ profile, userName, userId }: WellnessChatProps) =
 IMPORTANT: Format your response EXACTLY as follows:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
-3. Summary Card (2-3 encouraging sentences)
+3. One short encouraging motivational line (maximum 15 words)
 4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
-5. References (2-3 credible sources)
 
-Example format:
-**Gentle Morning Stretch Flow**
+At the end of your workout description, add 2-3 credible references as clickable markdown links in this format:
+**References:** [Mayo Clinic](https://mayoclinic.org) | [American Heart Association](https://heart.org) | [CDC Physical Activity](https://cdc.gov)
 
-• Neck rolls - 2 minutes
-• Shoulder shrugs - 1 minute  
-• Cat-cow pose - 3 minutes
-• Child's pose - 5 minutes
-
-This gentle routine will help you ease into your day with mindful movement. Perfect for when you need something nurturing and restorative.
-
-Need floor space or prefer seated?
-
-References:
-- Mayo Clinic: Stretching Guidelines
-- American Council on Exercise: Flexibility Training
-- Harvard Health: Benefits of Stretching`,
+Use real, credible fitness and wellness URLs.`,
           userContext
         }),
       });
@@ -108,13 +95,15 @@ References:
       const data = await response.json();
       const fullResponse = data.response || data.message || 'No workout suggestion received';
       
-      // Extract references if they exist
-      const referencesMatch = fullResponse.match(/References?:\s*([\s\S]*?)$/i);
+      // Extract and parse markdown-style references
+      const referencesMatch = fullResponse.match(/\*\*References?\*\*:\s*(.*?)$/i);
       const extractedReferences = referencesMatch ? 
-        referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
+        referencesMatch[1].split('|')
+          .map(ref => ref.trim())
+          .filter(ref => ref.length > 0) : [];
       
-      // Remove references from main content
-      const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      // Keep references embedded in the content instead of removing them
+      const cleanedResponse = fullResponse;
       
       // Extract title (first line with **title** format)
       const titleMatch = cleanedResponse.match(/\*\*(.*?)\*\*/);
@@ -186,14 +175,13 @@ References:
 Previous workout:
 ${workoutSuggestion}
 
-IMPORTANT: Format your improved response EXACTLY as follows:
+Please provide an improved version with the same format:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
-3. Summary Card (2-3 encouraging sentences)
-4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
-5. References (2-3 credible sources)
+3. One short encouraging motivational line (maximum 15 words)
 
-Keep the same format as before with References section at the end.`,
+At the end, add 2-3 credible references as clickable markdown links in this format:
+**References:** [Mayo Clinic](https://mayoclinic.org) | [American Heart Association](https://heart.org) | [CDC Physical Activity](https://cdc.gov)`,
           userContext
         }),
       });
@@ -205,13 +193,15 @@ Keep the same format as before with References section at the end.`,
       const data = await response.json();
       const fullResponse = data.response || data.message || 'No improved workout received';
       
-      // Extract references if they exist
-      const referencesMatch = fullResponse.match(/References?:\s*([\s\S]*?)$/i);
+      // Extract and parse markdown-style references
+      const referencesMatch = fullResponse.match(/\*\*References?\*\*:\s*(.*?)$/i);
       const extractedReferences = referencesMatch ? 
-        referencesMatch[1].split('\n').filter(ref => ref.trim().startsWith('-')).map(ref => ref.trim().substring(1).trim()) : [];
+        referencesMatch[1].split('|')
+          .map(ref => ref.trim())
+          .filter(ref => ref.length > 0) : [];
       
-      // Remove references from main content
-      const cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      // Keep references embedded in the content instead of removing them
+      const cleanedResponse = fullResponse;
       
       // Extract title (first line with **title** format)
       const titleMatch = cleanedResponse.match(/\*\*(.*?)\*\*/);
@@ -319,24 +309,24 @@ Keep the same format as before with References section at the end.`,
                 <p className="text-foreground font-medium text-sm">Your Personalized Workout</p>
               </div>
               <div className="text-muted-foreground whitespace-pre-wrap text-xs leading-relaxed">
-                {workoutSuggestion}
+                {workoutSuggestion.split(/(\[.*?\]\(.*?\))/g).map((part, index) => {
+                  const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
+                  if (linkMatch) {
+                    return (
+                      <a
+                        key={index}
+                        href={linkMatch[2]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {linkMatch[1]}
+                      </a>
+                    );
+                  }
+                  return part;
+                })}
               </div>
-              {references.length > 0 && (
-                <div className="mt-3 pt-2 border-t border-border">
-                  <button 
-                    className="text-xs text-muted-foreground hover:text-foreground underline transition-colors"
-                    onClick={() => {
-                      toast({
-                        title: "References",
-                        description: references.join(' • '),
-                        duration: 5000,
-                      });
-                    }}
-                  >
-                    View References ({references.length})
-                  </button>
-                </div>
-              )}
             </div>
             <div className="flex gap-2 shrink-0">
               <Button 

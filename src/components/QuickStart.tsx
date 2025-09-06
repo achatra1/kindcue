@@ -108,9 +108,11 @@ IMPORTANT: Format your response EXACTLY as follows:
 2. Exercise List (one exercise per line with duration/reps)
 3. One short encouraging motivational line (maximum 15 words)
 4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
-5. References (2-3 credible sources)
 
-Keep the same format with References section at the end.`,
+At the end of your workout description, add 2-3 credible references as clickable markdown links in this format:
+**References:** [Mayo Clinic](https://mayoclinic.org) | [American Heart Association](https://heart.org) | [CDC Physical Activity](https://cdc.gov)
+
+Use real, credible fitness and wellness URLs.`,
           userContext
         }),
       });
@@ -122,16 +124,15 @@ Keep the same format with References section at the end.`,
       const data = await response.json();
       const fullResponse = data.response || data.message || 'No workout suggestion received';
       
-      // Extract references if they exist - look for both numbered and unnumbered references
-      const referencesMatch = fullResponse.match(/(?:\d+\.\s*)?References?:\s*([\s\S]*?)$/i);
+      // Extract and parse markdown-style references
+      const referencesMatch = fullResponse.match(/\*\*References?\*\*:\s*(.*?)$/i);
       const extractedReferences = referencesMatch ? 
-        referencesMatch[1].split('\n')
-          .filter(ref => ref.trim() && (ref.trim().startsWith('-') || ref.trim().startsWith('•') || ref.trim().match(/^\d+\./)))
-          .map(ref => ref.trim().replace(/^[-•]\s*/, '').replace(/^\d+\.\s*/, '').trim())
+        referencesMatch[1].split('|')
+          .map(ref => ref.trim())
           .filter(ref => ref.length > 0) : [];
       
-      // Remove references from main content
-      let cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      // Remove references from main content but keep them embedded
+      let cleanedResponse = fullResponse;
       
       // Extract title (first line with **title** format or numbered title)
       const titleMatch = cleanedResponse.match(/(?:\d+\.\s*)?(?:Short Title[:\s]*)?(?:\*\*)?(.*?)(?:\*\*)?$/m);
@@ -227,14 +228,13 @@ Keep the same format with References section at the end.`,
 Previous workout:
 ${workoutSuggestion}
 
-IMPORTANT: Format your improved response EXACTLY as follows:
+Please provide an improved version with the same format:
 1. Short Title (max 8 words)
 2. Exercise List (one exercise per line with duration/reps)
 3. One short encouraging motivational line (maximum 15 words)
-4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
-5. References (2-3 credible sources)
 
-Keep the same format as before with References section at the end.`,
+At the end, add 2-3 credible references as clickable markdown links in this format:
+**References:** [Mayo Clinic](https://mayoclinic.org) | [American Heart Association](https://heart.org) | [CDC Physical Activity](https://cdc.gov)`,
           userContext
         }),
       });
@@ -246,16 +246,15 @@ Keep the same format as before with References section at the end.`,
       const data = await response.json();
       const fullResponse = data.response || data.message || 'No improved workout received';
       
-      // Extract references if they exist - look for both numbered and unnumbered references
-      const referencesMatch = fullResponse.match(/(?:\d+\.\s*)?References?:\s*([\s\S]*?)$/i);
+      // Extract and parse markdown-style references
+      const referencesMatch = fullResponse.match(/\*\*References?\*\*:\s*(.*?)$/i);
       const extractedReferences = referencesMatch ? 
-        referencesMatch[1].split('\n')
-          .filter(ref => ref.trim() && (ref.trim().startsWith('-') || ref.trim().startsWith('•') || ref.trim().match(/^\d+\./)))
-          .map(ref => ref.trim().replace(/^[-•]\s*/, '').replace(/^\d+\.\s*/, '').trim())
+        referencesMatch[1].split('|')
+          .map(ref => ref.trim())
           .filter(ref => ref.length > 0) : [];
       
-      // Remove references from main content
-      let cleanedResponse = fullResponse.replace(/References?:\s*[\s\S]*$/i, '').trim();
+      // Keep references embedded in the content instead of removing them
+      let cleanedResponse = fullResponse;
       
       // Extract title (first line with **title** format or numbered title)
       const titleMatch = cleanedResponse.match(/(?:\d+\.\s*)?(?:Short Title[:\s]*)?(?:\*\*)?(.*?)(?:\*\*)?$/m);
@@ -513,38 +512,26 @@ Keep the same format as before with References section at the end.`,
           
           <div className="bg-muted/30 rounded-lg p-4 flex-1 overflow-y-auto min-h-[200px]">
             <div className="text-foreground whitespace-pre-wrap text-sm leading-relaxed">
-              {workoutSuggestion}
+              {workoutSuggestion.split(/(\[.*?\]\(.*?\))/g).map((part, index) => {
+                const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
+                if (linkMatch) {
+                  return (
+                    <a
+                      key={index}
+                      href={linkMatch[2]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      {linkMatch[1]}
+                    </a>
+                  );
+                }
+                return part;
+              })}
             </div>
           </div>
           
-          {/* References at bottom */}
-          {references.length > 0 && (
-            <div className="text-center">
-              <button 
-                className="flex items-center justify-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors mx-auto"
-                onClick={() => setShowReferences(!showReferences)}
-              >
-                References
-                {showReferences ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-              </button>
-              {showReferences && (
-                <div className="mt-2 space-y-1 text-xs">
-                  {references.map((reference, index) => (
-                    <div key={index}>
-                      <a 
-                        href={`https://www.google.com/search?q=${encodeURIComponent(reference)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline"
-                      >
-                        {reference}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
           
           <div className="flex gap-2 shrink-0">
             <Button 
