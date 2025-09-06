@@ -523,34 +523,37 @@ Keep the same format as before with References section at the end.`,
             <div className="text-foreground whitespace-pre-wrap text-sm leading-relaxed">
               {workoutSuggestion}
             </div>
-            {references.length > 0 && (
-              <div className="mt-4 pt-3 border-t border-border">
-                <button 
-                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  onClick={() => setShowReferences(!showReferences)}
-                >
-                  References ({references.length})
-                  {showReferences ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-                </button>
-                {showReferences && (
-                  <div className="mt-2 space-y-1">
-                    {references.map((reference, index) => (
-                      <div key={index} className="text-xs">
-                        <a 
-                          href={`https://www.google.com/search?q=${encodeURIComponent(reference)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline"
-                        >
-                          {reference}
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
+          
+          {/* References at bottom */}
+          {references.length > 0 && (
+            <div className="text-center">
+              <button 
+                className="flex items-center justify-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors mx-auto"
+                onClick={() => setShowReferences(!showReferences)}
+              >
+                References
+                {showReferences ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+              </button>
+              {showReferences && (
+                <div className="mt-2 space-y-1 text-xs">
+                  {references.map((reference, index) => (
+                    <div key={index}>
+                      <a 
+                        href={`https://www.google.com/search?q=${encodeURIComponent(reference)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {reference}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          
           <div className="flex gap-2 shrink-0">
             <Button 
               className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
