@@ -298,7 +298,7 @@ export const WorkoutSession = ({
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-4">
               <Button 
                 variant="outline" 
                 onClick={() => setShowFeedback(false)}
@@ -309,7 +309,7 @@ export const WorkoutSession = ({
               <Button 
                 onClick={handleComplete}
                 disabled={isSaving}
-                className="flex-1"
+                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {isSaving ? 'Saving...' : 'Save Workout'}
               </Button>
