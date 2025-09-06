@@ -146,20 +146,16 @@ export const WorkoutSession = ({
               <Square className="h-4 w-4" />
               Stop
             </Button>
+            <Button 
+              onClick={handleComplete}
+              disabled={time < 60 || isSaving}
+              className="gap-2 flex-1"
+            >
+              <CheckCircle className="h-4 w-4" />
+              {isSaving ? 'Saving...' : 'Mark Complete'}
+            </Button>
           </>
         )}
-      </div>
-
-      {/* Mark Complete Button - Always Visible */}
-      <div className="flex justify-center">
-        <Button 
-          onClick={handleComplete}
-          disabled={time < 60 || isSaving}
-          className="gap-2 w-full"
-        >
-          <CheckCircle className="h-4 w-4" />
-          {isSaving ? 'Saving...' : 'Mark Complete'}
-        </Button>
       </div>
 
 
