@@ -75,6 +75,11 @@ const ActivityLogs = () => {
     });
   };
 
+  const cleanNotes = (notes: string) => {
+    // Remove the duplicate workout title from notes (e.g., "- **Workout Title**")
+    return notes.replace(/- \*\*.*?\*\*\n\n/g, '').trim();
+  };
+
   if (loading || profileLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-warm">
@@ -158,7 +163,7 @@ const ActivityLogs = () => {
                       </div>
                       
                       {activity.notes && (
-                        <p className="text-foreground mb-2">{activity.notes}</p>
+                        <p className="text-foreground mb-2">{cleanNotes(activity.notes)}</p>
                       )}
                       
                       <div className="flex items-center gap-1 text-sm text-muted-foreground">
