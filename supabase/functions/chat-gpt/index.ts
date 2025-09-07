@@ -20,69 +20,145 @@ serve(async (req) => {
     }
 
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    const assistantId = Deno.env.get('OPENAI_ASSISTANT_ID');
+    
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
+    
+    if (!assistantId) {
+      throw new Error('OpenAI Assistant ID not configured');
+    }
 
-    console.log('Processing wellness chat request:', { message, userContext });
+    console.log('Processing wellness chat request with custom assistant:', { message, userContext, assistantId });
 
-    // Create compassionate system prompt for KindCue
-    const systemPrompt = `You are KindCue's AI wellness coach - a compassionate, empathetic guide focused exclusively on gentle fitness and wellness for time-constrained individuals, especially new parents and those in acute life stages.
-
-STRICT SCOPE: You ONLY respond to fitness, wellness, exercise, and health-related questions. If a user asks about anything outside of fitness/wellness (politics, general knowledge, personal advice unrelated to fitness, etc.), politely decline and redirect them back to fitness topics.
-
-CRITICAL MEDICAL SAFETY: If a user mentions any injury, pain, medical condition, or asks for advice about exercising with specific health issues, you MUST respond with: "I'm not qualified to provide medical advice. For any concerns about injuries, pain, or medical conditions, please consult with a healthcare professional, physical therapist, or your doctor before starting any exercise program. Your safety is the top priority!"
-
-Core principles:
-- Use warm, encouraging language that feels like a caring friend
-- Avoid shame-based fitness language or intensity pressure
-- Suggest SHORT sessions (5-15 minutes) that fit into busy lives
-- Prioritize safety, especially for postpartum recovery
-- Focus on progress celebration over metrics
-- Offer adaptable options for different energy levels
-- Always validate their efforts and circumstances
-
-When suggesting workouts:
-- Ask about their current situation, energy level, and time availability
-- Provide 2-3 gentle options they can choose from
-- Include modifications for different fitness levels
-- Emphasize that something is always better than nothing
-- Offer encouragement about their journey
-
-If asked about non-fitness topics, respond with: "I'm here to help you with fitness and wellness guidance! Let's focus on creating a workout that fits your needs today. How are you feeling and what kind of movement sounds good to you?"
-
-Remember: This person chose KindCue because they need compassion, not intensity. Meet them where they are.`;
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Create a new thread
+    const threadResponse = await fetch('https://api.openai.com/v1/threads', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
+        'OpenAI-Beta': 'assistants=v2',
+      },
+      body: JSON.stringify({}),
+    });
+
+    if (!threadResponse.ok) {
+      const error = await threadResponse.json();
+      console.error('Thread creation error:', error);
+      throw new Error(`Thread creation error: ${error.error?.message || 'Unknown error'}`);
+    }
+
+    const thread = await threadResponse.json();
+    const threadId = thread.id;
+
+    // Add user message to thread (include user context if provided)
+    const fullMessage = userContext ? `${message}\n\nUser context: ${userContext}` : message;
+    
+    const messageResponse = await fetch(`https://api.openai.com/v1/threads/${threadId}/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+        'OpenAI-Beta': 'assistants=v2',
       },
       body: JSON.stringify({
-        model: 'gpt-4.1-2025-04-14',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...(userContext ? [{ role: 'system', content: `User context: ${userContext}` }] : []),
-          { role: 'user', content: message }
-        ],
-        max_completion_tokens: 500,
-        temperature: 0.7,
+        role: 'user',
+        content: fullMessage,
       }),
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      console.error('OpenAI API error:', error);
-      throw new Error(`OpenAI API error: ${error.error?.message || 'Unknown error'}`);
+    if (!messageResponse.ok) {
+      const error = await messageResponse.json();
+      console.error('Message creation error:', error);
+      throw new Error(`Message creation error: ${error.error?.message || 'Unknown error'}`);
     }
 
-    const data = await response.json();
-    console.log('Successfully processed wellness chat');
+    // Run the assistant
+    const runResponse = await fetch(`https://api.openai.com/v1/threads/${threadId}/runs`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+        'OpenAI-Beta': 'assistants=v2',
+      },
+      body: JSON.stringify({
+        assistant_id: assistantId,
+      }),
+    });
+
+    if (!runResponse.ok) {
+      const error = await runResponse.json();
+      console.error('Run creation error:', error);
+      throw new Error(`Run creation error: ${error.error?.message || 'Unknown error'}`);
+    }
+
+    const run = await runResponse.json();
+    const runId = run.id;
+
+    // Poll for completion
+    let runStatus = 'in_progress';
+    let attempts = 0;
+    const maxAttempts = 30; // 30 seconds max wait time
+    
+    while (runStatus === 'in_progress' || runStatus === 'queued') {
+      if (attempts >= maxAttempts) {
+        throw new Error('Assistant response timed out');
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+      
+      const statusResponse = await fetch(`https://api.openai.com/v1/threads/${threadId}/runs/${runId}`, {
+        headers: {
+          'Authorization': `Bearer ${openAIApiKey}`,
+          'OpenAI-Beta': 'assistants=v2',
+        },
+      });
+
+      if (!statusResponse.ok) {
+        const error = await statusResponse.json();
+        console.error('Run status error:', error);
+        throw new Error(`Run status error: ${error.error?.message || 'Unknown error'}`);
+      }
+
+      const statusData = await statusResponse.json();
+      runStatus = statusData.status;
+      attempts++;
+      
+      console.log(`Run status: ${runStatus}, attempt: ${attempts}`);
+    }
+
+    if (runStatus !== 'completed') {
+      throw new Error(`Assistant run failed with status: ${runStatus}`);
+    }
+
+    // Get the assistant's response
+    const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${threadId}/messages`, {
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'OpenAI-Beta': 'assistants=v2',
+      },
+    });
+
+    if (!messagesResponse.ok) {
+      const error = await messagesResponse.json();
+      console.error('Messages retrieval error:', error);
+      throw new Error(`Messages retrieval error: ${error.error?.message || 'Unknown error'}`);
+    }
+
+    const messagesData = await messagesResponse.json();
+    const assistantMessages = messagesData.data.filter(msg => msg.role === 'assistant');
+    
+    if (assistantMessages.length === 0) {
+      throw new Error('No assistant response found');
+    }
+
+    const assistantResponse = assistantMessages[0].content[0].text.value;
+    console.log('Successfully processed wellness chat with custom assistant');
     
     return new Response(JSON.stringify({ 
-      response: data.choices[0].message.content,
-      usage: data.usage 
+      response: assistantResponse,
+      threadId: threadId // Return thread ID for potential follow-up conversations
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
