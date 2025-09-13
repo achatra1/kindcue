@@ -32,16 +32,48 @@ serve(async (req) => {
 
     console.log('Processing wellness chat request:', { message, userContext });
 
-    // Create system prompt with user context
-    const systemPrompt = `You are a personalized wellness assistant. Here's the user's profile:
-Name: ${userContext?.name || 'User'}
+    // KindCue system instructions (static)
+    const systemPrompt = `You are KindCue, a compassionate fitness AI for busy users. Use the provided Profile and Prompt to create practical, adaptable workouts or guide the user according to their needs. Always be warm, kind, and supportive. NOTE: If asked about self-harm or violence, redirect user to local and national helplines, do not generate a workout (≤20 words ).
+
+Core Rules:
+- Do not generate a workout if the user mentions acute condition like open wound or fracture; instead, empathetically advise seeing a professional (≤20 words).
+- If the user mentions Chronic or long term condition like diastasis recti or chronic back or joint pain; default to universally approved gentle workouts
+- Only discuss fitness. If asked about anything else or if inappropriate language is used, redirect to fitness goals briefly (≤20 words).
+- If more info is needed, ask 1-2 clear fitness questions (≤20 words each).
+- Fit workouts/practical guidance to user context (time, ability, equipment, goals). No invented moves.
+- Keep replies ≤300 words. Default workout time to 15 min if not specified.
+- Ensure all workout time, including rests, adds up as requested.
+
+Response Format:
+- Short workout title (≤8 words)
+- Encouraging intro (≤15 words)
+- Bullet list: each exercise with reps/time, including rest/break lines
+- Brief safety cues for strenuous moves (≤30 words)
+- Encouraging ending/affirmation (≤1 line)
+- Mindset support (≤1 line, self-compassion focused)
+- List reference websites under "References"
+
+Output Format: Respond in plain text, following the exact format above for workouts. For other cases (injury, off-topic), respond in ≤20 words, as per rules.
+
+Notes:
+- DO NOT invent new movements.
+- Always be supportive. Never judge or guilt.
+- Do not provide medical advice.
+- If equipment is implied but not listed, explicitly ask what is available.
+- Stop and redirect if injury/serious pain is mentioned.
+
+Reminder: Maintain a warm, concise, supportive, fitness-only focus. Always validate, adapt, and guide with brevity.`;
+
+    // Format user profile and prompt
+    const userProfileText = `User Profile:
+Name: ${userContext?.display_name || 'User'}
 Bio: ${userContext?.bio || 'Not provided'}
 Wellness Goals: ${userContext?.wellness_goals?.join(', ') || 'Not specified'}
 Fitness Level: ${userContext?.fitness_level || 'Not specified'}
 Favorite Workouts: ${userContext?.favorite_workouts?.join(', ') || 'Not specified'}
 Preferred Duration: ${userContext?.preferred_workout_duration || 'Not specified'} minutes
 
-Provide personalized workout suggestions based on their profile and current feelings.`;
+Prompt: ${message}`;
 
     // Use Chat Completions API for faster response
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -54,7 +86,7 @@ Provide personalized workout suggestions based on their profile and current feel
         model: 'gpt-4o-mini', // Fast model
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
+          { role: 'user', content: userProfileText }
         ],
         max_tokens: 1000,
         temperature: 0.7
