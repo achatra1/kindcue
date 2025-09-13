@@ -295,6 +295,7 @@ ${workoutSuggestion}`,
                 {workoutSuggestion
                   .replace(/^\d+\.\s*/gm, '') // Remove numbered lists (e.g., "1. " "2. ")
                   .split(/(\[.*?\]\(.*?\))/g).map((part, index) => {
+                  // Check for markdown links [text](url)
                   const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
                   if (linkMatch) {
                     return (
@@ -303,12 +304,34 @@ ${workoutSuggestion}`,
                         href={linkMatch[2]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:underline"
+                        className="text-primary hover:underline font-medium"
                       >
                         {linkMatch[1]}
                       </a>
                     );
                   }
+                  
+                  // Check for plain URLs and make them clickable
+                  const urlPattern = /(https?:\/\/[^\s]+)/g;
+                  if (urlPattern.test(part)) {
+                    return part.split(urlPattern).map((segment, segIndex) => {
+                      if (segment.match(urlPattern)) {
+                        return (
+                          <a
+                            key={`${index}-${segIndex}`}
+                            href={segment}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline font-medium"
+                          >
+                            {segment}
+                          </a>
+                        );
+                      }
+                      return segment;
+                    });
+                  }
+                  
                   return part;
                 })}
               </div>
