@@ -83,7 +83,7 @@ Prompt: ${message}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini', // Fast model
+        model: 'gpt-4o-mini', // Always use gpt-4o-mini model
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userProfileText }
