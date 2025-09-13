@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
@@ -134,11 +135,13 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
     <div className="min-h-screen bg-gradient-warm flex items-center justify-center p-4">
       {/* Logo in top left */}
       <div className="absolute top-4 left-4">
-        <img 
-          src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
-          alt="KindCue Logo" 
-          className="h-16 w-auto"
-        />
+        <Link to="/">
+          <img 
+            src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+            alt="KindCue Logo" 
+            className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
+          />
+        </Link>
       </div>
       
       <Card className="w-full max-w-2xl p-6 bg-card/95 backdrop-blur-sm border-border/50">

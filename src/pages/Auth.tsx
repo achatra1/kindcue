@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -104,11 +104,13 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-warm p-4">
       {/* Logo in top left */}
       <div className="absolute top-4 left-4">
-        <img 
-          src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
-          alt="KindCue Logo" 
-          className="h-16 w-auto"
-        />
+        <Link to="/">
+          <img 
+            src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+            alt="KindCue Logo" 
+            className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
+          />
+        </Link>
       </div>
       
       <div className="w-full max-w-md">

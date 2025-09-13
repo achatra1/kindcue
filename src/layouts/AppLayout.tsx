@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { Button } from '@/components/ui/button';
@@ -24,11 +25,13 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <SidebarTrigger />
-                <img 
-                  src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
-                  alt="KindCue Logo" 
-                  className="h-16 w-auto"
-                />
+                <Link to="/">
+                  <img 
+                    src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+                    alt="KindCue Logo" 
+                    className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
+                  />
+                </Link>
               </div>
               
               <div className="flex items-center gap-4">
