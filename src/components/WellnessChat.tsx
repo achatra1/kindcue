@@ -308,13 +308,13 @@ At the end, add 2-3 credible references as clickable markdown links in this form
         )}
 
         {step === 'result' && workoutSuggestion && (
-          <div className="space-y-3 flex-1 flex flex-col">
+          <div className="space-y-2">
             {workoutTitle && (
               <div className="text-center">
-                <h2 className="text-foreground font-semibold text-lg">{workoutTitle}</h2>
+                <h2 className="text-foreground font-semibold text-base">{workoutTitle}</h2>
               </div>
             )}
-            <div className="bg-muted/30 rounded-lg p-3 flex-1 overflow-y-auto">
+            <div className="bg-muted/30 rounded-lg p-2 max-h-[300px] overflow-y-auto">
               <div className="text-muted-foreground whitespace-pre-wrap text-xs leading-relaxed">
                 {workoutSuggestion
                   .replace(/^\d+\.\s*/gm, '') // Remove numbered lists (e.g., "1. " "2. ")
@@ -337,7 +337,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
                 })}
               </div>
             </div>
-            <div className="flex gap-2 shrink-0">
+            <div className="flex gap-2">
               <Button 
                 className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
                 onClick={handleStartWorkout}
