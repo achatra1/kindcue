@@ -82,11 +82,11 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-4 overflow-hidden">
-        <div className="h-full">
+      <main className="px-4 py-4 overflow-hidden flex-1">
+        <div className="h-full flex items-center justify-center">
           {/* First Section - Chat Dialog and Activity Dashboard */}
-          <div className="h-full min-h-[500px]">
-            <div className="p-4 h-full flex flex-col">
+          <div className="w-full max-w-md">
+            <div className="flex flex-col">
               <div className="flex-1">
                 <WellnessChat 
                   profile={profile} 
