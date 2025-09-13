@@ -78,18 +78,7 @@ export const WellnessChat = ({ profile, userName, userId, onStepChange }: Wellne
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: `Based on how I'm feeling today: "${userInput}", please suggest a personalized workout. 
-
-IMPORTANT: Format your response EXACTLY as follows:
-1. Short Title (max 8 words)
-2. Exercise List (one exercise per line with duration/reps)
-3. One short encouraging motivational line (maximum 15 words)
-4. ONLY ask 1 short question if truly needed for clarification (use sparingly)
-
-At the end of your workout description, add 2-3 credible references as clickable markdown links in this format:
-**References:** [Mayo Clinic](https://mayoclinic.org) | [American Heart Association](https://heart.org) | [CDC Physical Activity](https://cdc.gov)
-
-Use real, credible fitness and wellness URLs.`,
+          message: userInput,
           userContext
         }),
       });
@@ -176,18 +165,10 @@ Use real, credible fitness and wellness URLs.`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: `Please improve this workout based on my feedback: "${feedbackInput}"
+          message: `${feedbackInput}
 
 Previous workout:
-${workoutSuggestion}
-
-Please provide an improved version with the same format:
-1. Short Title (max 8 words)
-2. Exercise List (one exercise per line with duration/reps)
-3. One short encouraging motivational line (maximum 15 words)
-
-At the end, add 2-3 credible references as clickable markdown links in this format:
-**References:** [Mayo Clinic](https://mayoclinic.org) | [American Heart Association](https://heart.org) | [CDC Physical Activity](https://cdc.gov)`,
+${workoutSuggestion}`,
           userContext
         }),
       });
