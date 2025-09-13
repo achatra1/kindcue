@@ -309,11 +309,6 @@ At the end, add 2-3 credible references as clickable markdown links in this form
 
         {step === 'result' && workoutSuggestion && (
           <div className="space-y-2">
-            {workoutTitle && (
-              <div className="text-center">
-                <h2 className="text-foreground font-semibold text-base">{workoutTitle}</h2>
-              </div>
-            )}
             <div className="bg-muted/30 rounded-lg p-2 max-h-[300px] overflow-y-auto">
               <div className="text-muted-foreground whitespace-pre-wrap text-xs leading-relaxed">
                 {workoutSuggestion
