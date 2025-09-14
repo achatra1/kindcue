@@ -129,7 +129,7 @@ const Auth = () => {
             <TabsContent value="signin" className="m-0">
               <form onSubmit={handleSignIn}>
                 <CardContent className="space-y-4">
-                  <CardTitle className="text-xl">Welcome back</CardTitle>
+                  <CardTitle className="text-xs font-bold">Welcome back</CardTitle>
                   <CardDescription>
                     Sign in to continue your wellness journey
                   </CardDescription>
@@ -204,7 +204,7 @@ const Auth = () => {
             <TabsContent value="signup" className="m-0">
               <form onSubmit={handleSignUp}>
                 <CardContent className="space-y-4">
-                  <CardTitle className="text-xl">Join KindCue</CardTitle>
+                  <CardTitle className="text-xs font-bold">Join KindCue</CardTitle>
                   <CardDescription>
                     Start your compassionate wellness journey today
                   </CardDescription>
