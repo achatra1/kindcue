@@ -254,7 +254,7 @@ const Profile = () => {
                     id="email"
                     value={user?.email || ''}
                     disabled
-                    className="bg-muted text-xs h-8"
+                    className="bg-muted text-xs h-8 whitespace-nowrap overflow-hidden text-ellipsis"
                   />
                   <p className="text-[10px] text-muted-foreground">
                     Contact support to change your email address
