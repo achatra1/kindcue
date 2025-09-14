@@ -75,21 +75,6 @@ export const ActivityDashboard = () => {
           </div>
         </div>
         
-        {/* Motivational Message */}
-        {stats.totalWorkouts > 0 && (
-          <div className="mt-1.5 pt-1.5 border-t border-border">
-            <p className="text-[10px] text-muted-foreground text-center italic leading-tight">
-              {stats.totalWorkouts === 1 
-                ? "Great start! Keep building that healthy habit." 
-                : stats.currentStreak > 5 
-                ? `Amazing ${stats.currentStreak}-day streak! You're on fire! 🔥`
-                : stats.currentStreak > 0
-                ? `Nice work! ${stats.currentStreak} days strong. Keep it up!`
-                : "Ready for your next workout? You've got this! 💪"
-              }
-            </p>
-          </div>
-        )}
       </Card>
     </div>
   );
