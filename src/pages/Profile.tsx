@@ -242,7 +242,7 @@ const Profile = () => {
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-1">
                 <div className="flex items-center gap-2">
                   <Label htmlFor="email" className="text-xs min-w-0 shrink-0 w-16">Email</Label>
                   <div className="flex-1">
