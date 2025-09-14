@@ -220,13 +220,13 @@ const Profile = () => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto px-4 py-2 pb-32">
-        <div className="space-y-4">
+        <div className="space-y-2">
           <div className="flex items-center gap-3">
             <User className="h-4 w-4 text-primary" />
             <h1 className="text-lg font-bold text-foreground">Profile</h1>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-2 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -247,8 +247,8 @@ const Profile = () => {
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="email" className="text-xs">Email</Label>
                   <Input
                     id="email"
@@ -261,7 +261,7 @@ const Profile = () => {
                   </p>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="display_name" className="text-xs">Display Name</Label>
                   <Input
                     id="display_name"
@@ -272,7 +272,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <div className="flex items-center justify-between">
                     <Label className="text-xs">Password</Label>
                     {!isEditingPassword ? (
@@ -296,7 +296,7 @@ const Profile = () => {
                   
                   {isEditingPassword && (
                     <>
-                      <div className="space-y-2">
+                      <div className="space-y-1">
                         <Label htmlFor="new_password" className="text-xs">New Password</Label>
                         <Input
                           id="new_password"
@@ -308,7 +308,7 @@ const Profile = () => {
                         />
                       </div>
 
-                      <div className="space-y-2">
+                      <div className="space-y-1">
                         <Label htmlFor="confirm_password" className="text-xs">Confirm New Password</Label>
                         <Input
                           id="confirm_password"
@@ -349,8 +349,8 @@ const Profile = () => {
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="fitness_level" className="text-xs">Fitness Level</Label>
                   <Input
                     id="fitness_level"
@@ -361,7 +361,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="workout_duration" className="text-xs">Preferred Workout Duration (minutes)</Label>
                   <Input
                     id="workout_duration"
@@ -374,7 +374,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="bio" className="text-xs">Your Fitness Goals and Life Journey</Label>
                   <Textarea
                     id="bio"
