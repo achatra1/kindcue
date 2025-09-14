@@ -222,15 +222,15 @@ const Profile = () => {
       <main className="flex-1 overflow-y-auto px-4 py-2 pb-32">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <User className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Profile</h1>
+            <User className="h-4 w-4 text-primary" />
+            <h1 className="text-lg font-bold text-foreground">Profile</h1>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Basic Information</CardTitle>
+                  <CardTitle className="text-sm">Basic Information</CardTitle>
                   {!isEditingBasic ? (
                     <Button onClick={() => setIsEditingBasic(true)} variant="outline" size="icon">
                       <Edit className="h-4 w-4" />
@@ -249,20 +249,20 @@ const Profile = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-xs">Email</Label>
                   <Input
                     id="email"
                     value={user?.email || ''}
                     disabled
                     className="bg-muted"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-[10px] text-muted-foreground">
                     Contact support to change your email address
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="display_name">Display Name</Label>
+                  <Label htmlFor="display_name" className="text-xs">Display Name</Label>
                   <Input
                     id="display_name"
                     value={formData.display_name}
@@ -274,19 +274,19 @@ const Profile = () => {
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Label>Password</Label>
+                    <Label className="text-xs">Password</Label>
                     {!isEditingPassword ? (
-                      <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-2">
+                      <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-1 text-xs">
                         <Edit className="h-3 w-3" />
                         Change Password
                       </Button>
                     ) : (
                       <div className="flex gap-2">
-                        <Button onClick={handlePasswordSave} size="sm" className="gap-2">
+                        <Button onClick={handlePasswordSave} size="sm" className="gap-1 text-xs">
                           <Save className="h-3 w-3" />
                           Save
                         </Button>
-                        <Button onClick={handlePasswordCancel} variant="outline" size="sm" className="gap-2">
+                        <Button onClick={handlePasswordCancel} variant="outline" size="sm" className="gap-1 text-xs">
                           <X className="h-3 w-3" />
                           Cancel
                         </Button>
@@ -297,7 +297,7 @@ const Profile = () => {
                   {isEditingPassword && (
                     <>
                       <div className="space-y-2">
-                        <Label htmlFor="new_password">New Password</Label>
+                        <Label htmlFor="new_password" className="text-xs">New Password</Label>
                         <Input
                           id="new_password"
                           type="password"
@@ -309,7 +309,7 @@ const Profile = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="confirm_password">Confirm New Password</Label>
+                        <Label htmlFor="confirm_password" className="text-xs">Confirm New Password</Label>
                         <Input
                           id="confirm_password"
                           type="password"
@@ -320,7 +320,7 @@ const Profile = () => {
                         />
                       </div>
 
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-[10px] text-muted-foreground">
                         Password must be at least 6 characters long
                       </p>
                     </>
@@ -332,7 +332,7 @@ const Profile = () => {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Wellness Preferences</CardTitle>
+                  <CardTitle className="text-sm">Wellness Preferences</CardTitle>
                   {!isEditingWellness ? (
                     <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="icon">
                       <Edit className="h-4 w-4" />
@@ -351,7 +351,7 @@ const Profile = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="fitness_level">Fitness Level</Label>
+                  <Label htmlFor="fitness_level" className="text-xs">Fitness Level</Label>
                   <Input
                     id="fitness_level"
                     value={formData.fitness_level}
@@ -362,7 +362,7 @@ const Profile = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="workout_duration">Preferred Workout Duration (minutes)</Label>
+                  <Label htmlFor="workout_duration" className="text-xs">Preferred Workout Duration (minutes)</Label>
                   <Input
                     id="workout_duration"
                     type="number"
@@ -375,7 +375,7 @@ const Profile = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bio">Your Fitness Goals and Life Journey</Label>
+                  <Label htmlFor="bio" className="text-xs">Your Fitness Goals and Life Journey</Label>
                   <Textarea
                     id="bio"
                     value={formData.bio}
