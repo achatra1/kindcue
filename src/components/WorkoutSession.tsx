@@ -230,18 +230,18 @@ export const WorkoutSession = ({
 
       {/* Feedback Section */}
       {showFeedback && (
-        <Card className="p-4 space-y-4">
+        <Card className="p-2 space-y-2">
           <div className="text-center">
-            <h4 className="font-semibold text-foreground mb-4">How was your workout?</h4>
+            <h4 className="font-semibold text-foreground mb-2 text-sm">How was your workout?</h4>
             
             {/* Add to Favorites */}
-            <div className="space-y-2 mb-4">
+            <div className="space-y-1 mb-2">
               <Button
                 variant={isFavorite ? "default" : "outline"}
                 onClick={() => setIsFavorite(!isFavorite)}
-                className="gap-2 w-full"
+                className="gap-1 w-full text-xs h-8"
               >
-                <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+                <Heart className={`h-3 w-3 ${isFavorite ? 'fill-current' : ''}`} />
                 {isFavorite ? 'Added to Favorites' : 'Add to Favorites'}
               </Button>
               {isFavorite && (
@@ -252,8 +252,8 @@ export const WorkoutSession = ({
             </div>
 
             {/* Mood Check-in */}
-            <div className="space-y-2 mb-4">
-              <label className="text-sm font-medium text-foreground">How do you feel:</label>
+            <div className="space-y-1 mb-2">
+              <label className="text-xs font-medium text-foreground">How do you feel:</label>
               <div className="flex gap-2 justify-center">
                 {['Sad', 'Happy', 'Amazing'].map((mood, index) => (
                   <Button
@@ -261,7 +261,7 @@ export const WorkoutSession = ({
                     variant={moodRating === index + 1 ? "default" : "outline"}
                     size="sm"
                     onClick={() => setMoodRating(index + 1)}
-                    className="px-3 py-1 text-xs"
+                    className="px-2 py-1 text-xs h-6"
                   >
                     {mood}
                   </Button>
@@ -270,8 +270,8 @@ export const WorkoutSession = ({
             </div>
 
             {/* Workout Effectiveness Rating */}
-            <div className="space-y-2 mb-4">
-              <label className="text-sm font-medium text-foreground">Workout Effectiveness (1-5 stars)</label>
+            <div className="space-y-1 mb-2">
+              <label className="text-xs font-medium text-foreground">Workout Effectiveness (1-5 stars)</label>
               <div className="flex gap-1 justify-center">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <Button
@@ -279,26 +279,26 @@ export const WorkoutSession = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setWorkoutRating(rating)}
-                    className="w-8 h-8 p-0"
+                    className="w-6 h-6 p-0"
                   >
-                    <Star className={`h-4 w-4 ${workoutRating >= rating ? 'fill-current text-yellow-500' : 'text-muted-foreground'}`} />
+                    <Star className={`h-3 w-3 ${workoutRating >= rating ? 'fill-current text-yellow-500' : 'text-muted-foreground'}`} />
                   </Button>
                 ))}
               </div>
             </div>
 
-            <div className="flex gap-2 mt-4 mb-8">
+            <div className="flex gap-2 mt-2 mb-4">
               <Button 
                 variant="outline" 
                 onClick={() => setShowFeedback(false)}
-                className="flex-1"
+                className="flex-1 text-xs h-8"
               >
                 Skip
               </Button>
               <Button 
                 onClick={handleComplete}
                 disabled={isSaving}
-                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-8"
               >
                 {isSaving ? 'Saving...' : 'Save Workout'}
               </Button>
