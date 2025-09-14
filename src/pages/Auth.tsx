@@ -143,7 +143,7 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
-                      className={formErrors.signinEmail ? 'border-destructive' : ''}
+                      className={formErrors.signinEmail ? 'border-destructive text-[10px]' : 'text-[10px]'}
                     />
                     {formErrors.signinEmail && (
                       <p className="text-sm text-destructive">{formErrors.signinEmail}</p>
@@ -159,7 +159,7 @@ const Auth = () => {
                         type={showPassword ? 'text' : 'password'}
                         required
                         disabled={isSubmitting}
-                        className={formErrors.signinPassword ? 'border-destructive pr-10' : 'pr-10'}
+                        className={formErrors.signinPassword ? 'border-destructive pr-10 text-[10px]' : 'pr-10 text-[10px]'}
                       />
                       <Button
                         type="button"
@@ -217,6 +217,7 @@ const Auth = () => {
                       type="text"
                       placeholder="How should we address you?"
                       disabled={isSubmitting}
+                      className="text-[10px]"
                     />
                   </div>
                   
@@ -229,7 +230,7 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
-                      className={formErrors.email ? 'border-destructive' : ''}
+                      className={formErrors.email ? 'border-destructive text-[10px]' : 'text-[10px]'}
                     />
                     {formErrors.email && (
                       <p className="text-sm text-destructive">{formErrors.email}</p>
@@ -248,7 +249,7 @@ const Auth = () => {
                         disabled={isSubmitting}
                         value={signupPassword}
                         onChange={(e) => setSignupPassword(e.target.value)}
-                        className={formErrors.password ? 'border-destructive pr-10' : 'pr-10'}
+                        className={formErrors.password ? 'border-destructive pr-10 text-[10px]' : 'pr-10 text-[10px]'}
                       />
                       <Button
                         type="button"
