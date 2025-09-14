@@ -254,7 +254,7 @@ const Profile = () => {
                     id="email"
                     value={user?.email || ''}
                     disabled
-                    className="bg-muted"
+                    className="bg-muted text-xs h-8"
                   />
                   <p className="text-[10px] text-muted-foreground">
                     Contact support to change your email address
@@ -269,6 +269,7 @@ const Profile = () => {
                     onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
                     disabled={!isEditingBasic}
                     placeholder="How should we address you?"
+                    className="text-xs h-8"
                   />
                 </div>
 
@@ -305,6 +306,7 @@ const Profile = () => {
                           onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
                           placeholder="Enter new password"
                           minLength={6}
+                          className="text-xs h-8"
                         />
                       </div>
 
@@ -317,6 +319,7 @@ const Profile = () => {
                           onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                           placeholder="Confirm new password"
                           minLength={6}
+                          className="text-xs h-8"
                         />
                       </div>
 
@@ -358,6 +361,7 @@ const Profile = () => {
                     onChange={(e) => setFormData(prev => ({ ...prev, fitness_level: e.target.value }))}
                     disabled={!isEditingWellness}
                     placeholder="e.g., Beginner, Intermediate, Advanced"
+                    className="text-xs h-8"
                   />
                 </div>
 
@@ -371,6 +375,7 @@ const Profile = () => {
                     disabled={!isEditingWellness}
                     min="5"
                     max="120"
+                    className="text-xs h-8"
                   />
                 </div>
 
@@ -382,7 +387,7 @@ const Profile = () => {
                     onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
                     disabled={!isEditingWellness}
                     placeholder="Share your fitness goals, wellness journey, and what motivates you..."
-                    className="min-h-[120px]"
+                    className="min-h-[80px] text-xs"
                   />
                 </div>
               </CardContent>
