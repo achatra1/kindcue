@@ -248,17 +248,19 @@ const Profile = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="email" className="text-xs">Email</Label>
-                  <Input
-                    id="email"
-                    value={user?.email || ''}
-                    disabled
-                    className="bg-muted text-xs h-8 whitespace-nowrap overflow-hidden text-ellipsis"
-                  />
-                  <p className="text-[10px] text-muted-foreground">
-                    Contact support to change your email address
-                  </p>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="email" className="text-xs min-w-0 shrink-0 w-16">Email</Label>
+                  <div className="flex-1">
+                    <Input
+                      id="email"
+                      value={user?.email || ''}
+                      disabled
+                      className="bg-muted text-xs h-8 whitespace-nowrap overflow-hidden text-ellipsis"
+                    />
+                    <p className="text-[10px] text-muted-foreground mt-1">
+                      Contact support to change your email address
+                    </p>
+                  </div>
                 </div>
 
                 <div className="space-y-1">
