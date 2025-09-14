@@ -148,7 +148,7 @@ const ActivityLogs = () => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto px-4 py-2 pb-32">
-        <div className="space-y-4">
+        <div className="space-y-2">
           {/* Activity Dashboard */}
           <div className="h-20">
             <ActivityDashboard />
