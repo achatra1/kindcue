@@ -207,7 +207,6 @@ const Auth = () => {
             <TabsContent value="signup" className="m-0">
               <form onSubmit={handleSignUp}>
                 <CardContent className="space-y-2">
-                  <CardTitle className="text-xs font-bold">Join KindCue</CardTitle>
                   <CardDescription className="text-[10px]">
                     Start your compassionate wellness journey today
                   </CardDescription>
