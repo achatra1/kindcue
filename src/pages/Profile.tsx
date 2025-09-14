@@ -221,11 +221,6 @@ const Profile = () => {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto px-4 py-2 pb-32">
         <div className="space-y-2">
-          <div className="flex items-center gap-3">
-            <User className="h-4 w-4 text-primary" />
-            <h1 className="text-lg font-bold text-foreground">Profile</h1>
-          </div>
-
           <div className="grid gap-2 md:grid-cols-2">
             <Card>
               <CardHeader className="py-2 px-3">
