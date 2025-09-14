@@ -64,6 +64,8 @@ export const WorkoutSession = ({
   };
 
   const handleMarkComplete = () => {
+    setIsActive(false);
+    setIsPaused(false);
     setShowFeedback(true);
   };
 
