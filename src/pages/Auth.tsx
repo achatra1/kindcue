@@ -104,7 +104,7 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-warm p-4">
       
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
+        <div className="text-center mb-4">
           <div className="inline-flex items-center gap-2 mb-4">
             <img 
               src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
