@@ -172,7 +172,7 @@ const ActivityLogs = () => {
               </p>
             </Card>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-1">
               {activities.map((activity) => (
                 <Card key={activity.id} className="p-2">
                   <div className="space-y-1">
