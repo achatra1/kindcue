@@ -131,5 +131,33 @@ All colors MUST be HSL for proper theming.
 
   body {
     @apply bg-background text-foreground;
+    /* Prevent horizontal scrolling on mobile */
+    overflow-x: hidden;
+    /* Enable smooth scrolling */
+    scroll-behavior: smooth;
+    /* Mobile viewport optimization */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Mobile-first responsive utilities */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Ensure containers fit mobile screens */
+  .mobile-container {
+    @apply max-w-full px-4;
+  }
+
+  /* Prevent text from being too small on mobile */
+  @media (max-width: 767px) {
+    html {
+      font-size: 16px;
+    }
   }
 }

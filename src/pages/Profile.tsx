@@ -187,46 +187,46 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-warm pb-20">
+    <div className="flex flex-col h-screen bg-gradient-warm">
       {/* Header */}
-      <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm shrink-0">
-        <div className="px-4 py-3 flex justify-between items-center">
+      <header className="shrink-0 px-4 py-2 safe-area-inset-top">
+        <div className="flex justify-between items-center">
           <div className="flex-1 flex justify-center">
             <Link to="/">
               <img 
                 src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
                 alt="KindCue Logo" 
-                className="h-24 w-auto cursor-pointer hover:opacity-80 transition-opacity"
+                className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
               />
             </Link>
           </div>
           
-          <div className="absolute right-4 flex items-center gap-2">
-            <span className="text-xs text-muted-foreground hidden sm:block">
+          <div className="absolute right-4 flex items-center gap-1">
+            <span className="text-xs text-muted-foreground hidden sm:block max-w-20 truncate">
               {user.user_metadata?.display_name || profile?.display_name || user.email}
             </span>
             <Button
               onClick={signOut}
               variant="outline"
               size="sm"
-              className="gap-1"
+              className="gap-1 h-8 px-2"
             >
               <LogOut className="h-3 w-3" />
-              <span className="hidden sm:inline">Sign Out</span>
+              <span className="hidden sm:inline text-xs">Sign Out</span>
             </Button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-6">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <User className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold text-foreground">User Profile</h1>
-            </div>
+      <main className="flex-1 overflow-y-auto px-4 py-2 pb-32">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <User className="h-6 w-6 text-primary" />
+            <h1 className="text-2xl font-bold text-foreground">Profile</h1>
+          </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
