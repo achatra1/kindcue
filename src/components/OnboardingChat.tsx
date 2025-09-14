@@ -153,7 +153,7 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
             </div>
             <div className="flex-1">
               <div className="bg-muted/50 rounded-lg p-4">
-                <p className="text-foreground leading-relaxed">
+                <p className="text-xs text-foreground leading-relaxed">
                   Tell me about your workout preferences, health goals, time availability and fitness level. 
                   It will help me cater to your personal needs better.
                 </p>
@@ -167,7 +167,7 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
               value={userResponse}
               onChange={(e) => setUserResponse(e.target.value)}
               placeholder="Share as much or as little as you'd like... For example: I'm a beginner looking to lose weight, I have about 30 minutes available most days, and I enjoy walking and light strength training."
-              className="min-h-[120px] resize-none"
+              className="min-h-[120px] resize-none text-xs"
               disabled={isSubmitting}
             />
             
@@ -175,7 +175,7 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
               <Button
                 onClick={handleSubmit}
                 disabled={!userResponse.trim() || isSubmitting}
-                className="gap-2"
+                className="gap-2 text-xs"
               >
                 <Send className="w-4 h-4" />
                 {isSubmitting ? 'Saving...' : 'Save Preferences'}
@@ -183,7 +183,7 @@ const OnboardingChat = ({ onComplete, userId }: OnboardingChatProps) => {
             </div>
           </div>
 
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-xs text-muted-foreground text-center">
             Your information helps us personalize your wellness journey
           </p>
         </div>
