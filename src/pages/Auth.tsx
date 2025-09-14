@@ -330,8 +330,8 @@ const Auth = () => {
           </Tabs>
         </Card>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
-          By joining KindCue, you're taking a compassionate step towards better wellness.
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          ©KindCue 2025, All Rights Reserved
         </p>
       </div>
     </div>
