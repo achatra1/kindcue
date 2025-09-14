@@ -253,7 +253,7 @@ const Profile = () => {
                       className="bg-muted text-xs h-8 whitespace-nowrap overflow-hidden text-ellipsis"
                     />
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      Contact support to change your email address
+                      Contact kindcue@gmail.com to change email address
                     </p>
                   </div>
                 </div>
