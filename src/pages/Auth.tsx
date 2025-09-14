@@ -207,8 +207,8 @@ const Auth = () => {
             <TabsContent value="signup" className="m-0">
               <form onSubmit={handleSignUp}>
                 <CardContent className="space-y-2">
-                  <CardDescription className="text-[10px] text-center">
-                    Start your compassionate wellness journey today
+                  <CardDescription className="text-xs text-center">
+                    Start your compassionate wellness journey today!
                   </CardDescription>
                   
                   <div className="flex items-center gap-2">
