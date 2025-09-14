@@ -219,7 +219,7 @@ const Profile = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 px-4 py-2">
+      <main className="flex-1 px-4 py-2 pb-32">
         <div className="space-y-2">
           <div className="grid gap-2 md:grid-cols-2">
             <Card>
