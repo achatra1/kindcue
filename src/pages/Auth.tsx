@@ -113,7 +113,7 @@ const Auth = () => {
             />
           </div>
           <p className="text-muted-foreground">
-            Your compassionate wellness companion
+            Move how you feel!
           </p>
         </div>
 
