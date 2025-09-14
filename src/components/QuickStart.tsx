@@ -462,7 +462,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
                     }}
                   >
                     <div className="flex flex-col items-start w-full">
-                      <span className="font-medium text-left whitespace-normal word-break break-all leading-tight">{workout.workout_title}</span>
+                      <span className="font-medium text-left whitespace-normal break-words leading-tight">{workout.workout_title}</span>
                       <span className="text-muted-foreground text-[8px]">
                         {workout.workout_duration}min • {new Date(workout.created_at).toLocaleDateString()}
                       </span>
