@@ -263,15 +263,15 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <Label htmlFor="display_name" className="text-xs">Display Name</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="display_name" className="text-xs min-w-0 shrink-0 w-16">Name</Label>
                   <Input
                     id="display_name"
                     value={formData.display_name}
                     onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
                     disabled={!isEditingBasic}
                     placeholder="How should we address you?"
-                    className="text-xs h-8"
+                    className="text-xs h-8 flex-1"
                   />
                 </div>
 
