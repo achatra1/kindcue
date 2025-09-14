@@ -25,6 +25,7 @@ const Auth = () => {
   const { user, loading, signIn, signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
   const [signupPassword, setSignupPassword] = useState('');
   const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
 
@@ -267,25 +268,40 @@ const Auth = () => {
                       </Button>
                     </div>
                     
-                    {/* Password Requirements */}
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Password must contain:</p>
-                      {passwordRequirements.map((req, index) => {
-                        const isValid = req.test(signupPassword);
-                        return (
-                          <div key={index} className="flex items-center gap-2 text-xs">
-                            {isValid ? (
-                              <Check className="h-3 w-3 text-primary" />
-                            ) : (
-                              <X className="h-3 w-3 text-muted-foreground" />
-                            )}
-                            <span className={isValid ? 'text-primary' : 'text-muted-foreground'}>
-                              {req.label}
-                            </span>
-                          </div>
-                        );
-                      })}
+                    {/* Password Requirements Toggle */}
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowPasswordRequirements(!showPasswordRequirements)}
+                        className="text-xs h-5 px-2 py-1 text-muted-foreground hover:text-foreground"
+                      >
+                        {showPasswordRequirements ? 'Hide' : 'Show'} requirements
+                      </Button>
                     </div>
+                    
+                    {/* Password Requirements */}
+                    {showPasswordRequirements && (
+                      <div className="space-y-1">
+                        <p className="text-xs text-muted-foreground">Password must contain:</p>
+                        {passwordRequirements.map((req, index) => {
+                          const isValid = req.test(signupPassword);
+                          return (
+                            <div key={index} className="flex items-center gap-2 text-xs">
+                              {isValid ? (
+                                <Check className="h-3 w-3 text-primary" />
+                              ) : (
+                                <X className="h-3 w-3 text-muted-foreground" />
+                              )}
+                              <span className={isValid ? 'text-primary' : 'text-muted-foreground'}>
+                                {req.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                     
                     {formErrors.password && (
                       <p className="text-sm text-destructive">{formErrors.password}</p>
