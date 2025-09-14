@@ -193,14 +193,14 @@ const ActivityLogs = () => {
           </div>
           
           <div className="absolute right-4 flex items-center gap-1">
-            <span className="text-xs text-muted-foreground hidden sm:block max-w-20 truncate">
+            <span className="text-[8px] text-muted-foreground hidden sm:block max-w-20 truncate">
               {user.user_metadata?.display_name || profile?.display_name || user.email}
             </span>
             <Button
               onClick={signOut}
               variant="outline"
               size="sm"
-              className="gap-1 h-8 px-2"
+              className="gap-1 h-8 px-2 text-xs"
             >
               <LogOut className="h-3 w-3" />
               <span className="hidden sm:inline text-xs">Sign Out</span>
@@ -219,18 +219,18 @@ const ActivityLogs = () => {
           
           <div className="flex items-center gap-3">
             <Activity className="h-4 w-4 text-primary" />
-            <h1 className="text-sm font-bold text-foreground">Activity Logs</h1>
+            <h1 className="text-xs font-bold text-foreground">Activity Logs</h1>
           </div>
 
           {activitiesLoading ? (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">Loading your activities...</p>
+              <p className="text-[8px] text-muted-foreground">Loading your activities...</p>
             </div>
           ) : activities.length === 0 ? (
             <Card className="p-4 text-center">
               <Activity className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-              <h3 className="text-sm font-semibold mb-2 text-foreground">No activities logged yet</h3>
-              <p className="text-[10px] text-muted-foreground mb-4">
+              <h3 className="text-xs font-bold mb-2 text-foreground">No activities logged yet</h3>
+              <p className="text-[8px] text-muted-foreground mb-4">
                 Complete workouts through the app to see your activity history here.
               </p>
             </Card>
@@ -243,7 +243,7 @@ const ActivityLogs = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1">
-                          <span className="font-medium text-foreground text-[10px]">
+                          <span className="text-[10px] text-foreground">
                             {activity.activity_type}
                           </span>
                           {favoriteWorkouts.has(activity.activity_type) && (
@@ -279,9 +279,9 @@ const ActivityLogs = () => {
                     
                     {/* Second line: Notes */}
                     {activity.notes && (
-                      <p className="text-[8px] text-muted-foreground line-clamp-1">
-                        {cleanNotes(activity.notes)}
-                      </p>
+                        <p className="text-[8px] text-muted-foreground line-clamp-1">
+                          {cleanNotes(activity.notes)}
+                        </p>
                     )}
                   </div>
                 </Card>

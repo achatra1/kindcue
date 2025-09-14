@@ -178,7 +178,7 @@ export const WorkoutSession = ({
     <div className="space-y-4 h-full flex flex-col">
       {/* Workout Header */}
       <div className="text-center">
-        <h3 className="text-lg font-semibold text-foreground mb-2">
+        <h3 className="text-xs font-bold text-foreground mb-2">
           {workoutTitle || 'Your Workout'}
         </h3>
         <div className="flex items-center justify-center gap-2 text-2xl font-mono text-primary">
@@ -190,7 +190,7 @@ export const WorkoutSession = ({
       {/* Workout Content */}
       {!isCompleted && (
         <Card className="p-2 flex-1 overflow-y-auto">
-          <div className="text-xs text-muted-foreground whitespace-pre-wrap leading-tight">
+          <div className="text-[10px] text-muted-foreground whitespace-pre-wrap leading-tight">
             {workoutSuggestion
               .replace(/^\d+\.\s*/gm, '') // Remove numbered lists
               .replace(/\*\*References?\*\*:.*$/im, '') // Remove references section
@@ -204,8 +204,8 @@ export const WorkoutSession = ({
       <div className="space-y-3">
         {!isActive && !isCompleted ? (
           <div className="flex justify-center">
-            <Button onClick={handleStart} className="gap-2">
-              <Play className="h-4 w-4" />
+            <Button onClick={handleStart} className="gap-2 text-xs">
+              <Play className="h-3 w-3" />
               Start Workout
             </Button>
           </div>
@@ -236,7 +236,7 @@ export const WorkoutSession = ({
       {showFeedback && (
         <Card className="p-2 space-y-2">
           <div className="text-center">
-            <h4 className="font-semibold text-foreground mb-2 text-sm">How was your workout?</h4>
+            <h4 className="text-xs font-bold text-foreground mb-2">How was your workout?</h4>
             
             {/* Add to Favorites */}
             <div className="space-y-1 mb-2">

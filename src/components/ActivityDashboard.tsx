@@ -17,7 +17,7 @@ export const ActivityDashboard = () => {
     return (
       <div className="p-1 h-full">
         <Card className="p-2 h-full flex items-center justify-center">
-          <div className="text-xs text-muted-foreground">Loading activity stats...</div>
+          <div className="text-[8px] text-muted-foreground">Loading activity stats...</div>
         </Card>
       </div>
     );
@@ -34,40 +34,40 @@ export const ActivityDashboard = () => {
             {/* Total Active Hours */}
             <div className="flex flex-col items-center justify-center">
               <Clock className="h-3 w-3 text-primary mb-0.5" />
-              <h3 className="text-sm font-semibold text-foreground mb-0">
+              <h3 className="text-xs font-bold text-foreground mb-0">
                 {stats.totalActiveHours}h
               </h3>
-              <p className="text-[10px] text-muted-foreground text-center leading-tight">Active Hours</p>
+              <p className="text-[8px] text-muted-foreground text-center leading-tight">Active Hours</p>
             </div>
 
             {/* Current Streak */}
             <div className="flex flex-col items-center justify-center">
               <Calendar className="h-3 w-3 text-primary mb-0.5" />
-              <h3 className="text-sm font-semibold text-foreground mb-0">
+              <h3 className="text-xs font-bold text-foreground mb-0">
                 {stats.currentStreak}
               </h3>
-              <p className="text-[10px] text-muted-foreground text-center leading-tight">Day Streak</p>
+              <p className="text-[8px] text-muted-foreground text-center leading-tight">Day Streak</p>
             </div>
 
             {/* Mood Check-in */}
             <div className="flex flex-col items-center justify-center">
               <Heart className="h-3 w-3 text-primary mb-0.5" />
-              <h3 className="text-sm font-semibold text-foreground mb-0">
+              <h3 className="text-xs font-bold text-foreground mb-0">
                 {stats.averageMood > 0 ? (
                   stats.averageMood <= 1.5 ? '😢' : 
                   stats.averageMood <= 2.5 ? '😊' : '🤩'
                 ) : '—'}
               </h3>
-              <p className="text-[10px] text-muted-foreground text-center leading-tight">Mood</p>
+              <p className="text-[8px] text-muted-foreground text-center leading-tight">Mood</p>
             </div>
 
             {/* Days Since Last Workout */}
             <div className="flex flex-col items-center justify-center">
               <BarChart3 className="h-3 w-3 text-primary mb-0.5" />
-              <h3 className="text-sm font-semibold text-foreground mb-0">
+              <h3 className="text-xs font-bold text-foreground mb-0">
                 {stats.daysSinceLastWorkout}
               </h3>
-              <p className="text-[10px] text-muted-foreground text-center leading-tight">
+              <p className="text-[8px] text-muted-foreground text-center leading-tight">
                 {stats.daysSinceLastWorkout === 0 ? 'Today!' : 
                  stats.daysSinceLastWorkout === 1 ? 'Day ago' : 'Days ago'}
               </p>

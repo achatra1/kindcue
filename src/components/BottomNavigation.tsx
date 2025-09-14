@@ -30,7 +30,7 @@ export const BottomNavigation = () => {
               }`}
             >
               <Icon className={`h-3 w-3 mb-0.5 ${isActive ? 'text-primary' : ''}`} />
-              <span className="text-[10px] font-medium truncate">{item.label}</span>
+              <span className="text-xs font-medium truncate">{item.label}</span>
             </button>
           );
         })}

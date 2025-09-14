@@ -263,12 +263,12 @@ ${workoutSuggestion}`,
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="I'm feeling energetic and ready to move... or maybe I'm tired and need something gentle..."
-              className="min-h-[60px] text-sm"
+              className="min-h-[60px] text-[10px]"
             />
             <Button 
               onClick={handleSubmitFeeling}
               disabled={!userInput.trim()}
-              className="w-full gap-2 text-sm"
+              className="w-full gap-2 text-xs"
             >
               <Send className="h-3 w-3" />
               Get My Personalized Workout

@@ -225,7 +225,7 @@ const Profile = () => {
             <Card>
               <CardHeader className="py-2 px-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm">Basic Information</CardTitle>
+                  <CardTitle className="text-xs font-bold">Basic Information</CardTitle>
                   {!isEditingBasic ? (
                     <Button onClick={() => setIsEditingBasic(true)} variant="outline" size="sm" className="h-6 w-6 p-0">
                       <Edit className="h-3 w-3" />
@@ -244,40 +244,40 @@ const Profile = () => {
               </CardHeader>
               <CardContent className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <Label htmlFor="email" className="text-xs min-w-0 shrink-0 w-16">Email</Label>
+                  <Label htmlFor="email" className="text-[10px] min-w-0 shrink-0 w-16">Email</Label>
                   <div className="flex-1">
                     <Input
                       id="email"
                       value={user?.email || ''}
                       disabled
-                      className="bg-muted text-xs h-8 whitespace-nowrap overflow-hidden text-ellipsis"
+                      className="bg-muted text-[10px] h-8 whitespace-nowrap overflow-hidden text-ellipsis"
                     />
-                    <p className="text-[10px] text-muted-foreground mt-1">
+                    <p className="text-[8px] text-muted-foreground mt-1">
                       Contact kindcue@gmail.com to change email address
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Label htmlFor="display_name" className="text-xs min-w-0 shrink-0 w-16">Name</Label>
+                  <Label htmlFor="display_name" className="text-[10px] min-w-0 shrink-0 w-16">Name</Label>
                   <Input
                     id="display_name"
                     value={formData.display_name}
                     onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
                     disabled={!isEditingBasic}
                     placeholder="How should we address you?"
-                    className="text-xs h-8 flex-1"
+                    className="text-[10px] h-8 flex-1"
                   />
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs">Password</Label>
+                    <Label className="text-[10px]">Password</Label>
                     {!isEditingPassword ? (
-                      <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-1 text-xs h-6">
-                        <Edit className="h-3 w-3" />
-                        Change Password
-                      </Button>
+                       <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-1 text-xs h-6">
+                         <Edit className="h-3 w-3" />
+                         Change Password
+                       </Button>
                     ) : (
                       <div className="flex gap-1">
                         <Button onClick={handlePasswordSave} size="sm" className="gap-1 text-xs h-6">
@@ -332,7 +332,7 @@ const Profile = () => {
             <Card>
               <CardHeader className="py-2 px-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm">Wellness Preferences</CardTitle>
+                  <CardTitle className="text-xs font-bold">Wellness Preferences</CardTitle>
                   {!isEditingWellness ? (
                     <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="sm" className="h-6 w-6 p-0">
                       <Edit className="h-3 w-3" />
