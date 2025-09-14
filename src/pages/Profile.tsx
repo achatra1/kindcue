@@ -274,17 +274,17 @@ const Profile = () => {
                   <div className="flex items-center justify-between">
                     <Label className="text-xs">Password</Label>
                     {!isEditingPassword ? (
-                      <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-1 text-xs">
+                      <Button onClick={() => setIsEditingPassword(true)} variant="outline" size="sm" className="gap-1 text-xs h-6">
                         <Edit className="h-3 w-3" />
                         Change Password
                       </Button>
                     ) : (
-                      <div className="flex gap-2">
-                        <Button onClick={handlePasswordSave} size="sm" className="gap-1 text-xs">
+                      <div className="flex gap-1">
+                        <Button onClick={handlePasswordSave} size="sm" className="gap-1 text-xs h-6">
                           <Save className="h-3 w-3" />
                           Save
                         </Button>
-                        <Button onClick={handlePasswordCancel} variant="outline" size="sm" className="gap-1 text-xs">
+                        <Button onClick={handlePasswordCancel} variant="outline" size="sm" className="gap-1 text-xs h-6">
                           <X className="h-3 w-3" />
                           Cancel
                         </Button>
