@@ -294,7 +294,7 @@ export const WorkoutSession = ({
             <div className="flex gap-2 mt-2 mb-4">
               <Button 
                 variant="outline" 
-                onClick={() => setShowFeedback(false)}
+                onClick={onComplete}
                 className="flex-1 text-xs h-8"
               >
                 Skip
