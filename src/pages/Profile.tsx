@@ -228,7 +228,7 @@ const Profile = () => {
 
           <div className="grid gap-2 md:grid-cols-2">
             <Card>
-              <CardHeader>
+              <CardHeader className="py-2 px-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-sm">Basic Information</CardTitle>
                   {!isEditingBasic ? (
