@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/integrations/supabase/client';
-import { Activity, Calendar, Clock, LogOut, Loader2, Heart } from 'lucide-react';
+import { Activity, Calendar, Clock, LogOut, Loader2, Heart, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ActivityDashboard } from '@/components/ActivityDashboard';
 
@@ -102,6 +102,33 @@ const ActivityLogs = () => {
       toast({
         title: "Error",
         description: "Failed to remove workout from favorites. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const removeActivityLog = async (activityId: string, activityName: string) => {
+    try {
+      const { error } = await supabase
+        .from('activity_logs')
+        .delete()
+        .eq('id', activityId)
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+
+      // Update local state
+      setActivities(prev => prev.filter(activity => activity.id !== activityId));
+
+      toast({
+        title: "Workout removed",
+        description: `${activityName} has been removed from your activity log.`,
+      });
+    } catch (error) {
+      console.error('Error removing activity log:', error);
+      toast({
+        title: "Error",
+        description: "Failed to remove workout from activity log. Please try again.",
         variant: "destructive"
       });
     }
@@ -231,9 +258,21 @@ const ActivityLogs = () => {
                           </Badge>
                         )}
                       </div>
-                      <span className="text-[8px] text-muted-foreground">
-                        {formatDate(activity.logged_at)} • {formatTime(activity.logged_at)}
-                      </span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[8px] text-muted-foreground">
+                          {formatDate(activity.logged_at)} • {formatTime(activity.logged_at)}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            removeActivityLog(activity.id, activity.activity_type);
+                          }}
+                          className="p-0.5 hover:bg-destructive/10 rounded transition-colors ml-1"
+                          title="Remove workout from log"
+                        >
+                          <Trash2 className="h-3 w-3 text-muted-foreground hover:text-destructive" />
+                        </button>
+                      </div>
                     </div>
                     
                     {/* Second line: Notes */}
