@@ -368,12 +368,12 @@ At the end, add 2-3 credible references as clickable markdown links in this form
     selected: string; 
     onSelect: (value: string) => void; 
   }) => (
-    <div className="flex items-center gap-2">
-      <div className="flex items-center gap-1 min-w-0 shrink-0">
+    <div className="space-y-1">
+      <div className="flex items-center gap-1">
         <Icon className="h-3 w-3 text-primary" />
         <span className="text-[10px] font-medium text-foreground">{title}:</span>
       </div>
-      <div className="flex flex-wrap gap-1 min-w-0">
+      <div className="flex flex-wrap gap-1">
         {options.map((option) => (
           <Badge
             key={option}
