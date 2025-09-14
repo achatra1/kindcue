@@ -46,7 +46,8 @@ const ActivityLogs = () => {
         .from('activity_logs')
         .select('*')
         .eq('user_id', user?.id)
-        .order('logged_at', { ascending: false });
+        .order('logged_at', { ascending: false })
+        .limit(5);
 
       if (error) throw error;
       setActivities(data || []);
