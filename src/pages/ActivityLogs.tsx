@@ -151,7 +151,13 @@ const ActivityLogs = () => {
   };
 
   const cleanNotes = (notes: string) => {
-    // Remove the duplicate workout title and favorite workout tag from notes
+    // Extract only feedback items (mood and effectiveness) before the dash
+    const feedbackMatch = notes.match(/^(.*?)\s*-/);
+    if (feedbackMatch) {
+      return feedbackMatch[1]
+        .replace(/⭐ Favorite workout! /g, '')
+        .trim();
+    }
     return notes
       .replace(/- \*\*.*?\*\*\n\n/g, '')
       .replace(/⭐ Favorite workout! /g, '')
