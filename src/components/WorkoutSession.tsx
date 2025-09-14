@@ -210,22 +210,22 @@ export const WorkoutSession = ({
             </Button>
           </div>
         ) : isActive ? (
-          <div className="flex gap-2">
-            <Button onClick={handlePause} variant="outline" className="gap-2 flex-1">
-              <Pause className="h-4 w-4" />
+          <div className="flex gap-1">
+            <Button onClick={handlePause} variant="outline" className="gap-1 flex-1 text-xs h-8">
+              <Pause className="h-3 w-3" />
               {isPaused ? 'Resume' : 'Pause'}
             </Button>
-            <Button onClick={handleStop} variant="outline" className="gap-2 flex-1">
-              <Square className="h-4 w-4" />
+            <Button onClick={handleStop} variant="outline" className="gap-1 flex-1 text-xs h-8">
+              <Square className="h-3 w-3" />
               Stop
             </Button>
             <Button 
               onClick={handleMarkComplete}
               disabled={isSaving}
-              className="gap-2 flex-1"
+              className="gap-1 flex-1 text-xs h-8"
             >
-              <CheckCircle className="h-4 w-4" />
-              Mark Complete
+              <CheckCircle className="h-3 w-3" />
+              Complete
             </Button>
           </div>
         ) : null}
