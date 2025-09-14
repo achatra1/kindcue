@@ -52,32 +52,30 @@ const Index = () => {
   return (
     <div className="flex flex-col h-screen bg-gradient-warm">
       {/* Header */}
-      <header className="shrink-0 px-4 py-2 safe-area-inset-top">
-        <div className="flex justify-between items-center">
-          <div className="flex-1 flex justify-center">
-            <Link to="/">
-              <img 
-                src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
-                alt="KindCue Logo" 
-                className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
-              />
-            </Link>
-          </div>
-          
-          <div className="absolute right-4 flex items-center gap-1">
-            <span className="text-xs text-muted-foreground hidden sm:block max-w-20 truncate">
-              {user.user_metadata?.display_name || profile?.display_name || user.email}
-            </span>
-            <Button
-              onClick={signOut}
-              variant="outline"
-              size="sm"
-              className="gap-1 h-8 px-2"
-            >
-              <LogOut className="h-3 w-3" />
-              <span className="hidden sm:inline text-xs">Sign Out</span>
-            </Button>
-          </div>
+      <header className="shrink-0 px-4 py-1 safe-area-inset-top">
+        <div className="flex justify-center items-center">
+          <Link to="/">
+            <img 
+              src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
+              alt="KindCue Logo" 
+              className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
+            />
+          </Link>
+        </div>
+        
+        <div className="absolute top-2 right-4 flex items-center gap-1">
+          <span className="text-xs text-muted-foreground hidden sm:block max-w-20 truncate">
+            {user.user_metadata?.display_name || profile?.display_name || user.email}
+          </span>
+          <Button
+            onClick={signOut}
+            variant="outline"
+            size="sm"
+            className="gap-1 h-8 px-2"
+          >
+            <LogOut className="h-3 w-3" />
+            <span className="hidden sm:inline text-xs">Sign Out</span>
+          </Button>
         </div>
       </header>
 

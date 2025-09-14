@@ -30,7 +30,7 @@ export const ActivityDashboard = () => {
         onClick={handleDashboardClick}
       >
         <div className="flex justify-center items-center h-full">
-          <div className="grid grid-cols-4 gap-2 max-w-full">
+          <div className="grid grid-cols-4 gap-1 max-w-full">
             {/* Total Active Hours */}
             <div className="flex flex-col items-center justify-center">
               <Clock className="h-3 w-3 text-primary mb-0.5" />
