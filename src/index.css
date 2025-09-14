@@ -130,7 +130,7 @@ All colors MUST be HSL for proper theming.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     /* Prevent horizontal scrolling on mobile */
     overflow-x: hidden;
     /* Enable smooth scrolling */
