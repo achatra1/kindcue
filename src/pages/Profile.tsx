@@ -384,7 +384,7 @@ const Profile = () => {
                     onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
                     disabled={!isEditingWellness}
                     placeholder="Share your fitness goals, wellness journey, and what motivates you..."
-                    className="min-h-[80px] text-xs flex-1"
+                    className="min-h-[60px] text-xs flex-1"
                   />
                 </div>
               </CardContent>
