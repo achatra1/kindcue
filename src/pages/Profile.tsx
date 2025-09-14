@@ -14,7 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const Profile = () => {
   const { user, loading, signOut } = useAuth();
-  const { profile, loading: profileLoading } = useProfile(user?.id);
+  const { profile, loading: profileLoading, refreshProfile } = useProfile(user?.id);
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isEditingBasic, setIsEditingBasic] = useState(false);
@@ -59,6 +59,9 @@ const Profile = () => {
 
       if (error) throw error;
 
+      // Refresh the profile data to update all components
+      await refreshProfile();
+
       toast({
         title: "Basic Information Updated",
         description: "Your basic information has been successfully updated.",
@@ -87,6 +90,9 @@ const Profile = () => {
         .eq('user_id', user?.id);
 
       if (error) throw error;
+
+      // Refresh the profile data to update all components
+      await refreshProfile();
 
       toast({
         title: "Wellness Preferences Updated",

@@ -19,35 +19,42 @@ export const useProfile = (userId: string | undefined) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchProfile = async () => {
     if (!userId) {
       setLoading(false);
       return;
     }
 
-    const fetchProfile = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('user_id', userId)
-          .single();
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
 
-        if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
-          throw error;
-        }
-
-        setProfile(data);
-      } catch (err: any) {
-        console.error('Error fetching profile:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
+        throw error;
       }
-    };
 
+      setProfile(data);
+    } catch (err: any) {
+      console.error('Error fetching profile:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchProfile();
   }, [userId]);
+
+  const refreshProfile = async () => {
+    if (userId) {
+      setLoading(true);
+      await fetchProfile();
+    }
+  };
 
   const isFirstTimeUser = profile && !profile.bio && !profile.wellness_goals?.length;
 
@@ -55,6 +62,7 @@ export const useProfile = (userId: string | undefined) => {
     profile,
     loading,
     error,
-    isFirstTimeUser
+    isFirstTimeUser,
+    refreshProfile
   };
 };
