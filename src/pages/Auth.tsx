@@ -143,7 +143,7 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
-                      className={formErrors.signinEmail ? 'border-destructive text-[10px]' : 'text-[10px]'}
+                      className={formErrors.signinEmail ? 'border-destructive text-[10px] h-6 px-2 py-1' : 'text-[10px] h-6 px-2 py-1'}
                     />
                     {formErrors.signinEmail && (
                       <p className="text-sm text-destructive">{formErrors.signinEmail}</p>
@@ -159,7 +159,7 @@ const Auth = () => {
                         type={showPassword ? 'text' : 'password'}
                         required
                         disabled={isSubmitting}
-                        className={formErrors.signinPassword ? 'border-destructive pr-10 text-[10px]' : 'pr-10 text-[10px]'}
+                        className={formErrors.signinPassword ? 'border-destructive pr-8 text-[10px] h-6 px-2 py-1' : 'pr-8 text-[10px] h-6 px-2 py-1'}
                       />
                       <Button
                         type="button"
@@ -217,7 +217,7 @@ const Auth = () => {
                       type="text"
                       placeholder="How should we address you?"
                       disabled={isSubmitting}
-                      className="text-[10px]"
+                      className="text-[10px] h-6 px-2 py-1"
                     />
                   </div>
                   
@@ -230,7 +230,7 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
-                      className={formErrors.email ? 'border-destructive text-[10px]' : 'text-[10px]'}
+                      className={formErrors.email ? 'border-destructive text-[10px] h-6 px-2 py-1' : 'text-[10px] h-6 px-2 py-1'}
                     />
                     {formErrors.email && (
                       <p className="text-sm text-destructive">{formErrors.email}</p>
@@ -249,7 +249,7 @@ const Auth = () => {
                         disabled={isSubmitting}
                         value={signupPassword}
                         onChange={(e) => setSignupPassword(e.target.value)}
-                        className={formErrors.password ? 'border-destructive pr-10 text-[10px]' : 'pr-10 text-[10px]'}
+                        className={formErrors.password ? 'border-destructive pr-8 text-[10px] h-6 px-2 py-1' : 'pr-8 text-[10px] h-6 px-2 py-1'}
                       />
                       <Button
                         type="button"
