@@ -349,7 +349,7 @@ const Profile = () => {
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-1">
                 <div className="flex items-center gap-2">
                   <Label htmlFor="fitness_level" className="text-xs min-w-0 shrink-0 w-16">Level</Label>
                   <Input
