@@ -219,7 +219,7 @@ const ActivityLogs = () => {
           
           <div className="flex items-center gap-3">
             <Activity className="h-4 w-4 text-primary" />
-            <h1 className="text-lg font-bold text-foreground">Activity Logs</h1>
+            <h1 className="text-sm font-bold text-foreground">Activity Logs</h1>
           </div>
 
           {activitiesLoading ? (
