@@ -135,8 +135,8 @@ const Auth = () => {
                     Sign in to continue your wellness journey
                   </CardDescription>
                   
-                  <div className="space-y-1">
-                    <Label htmlFor="signin-email">Email</Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="signin-email" className="text-xs min-w-20">Email</Label>
                     <Input
                       id="signin-email"
                       name="email"
@@ -144,41 +144,43 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
-                      className={formErrors.signinEmail ? 'border-destructive text-[10px] h-6 px-2 py-1' : 'text-[10px] h-6 px-2 py-1'}
+                      className={formErrors.signinEmail ? 'border-destructive text-[10px] h-6 px-2 py-1 flex-1' : 'text-[10px] h-6 px-2 py-1 flex-1'}
                     />
-                    {formErrors.signinEmail && (
-                      <p className="text-sm text-destructive">{formErrors.signinEmail}</p>
-                    )}
                   </div>
+                  {formErrors.signinEmail && (
+                    <p className="text-sm text-destructive ml-24">{formErrors.signinEmail}</p>
+                  )}
                   
                   <div className="space-y-1">
-                    <Label htmlFor="signin-password">Password</Label>
-                    <div className="relative">
-                      <Input
-                        id="signin-password"
-                        name="password"
-                        type={showPassword ? 'text' : 'password'}
-                        required
-                        disabled={isSubmitting}
-                        className={formErrors.signinPassword ? 'border-destructive pr-8 text-[10px] h-6 px-2 py-1' : 'pr-8 text-[10px] h-6 px-2 py-1'}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={() => setShowPassword(!showPassword)}
-                        disabled={isSubmitting}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
-                        ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
-                        )}
-                      </Button>
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor="signin-password" className="text-xs min-w-20">Password</Label>
+                      <div className="relative flex-1">
+                        <Input
+                          id="signin-password"
+                          name="password"
+                          type={showPassword ? 'text' : 'password'}
+                          required
+                          disabled={isSubmitting}
+                          className={formErrors.signinPassword ? 'border-destructive pr-8 text-[10px] h-6 px-2 py-1' : 'pr-8 text-[10px] h-6 px-2 py-1'}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-2 py-1 hover:bg-transparent"
+                          onClick={() => setShowPassword(!showPassword)}
+                          disabled={isSubmitting}
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-3 w-3 text-muted-foreground" />
+                          ) : (
+                            <Eye className="h-3 w-3 text-muted-foreground" />
+                          )}
+                        </Button>
+                      </div>
                     </div>
                     {formErrors.signinPassword && (
-                      <p className="text-sm text-destructive">{formErrors.signinPassword}</p>
+                      <p className="text-sm text-destructive ml-24">{formErrors.signinPassword}</p>
                     )}
                   </div>
                 </CardContent>
