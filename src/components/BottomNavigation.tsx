@@ -14,7 +14,7 @@ export const BottomNavigation = () => {
 
   return (
     <div className="fixed bottom-10 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-border z-50 safe-area-inset-bottom">
-      <div className="flex justify-around items-center py-3 px-2">
+      <div className="flex justify-around items-center py-1 px-1">
         {navigationItems.map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
@@ -23,14 +23,14 @@ export const BottomNavigation = () => {
             <button
               key={item.id}
               onClick={() => navigate(item.path)}
-              className={`flex flex-col items-center justify-center min-w-0 flex-1 py-1 px-1 transition-colors rounded-lg ${
+              className={`flex flex-col items-center justify-center min-w-0 flex-1 py-0.5 px-0.5 transition-colors rounded-lg ${
                 isActive 
                   ? 'text-primary bg-primary/10' 
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
               }`}
             >
-              <Icon className={`h-4 w-4 mb-1 ${isActive ? 'text-primary' : ''}`} />
-              <span className="text-xs font-medium truncate">{item.label}</span>
+              <Icon className={`h-3 w-3 mb-0.5 ${isActive ? 'text-primary' : ''}`} />
+              <span className="text-[10px] font-medium truncate">{item.label}</span>
             </button>
           );
         })}
