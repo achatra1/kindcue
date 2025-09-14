@@ -102,16 +102,6 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-warm p-4">
-      {/* Logo in top left */}
-      <div className="absolute top-4 left-4">
-        <Link to="/">
-          <img 
-            src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
-            alt="KindCue Logo" 
-            className="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity"
-          />
-        </Link>
-      </div>
       
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
