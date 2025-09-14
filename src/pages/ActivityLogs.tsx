@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/integrations/supabase/client';
-import { Activity, Calendar, Clock, LogOut, Loader2, Star } from 'lucide-react';
+import { Activity, Calendar, Clock, LogOut, Loader2, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ActivityDashboard } from '@/components/ActivityDashboard';
 
@@ -75,6 +75,35 @@ const ActivityLogs = () => {
       setFavoriteWorkouts(favoriteSet);
     } catch (error) {
       console.error('Error fetching favorite workouts:', error);
+    }
+  };
+
+  const removeFavoriteWorkout = async (workoutTitle: string) => {
+    try {
+      const { error } = await supabase
+        .from('favorite_workouts')
+        .delete()
+        .eq('user_id', user?.id)
+        .eq('workout_title', workoutTitle);
+
+      if (error) throw error;
+
+      // Update local state
+      const updatedFavorites = new Set(favoriteWorkouts);
+      updatedFavorites.delete(workoutTitle);
+      setFavoriteWorkouts(updatedFavorites);
+
+      toast({
+        title: "Removed from favorites",
+        description: `${workoutTitle} has been removed from your favorites.`,
+      });
+    } catch (error) {
+      console.error('Error removing favorite workout:', error);
+      toast({
+        title: "Error",
+        description: "Failed to remove workout from favorites. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -184,7 +213,16 @@ const ActivityLogs = () => {
                             {activity.activity_type}
                           </span>
                           {favoriteWorkouts.has(activity.activity_type) && (
-                            <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                removeFavoriteWorkout(activity.activity_type);
+                              }}
+                              className="p-0.5 hover:bg-muted rounded transition-colors"
+                              title="Remove from favorites"
+                            >
+                              <Heart className="h-3 w-3 text-red-500 fill-current" />
+                            </button>
                           )}
                         </div>
                         {activity.duration && (
