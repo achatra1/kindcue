@@ -125,21 +125,38 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signOut = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
+      // Use global scope to clear all sessions
+      const { error } = await supabase.auth.signOut({ scope: 'global' });
+      
+      // If the error is just that the session doesn't exist, that's fine - we wanted to log out anyway
+      if (error && error.message !== 'Session from session_id claim in JWT does not exist') {
         console.error('Sign out error:', error);
         toast({
           title: "Sign Out Failed",
           description: error.message,
           variant: "destructive"
         });
+        return;
       }
+      
+      // Clear local state regardless of server response
+      setSession(null);
+      setUser(null);
+      
+      toast({
+        title: "Signed out successfully",
+        description: "You have been logged out of your account.",
+      });
     } catch (err: any) {
       console.error('Sign out error:', err);
+      
+      // Clear local state even if there's an error
+      setSession(null);
+      setUser(null);
+      
       toast({
-        title: "Sign Out Failed", 
-        description: 'An unexpected error occurred during sign out',
-        variant: "destructive"
+        title: "Signed out",
+        description: "You have been logged out locally.",
       });
     }
   };
