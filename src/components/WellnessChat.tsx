@@ -314,6 +314,31 @@ ${workoutSuggestion}`,
     );
   };
 
+  // Function to detect mentions of self-harm or suicidal thoughts
+  const hasSelfHarmContent = (response: string) => {
+    const lowercaseResponse = response.toLowerCase();
+    
+    const selfHarmIndicators = [
+      'self-harm',
+      'suicide',
+      'suicidal',
+      'kill myself',
+      'end my life',
+      'hurt myself',
+      'harm myself',
+      'want to die',
+      'better off dead',
+      'no point in living',
+      'local and national helplines',
+      'crisis helpline',
+      'mental health crisis'
+    ];
+    
+    return selfHarmIndicators.some(indicator => 
+      lowercaseResponse.includes(indicator)
+    );
+  };
+
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto space-y-3">
@@ -405,7 +430,16 @@ ${workoutSuggestion}`,
               </div>
             </div>
             <div className="flex gap-2">
-              {hasAcuteInjury(workoutSuggestion) ? (
+              {hasSelfHarmContent(workoutSuggestion) ? (
+                // For self-harm/suicidal content, only show cancel button
+                <Button 
+                  variant="outline"
+                  onClick={handleStartOver}
+                  className="w-full text-xs"
+                >
+                  Return to Home
+                </Button>
+              ) : hasAcuteInjury(workoutSuggestion) ? (
                 // For acute injury cases, only show cancel button
                 <Button 
                   variant="outline"
