@@ -259,7 +259,7 @@ export const WorkoutSession = ({
             <div className="space-y-1 mb-2">
               <label className="text-xs font-medium text-foreground">How do you feel:</label>
               <div className="flex gap-2 justify-center">
-                {['Sad', 'Happy', 'Amazing'].map((mood, index) => (
+                {['Meh!', 'Happy', 'Amazing'].map((mood, index) => (
                   <Button
                     key={mood}
                     variant={moodRating === index + 1 ? "default" : "outline"}
