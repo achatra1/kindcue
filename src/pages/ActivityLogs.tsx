@@ -252,11 +252,6 @@ const ActivityLogs = () => {
                             </button>
                           )}
                         </div>
-                        {activity.duration && (
-                          <Badge variant="outline" className="text-[8px] px-1 py-0">
-                            {activity.duration}min
-                          </Badge>
-                        )}
                       </div>
                       <div className="flex items-center gap-1">
                         <span className="text-[8px] text-muted-foreground">
