@@ -155,8 +155,8 @@ const ActivityLogs = () => {
           </div>
           
           <div className="flex items-center gap-3">
-            <Activity className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Activity Logs</h1>
+            <Activity className="h-4 w-4 text-primary" />
+            <h1 className="text-lg font-bold text-foreground">Activity Logs</h1>
           </div>
 
           {activitiesLoading ? (
@@ -164,43 +164,43 @@ const ActivityLogs = () => {
               <p className="text-muted-foreground">Loading your activities...</p>
             </div>
           ) : activities.length === 0 ? (
-            <Card className="p-8 text-center">
-              <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">No activities logged yet</h3>
-              <p className="text-muted-foreground mb-4">
+            <Card className="p-4 text-center">
+              <Activity className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+              <h3 className="text-sm font-semibold mb-2 text-foreground">No activities logged yet</h3>
+              <p className="text-[10px] text-muted-foreground mb-4">
                 Complete workouts through the app to see your activity history here.
               </p>
             </Card>
           ) : (
             <div className="space-y-4">
               {activities.map((activity) => (
-                <Card key={activity.id} className="p-3">
+                <Card key={activity.id} className="p-2">
                   <div className="space-y-1">
                     {/* Top line: Workout name, duration, date and time */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1">
-                          <span className="font-medium text-foreground">
+                          <span className="font-medium text-foreground text-[10px]">
                             {activity.activity_type}
                           </span>
                           {favoriteWorkouts.has(activity.activity_type) && (
-                            <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                            <Star className="h-3 w-3 text-yellow-500 fill-current" />
                           )}
                         </div>
                         {activity.duration && (
-                          <Badge variant="outline" className="text-xs">
+                          <Badge variant="outline" className="text-[8px] px-1 py-0">
                             {activity.duration}min
                           </Badge>
                         )}
                       </div>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-[8px] text-muted-foreground">
                         {formatDate(activity.logged_at)} • {formatTime(activity.logged_at)}
                       </span>
                     </div>
                     
                     {/* Second line: Notes */}
                     {activity.notes && (
-                      <p className="text-sm text-muted-foreground line-clamp-1">
+                      <p className="text-[8px] text-muted-foreground line-clamp-1">
                         {cleanNotes(activity.notes)}
                       </p>
                     )}
