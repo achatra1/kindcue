@@ -7,6 +7,7 @@ import { MessageCircle, Send, Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { WorkoutSession } from '@/components/WorkoutSession';
 import { VoiceWorkoutSession } from '@/components/VoiceWorkoutSession';
+import { useNavigate } from 'react-router-dom';
 
 interface Profile {
   display_name: string | null;
@@ -33,6 +34,7 @@ export const WellnessChat = ({ profile, userName, userId, onStepChange }: Wellne
   const [references, setReferences] = useState<string[]>([]);
   const [feedbackInput, setFeedbackInput] = useState('');
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   // Notify parent of step changes
   useEffect(() => {
@@ -59,6 +61,17 @@ export const WellnessChat = ({ profile, userName, userId, onStepChange }: Wellne
 
   const handleSubmitFeeling = async () => {
     if (!userInput.trim()) return;
+    
+    // Detect self-harm content and short-circuit with support message
+    if (detectSelfHarmInText(userInput)) {
+      const crisisMsg = getCrisisSupportMessage(profile?.display_name || userName);
+      setWorkoutSuggestion(crisisMsg);
+      setWorkoutTitle('');
+      setWorkoutSummary('');
+      setReferences([]);
+      setStep('result');
+      return;
+    }
     
     setStep('generating');
     
@@ -147,6 +160,18 @@ export const WellnessChat = ({ profile, userName, userId, onStepChange }: Wellne
   const handleFeedback = async () => {
     if (!feedbackInput.trim()) return;
     
+    // Detect self-harm content and short-circuit with support message
+    if (detectSelfHarmInText(feedbackInput)) {
+      const crisisMsg = getCrisisSupportMessage(profile?.display_name || userName);
+      setWorkoutSuggestion(crisisMsg);
+      setWorkoutTitle('');
+      setWorkoutSummary('');
+      setReferences([]);
+      setFeedbackInput('');
+      setStep('result');
+      return;
+    }
+
     setStep('improving');
     
     try {
@@ -236,6 +261,8 @@ ${workoutSuggestion}`,
   };
 
   const handleStartOver = () => {
+    // Navigate to home screen and reset state
+    navigate('/');
     setStep('input');
     setUserInput('');
     setWorkoutSuggestion('');
@@ -339,6 +366,21 @@ ${workoutSuggestion}`,
     );
   };
 
+  // Detect self-harm in raw user input (pre-AI)
+  const detectSelfHarmInText = (text: string) => {
+    const t = text.toLowerCase();
+    const indicators = [
+      'self-harm', 'self harm', 'suicide', 'suicidal', 'kill myself', 'end my life', 'hurt myself', 'harm myself', 'want to die', 'better off dead', 'no point in living', 'end it all'
+    ];
+    return indicators.some((k) => t.includes(k));
+  };
+
+  // Compose a brief, empathetic crisis support message
+  const getCrisisSupportMessage = (name?: string | null) => {
+    const firstLine = name ? `${name}, I'm really sorry you're feeling this way.` : "I'm really sorry you're feeling this way.";
+    return `${firstLine} You matter. Please contact a helpline now:\n• US: Call/Text 988 (24/7)\n• UK/ROI: Samaritans 116 123\n• Elsewhere: Search 'suicide crisis helpline' for your country\nIf you’re in immediate danger, call your local emergency number.`;
+  };
+
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto space-y-3">
@@ -437,7 +479,7 @@ ${workoutSuggestion}`,
                   onClick={handleStartOver}
                   className="w-full text-xs"
                 >
-                  Return to Home
+                  Cancel
                 </Button>
               ) : hasAcuteInjury(workoutSuggestion) ? (
                 // For acute injury cases, only show cancel button
