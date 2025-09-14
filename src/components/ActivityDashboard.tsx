@@ -15,7 +15,7 @@ export const ActivityDashboard = () => {
 
   if (loading) {
     return (
-      <div className="p-2 h-full">
+      <div className="p-1 h-full">
         <Card className="p-2 h-full flex items-center justify-center">
           <div className="text-xs text-muted-foreground">Loading activity stats...</div>
         </Card>
@@ -24,7 +24,7 @@ export const ActivityDashboard = () => {
   }
 
   return (
-    <div className="p-2 h-full">
+    <div className="p-1 h-full">
       <Card 
         className="p-2 h-full cursor-pointer hover:bg-muted/50 transition-colors" 
         onClick={handleDashboardClick}
