@@ -227,16 +227,16 @@ const Profile = () => {
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-sm">Basic Information</CardTitle>
                   {!isEditingBasic ? (
-                    <Button onClick={() => setIsEditingBasic(true)} variant="outline" size="icon">
-                      <Edit className="h-4 w-4" />
+                    <Button onClick={() => setIsEditingBasic(true)} variant="outline" size="sm" className="h-6 w-6 p-0">
+                      <Edit className="h-3 w-3" />
                     </Button>
                   ) : (
-                    <div className="flex gap-2">
-                      <Button onClick={handleSaveBasic} size="icon">
-                        <Save className="h-4 w-4" />
+                    <div className="flex gap-1">
+                      <Button onClick={handleSaveBasic} size="sm" className="h-6 w-6 p-0">
+                        <Save className="h-3 w-3" />
                       </Button>
-                      <Button onClick={handleCancelBasic} variant="outline" size="icon">
-                        <X className="h-4 w-4" />
+                      <Button onClick={handleCancelBasic} variant="outline" size="sm" className="h-6 w-6 p-0">
+                        <X className="h-3 w-3" />
                       </Button>
                     </div>
                   )}
@@ -334,16 +334,16 @@ const Profile = () => {
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-sm">Wellness Preferences</CardTitle>
                   {!isEditingWellness ? (
-                    <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="icon">
-                      <Edit className="h-4 w-4" />
+                    <Button onClick={() => setIsEditingWellness(true)} variant="outline" size="sm" className="h-6 w-6 p-0">
+                      <Edit className="h-3 w-3" />
                     </Button>
                   ) : (
-                    <div className="flex gap-2">
-                      <Button onClick={handleSaveWellness} size="icon">
-                        <Save className="h-4 w-4" />
+                    <div className="flex gap-1">
+                      <Button onClick={handleSaveWellness} size="sm" className="h-6 w-6 p-0">
+                        <Save className="h-3 w-3" />
                       </Button>
-                      <Button onClick={handleCancelWellness} variant="outline" size="icon">
-                        <X className="h-4 w-4" />
+                      <Button onClick={handleCancelWellness} variant="outline" size="sm" className="h-6 w-6 p-0">
+                        <X className="h-3 w-3" />
                       </Button>
                     </div>
                   )}
