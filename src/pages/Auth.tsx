@@ -210,20 +210,20 @@ const Auth = () => {
                     Start your compassionate wellness journey today
                   </CardDescription>
                   
-                  <div className="space-y-1">
-                    <Label htmlFor="signup-name">Display Name</Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="signup-name" className="text-xs min-w-20">Display Name</Label>
                     <Input
                       id="signup-name"
                       name="displayName"
                       type="text"
                       placeholder="How should we address you?"
                       disabled={isSubmitting}
-                      className="text-[10px] h-6 px-2 py-1"
+                      className="text-[10px] h-6 px-2 py-1 flex-1"
                     />
                   </div>
                   
-                  <div className="space-y-1">
-                    <Label htmlFor="signup-email">Email</Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="signup-email" className="text-xs min-w-20">Email</Label>
                     <Input
                       id="signup-email"
                       name="email"
@@ -231,45 +231,47 @@ const Auth = () => {
                       placeholder="your@email.com"
                       required
                       disabled={isSubmitting}
-                      className={formErrors.email ? 'border-destructive text-[10px] h-6 px-2 py-1' : 'text-[10px] h-6 px-2 py-1'}
+                      className={formErrors.email ? 'border-destructive text-[10px] h-6 px-2 py-1 flex-1' : 'text-[10px] h-6 px-2 py-1 flex-1'}
                     />
-                    {formErrors.email && (
-                      <p className="text-sm text-destructive">{formErrors.email}</p>
-                    )}
                   </div>
+                  {formErrors.email && (
+                    <p className="text-sm text-destructive ml-24">{formErrors.email}</p>
+                  )}
                   
                   <div className="space-y-1">
-                    <Label htmlFor="signup-password">Password</Label>
-                    <div className="relative">
-                      <Input
-                        id="signup-password"
-                        name="password"
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder="Choose a secure password"
-                        required
-                        disabled={isSubmitting}
-                        value={signupPassword}
-                        onChange={(e) => setSignupPassword(e.target.value)}
-                        className={formErrors.password ? 'border-destructive pr-8 text-[10px] h-6 px-2 py-1' : 'pr-8 text-[10px] h-6 px-2 py-1'}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={() => setShowPassword(!showPassword)}
-                        disabled={isSubmitting}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4 text-muted-foreground" />
-                        ) : (
-                          <Eye className="h-4 w-4 text-muted-foreground" />
-                        )}
-                      </Button>
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor="signup-password" className="text-xs min-w-20">Password</Label>
+                      <div className="relative flex-1">
+                        <Input
+                          id="signup-password"
+                          name="password"
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Choose a secure password"
+                          required
+                          disabled={isSubmitting}
+                          value={signupPassword}
+                          onChange={(e) => setSignupPassword(e.target.value)}
+                          className={formErrors.password ? 'border-destructive pr-8 text-[10px] h-6 px-2 py-1' : 'pr-8 text-[10px] h-6 px-2 py-1'}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-2 py-1 hover:bg-transparent"
+                          onClick={() => setShowPassword(!showPassword)}
+                          disabled={isSubmitting}
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-3 w-3 text-muted-foreground" />
+                          ) : (
+                            <Eye className="h-3 w-3 text-muted-foreground" />
+                          )}
+                        </Button>
+                      </div>
                     </div>
                     
                     {/* Password Requirements Toggle */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 ml-24">
                       <Button
                         type="button"
                         variant="ghost"
@@ -283,7 +285,7 @@ const Auth = () => {
                     
                     {/* Password Requirements */}
                     {showPasswordRequirements && (
-                      <div className="space-y-1">
+                      <div className="space-y-1 ml-24">
                         <p className="text-xs text-muted-foreground">Password must contain:</p>
                         {passwordRequirements.map((req, index) => {
                           const isValid = req.test(signupPassword);
@@ -304,7 +306,7 @@ const Auth = () => {
                     )}
                     
                     {formErrors.password && (
-                      <p className="text-sm text-destructive">{formErrors.password}</p>
+                      <p className="text-sm text-destructive ml-24">{formErrors.password}</p>
                     )}
                   </div>
                 </CardContent>
