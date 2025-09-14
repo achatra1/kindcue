@@ -207,7 +207,7 @@ const Auth = () => {
             <TabsContent value="signup" className="m-0">
               <form onSubmit={handleSignUp}>
                 <CardContent className="space-y-2">
-                  <CardDescription className="text-sm text-center">
+                  <CardDescription className="text-sm text-center mb-5">
                     Start your compassionate wellness journey today!
                   </CardDescription>
                   
