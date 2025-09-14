@@ -350,20 +350,20 @@ const Profile = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="fitness_level" className="text-xs">Fitness Level</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="fitness_level" className="text-xs min-w-0 shrink-0 w-16">Level</Label>
                   <Input
                     id="fitness_level"
                     value={formData.fitness_level}
                     onChange={(e) => setFormData(prev => ({ ...prev, fitness_level: e.target.value }))}
                     disabled={!isEditingWellness}
                     placeholder="e.g., Beginner, Intermediate, Advanced"
-                    className="text-xs h-8"
+                    className="text-xs h-8 flex-1"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <Label htmlFor="workout_duration" className="text-xs">Preferred Workout Duration (minutes)</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="workout_duration" className="text-xs min-w-0 shrink-0 w-16">Duration</Label>
                   <Input
                     id="workout_duration"
                     type="number"
@@ -372,19 +372,19 @@ const Profile = () => {
                     disabled={!isEditingWellness}
                     min="5"
                     max="120"
-                    className="text-xs h-8"
+                    className="text-xs h-8 flex-1"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <Label htmlFor="bio" className="text-xs">Your Fitness Goals and Life Journey</Label>
+                <div className="flex items-start gap-2">
+                  <Label htmlFor="bio" className="text-xs min-w-0 shrink-0 w-16 pt-2">Goals</Label>
                   <Textarea
                     id="bio"
                     value={formData.bio}
                     onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
                     disabled={!isEditingWellness}
                     placeholder="Share your fitness goals, wellness journey, and what motivates you..."
-                    className="min-h-[80px] text-xs"
+                    className="min-h-[80px] text-xs flex-1"
                   />
                 </div>
               </CardContent>
