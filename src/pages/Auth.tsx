@@ -206,7 +206,7 @@ const Auth = () => {
               <form onSubmit={handleSignUp}>
                 <CardContent className="space-y-4">
                   <CardTitle className="text-xs font-bold">Join KindCue</CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-[8px]">
                     Start your compassionate wellness journey today
                   </CardDescription>
                   
