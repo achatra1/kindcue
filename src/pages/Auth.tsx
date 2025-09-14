@@ -121,8 +121,8 @@ const Auth = () => {
           <Tabs defaultValue="signin" className="w-full">
             <CardHeader>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                <TabsTrigger value="signin" className="text-xs h-6 px-2 py-1">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="text-xs h-6 px-2 py-1">Sign Up</TabsTrigger>
               </TabsList>
             </CardHeader>
 
@@ -185,7 +185,7 @@ const Auth = () => {
                 <CardFooter>
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-safety hover:opacity-90 transition-opacity"
+                    className="w-full bg-gradient-safety hover:opacity-90 transition-opacity text-xs h-6 px-2 py-1"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -296,7 +296,7 @@ const Auth = () => {
                 <CardFooter>
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-encouragement hover:opacity-90 transition-opacity"
+                    className="w-full bg-gradient-encouragement hover:opacity-90 transition-opacity text-xs h-6 px-2 py-1"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
