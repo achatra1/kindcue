@@ -290,6 +290,30 @@ ${workoutSuggestion}`,
     return hasWorkoutContent;
   };
 
+  // Function to detect if the response mentions acute injury or fracture
+  const hasAcuteInjury = (response: string) => {
+    const lowercaseResponse = response.toLowerCase();
+    
+    const acuteInjuryIndicators = [
+      'acute',
+      'fracture',
+      'broken bone',
+      'open wound',
+      'severe pain',
+      'see a doctor',
+      'medical professional',
+      'healthcare provider',
+      'immediate medical',
+      'seek medical',
+      'consult a doctor',
+      'serious injury'
+    ];
+    
+    return acuteInjuryIndicators.some(indicator => 
+      lowercaseResponse.includes(indicator)
+    );
+  };
+
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto space-y-3">
@@ -381,21 +405,42 @@ ${workoutSuggestion}`,
               </div>
             </div>
             <div className="flex gap-2">
-              {hasActualWorkout(workoutSuggestion) && (
+              {hasAcuteInjury(workoutSuggestion) ? (
+                // For acute injury cases, only show cancel button
                 <Button 
-                  className="flex-1 bg-gradient-safety hover:opacity-90 text-xs"
-                  onClick={handleStartWorkout}
+                  variant="outline"
+                  onClick={handleStartOver}
+                  className="w-full text-xs"
                 >
-                  Start Workout
+                  Return to Home
+                </Button>
+              ) : hasActualWorkout(workoutSuggestion) ? (
+                // For actual workouts, show start and modify buttons
+                <>
+                  <Button 
+                    className="flex-1 bg-gradient-safety hover:opacity-90 text-xs"
+                    onClick={handleStartWorkout}
+                  >
+                    Start Workout
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setStep('feedback')}
+                    className="flex-1 text-xs"
+                  >
+                    Modify
+                  </Button>
+                </>
+              ) : (
+                // For questions/feedback, only show tell me more button
+                <Button 
+                  variant="outline"
+                  onClick={() => setStep('feedback')}
+                  className="w-full text-xs"
+                >
+                  Tell me more
                 </Button>
               )}
-              <Button 
-                variant="outline"
-                onClick={() => setStep('feedback')}
-                className={`${hasActualWorkout(workoutSuggestion) ? 'flex-1' : 'w-full'} text-xs`}
-              >
-                {hasActualWorkout(workoutSuggestion) ? 'Modify' : 'Tell me more'}
-              </Button>
             </div>
           </div>
         )}
