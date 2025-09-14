@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BottomNavigation } from "@/components/BottomNavigation";
+import { Footer } from "@/components/Footer";
 import { useAuth } from '@/hooks/useAuth';
 import { useAppSessionTracking } from '@/hooks/useAppSessionTracking';
 import Index from "./pages/Index";
@@ -31,6 +32,7 @@ const AppContent = () => {
         <Route path="/auth" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
       <BottomNavigation />
     </>
   );
