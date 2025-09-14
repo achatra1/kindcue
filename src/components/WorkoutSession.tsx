@@ -25,6 +25,7 @@ export const WorkoutSession = ({
   const [time, setTime] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [moodRating, setMoodRating] = useState(0);
   const [workoutRating, setWorkoutRating] = useState(0);
@@ -66,6 +67,7 @@ export const WorkoutSession = ({
   const handleMarkComplete = () => {
     setIsActive(false);
     setIsPaused(false);
+    setIsCompleted(true);
     setShowFeedback(true);
   };
 
@@ -198,14 +200,14 @@ export const WorkoutSession = ({
 
       {/* Timer Controls */}
       <div className="space-y-3">
-        {!isActive ? (
+        {!isActive && !isCompleted ? (
           <div className="flex justify-center">
             <Button onClick={handleStart} className="gap-2">
               <Play className="h-4 w-4" />
               Start Workout
             </Button>
           </div>
-        ) : (
+        ) : isActive ? (
           <div className="flex gap-2">
             <Button onClick={handlePause} variant="outline" className="gap-2 flex-1">
               <Pause className="h-4 w-4" />
@@ -224,7 +226,7 @@ export const WorkoutSession = ({
               Mark Complete
             </Button>
           </div>
-        )}
+        ) : null}
       </div>
 
 
