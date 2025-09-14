@@ -243,7 +243,51 @@ ${workoutSuggestion}`,
     setWorkoutSummary('');
     setReferences([]);
     setFeedbackInput('');
+  };
 
+  // Function to determine if the response contains an actual workout
+  const hasActualWorkout = (response: string) => {
+    const lowercaseResponse = response.toLowerCase();
+    
+    // Check for workout indicators
+    const workoutIndicators = [
+      '•', '-', // bullet points
+      'reps', 'seconds', 'minutes', 'sets',
+      'hold for', 'repeat', 'times',
+      'push-up', 'squat', 'lunge', 'plank', 'stretch',
+      'exercise', 'movement', 'workout'
+    ];
+    
+    // Check for question patterns that indicate no workout
+    const questionPatterns = [
+      'what type of',
+      'do you prefer',
+      'would you like',
+      'can you tell me',
+      'what equipment',
+      'how much time',
+      'what is your',
+      'are you comfortable',
+      'do you have any'
+    ];
+    
+    // If response is mostly questions, likely not a workout
+    const questionCount = questionPatterns.filter(pattern => 
+      lowercaseResponse.includes(pattern)
+    ).length;
+    
+    // If response has workout indicators and not primarily questions
+    const hasWorkoutContent = workoutIndicators.some(indicator => 
+      lowercaseResponse.includes(indicator)
+    );
+    
+    // If it's mostly questions (2 or more question patterns) and no clear workout content
+    if (questionCount >= 2 && !hasWorkoutContent) {
+      return false;
+    }
+    
+    // If it has workout content, it's likely a workout
+    return hasWorkoutContent;
   };
 
   return (
@@ -337,18 +381,20 @@ ${workoutSuggestion}`,
               </div>
             </div>
             <div className="flex gap-2">
-              <Button 
-                className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
-                onClick={handleStartWorkout}
-              >
-                Start Workout
-              </Button>
+              {hasActualWorkout(workoutSuggestion) && (
+                <Button 
+                  className="flex-1 bg-gradient-safety hover:opacity-90 text-xs"
+                  onClick={handleStartWorkout}
+                >
+                  Start Workout
+                </Button>
+              )}
               <Button 
                 variant="outline"
                 onClick={() => setStep('feedback')}
-                className="flex-1 text-sm"
+                className={`${hasActualWorkout(workoutSuggestion) ? 'flex-1' : 'w-full'} text-xs`}
               >
-                Modify
+                {hasActualWorkout(workoutSuggestion) ? 'Modify' : 'Tell me more'}
               </Button>
             </div>
           </div>
