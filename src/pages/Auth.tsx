@@ -106,7 +106,7 @@ const Auth = () => {
       
       <div className="w-full max-w-md">
         <div className="text-center mb-4">
-          <div className="inline-flex items-center gap-2 mb-4">
+          <div className="inline-flex items-center gap-2 mb-2">
             <img 
               src="/lovable-uploads/3b31a267-d041-45de-8edb-7ea25281346e.png" 
               alt="KindCue Logo" 
