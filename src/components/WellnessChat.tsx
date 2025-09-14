@@ -256,7 +256,7 @@ ${workoutSuggestion}`,
                 🎉 Ready to make today amazing, {profile?.display_name || userName}?
               </p>
               <p className="text-muted-foreground text-xs">
-                Share whatever's on your mind - your energy level, mood, any physical sensations, or what you need right now.
+                Share whatever's on your mind - your energy level, mood or what you need right now.
               </p>
             </div>
             <Textarea
