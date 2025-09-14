@@ -30,14 +30,14 @@ export const ActivityDashboard = () => {
         onClick={handleDashboardClick}
       >
         <div className="flex justify-center items-center h-full">
-          <div className="grid grid-cols-2 gap-3 max-w-[140px]">
+          <div className="grid grid-cols-4 gap-2 max-w-full">
             {/* Total Active Hours */}
             <div className="flex flex-col items-center justify-center">
               <Clock className="h-3 w-3 text-primary mb-0.5" />
               <h3 className="text-sm font-semibold text-foreground mb-0">
                 {stats.totalActiveHours}h
               </h3>
-              <p className="text-[10px] text-muted-foreground text-center leading-tight">Total Active Hours</p>
+              <p className="text-[10px] text-muted-foreground text-center leading-tight">Active Hours</p>
             </div>
 
             {/* Current Streak */}
@@ -58,7 +58,7 @@ export const ActivityDashboard = () => {
                   stats.averageMood <= 2.5 ? '😊' : '🤩'
                 ) : '—'}
               </h3>
-              <p className="text-[10px] text-muted-foreground text-center leading-tight">Mood Check-in</p>
+              <p className="text-[10px] text-muted-foreground text-center leading-tight">Mood</p>
             </div>
 
             {/* Days Since Last Workout */}
@@ -68,8 +68,8 @@ export const ActivityDashboard = () => {
                 {stats.daysSinceLastWorkout}
               </h3>
               <p className="text-[10px] text-muted-foreground text-center leading-tight">
-                {stats.daysSinceLastWorkout === 0 ? 'Worked out today!' : 
-                 stats.daysSinceLastWorkout === 1 ? 'Day since workout' : 'Days since workout'}
+                {stats.daysSinceLastWorkout === 0 ? 'Today!' : 
+                 stats.daysSinceLastWorkout === 1 ? 'Day ago' : 'Days ago'}
               </p>
             </div>
           </div>
