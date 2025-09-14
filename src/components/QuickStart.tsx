@@ -371,14 +371,14 @@ At the end, add 2-3 credible references as clickable markdown links in this form
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-1 min-w-0 shrink-0">
         <Icon className="h-3 w-3 text-primary" />
-        <span className="text-xs font-medium text-foreground">{title}:</span>
+        <span className="text-[10px] font-medium text-foreground">{title}:</span>
       </div>
       <div className="flex flex-wrap gap-1 min-w-0">
         {options.map((option) => (
           <Badge
             key={option}
             variant={selected === option ? "default" : "outline"}
-            className={`cursor-pointer text-xs px-2 py-1 ${
+            className={`cursor-pointer text-[10px] px-1.5 py-0.5 ${
               selected === option 
                 ? 'bg-primary text-primary-foreground' 
                 : 'hover:bg-muted'
@@ -398,7 +398,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
         <div className="flex-1 grid grid-cols-2 gap-3">
           {/* Left Half - Customize */}
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-foreground">Customize</h4>
+            <h4 className="text-xs font-medium text-foreground">Customize</h4>
             
             <div className="space-y-2">
               <ChipGroup
@@ -437,8 +437,8 @@ At the end, add 2-3 credible references as clickable markdown links in this form
 
           {/* Right Half - Favorites */}
           <div className="space-y-2 border-l border-border pl-3">
-            <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
-              <Heart className="h-4 w-4 text-primary" />
+            <h4 className="text-xs font-medium text-foreground flex items-center gap-2">
+              <Heart className="h-3 w-3 text-primary" />
               Favorites
             </h4>
             
@@ -448,7 +448,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
                   <Button
                     key={workout.id}
                     variant="ghost"
-                    className="w-full justify-start text-xs p-2 h-auto text-left"
+                    className="w-full justify-start text-[10px] p-1.5 h-auto text-left"
                     onClick={() => {
                       // Load the favorite workout content
                       setWorkoutTitle(workout.workout_title);
@@ -463,7 +463,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
                   >
                     <div className="flex flex-col items-start w-full">
                       <span className="truncate font-medium">{workout.workout_title}</span>
-                      <span className="text-muted-foreground text-xs">
+                      <span className="text-muted-foreground text-[8px]">
                         {workout.workout_duration}min • {new Date(workout.created_at).toLocaleDateString()}
                       </span>
                     </div>
@@ -479,7 +479,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
                 )}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[10px] text-muted-foreground">
                 No favorite workouts saved yet. Complete workouts to add them to your favorites!
               </p>
             )}
@@ -491,10 +491,10 @@ At the end, add 2-3 credible references as clickable markdown links in this form
         <div className="flex-1 flex items-center justify-center">
           <div className="space-y-3 text-center py-6">
             <Loader2 className="h-6 w-6 animate-spin text-primary mx-auto" />
-            <p className="text-foreground font-medium text-sm">
+            <p className="text-foreground font-medium text-xs">
               {step === 'generating' ? 'Creating your perfect workout...' : 'Improving your workout...'}
             </p>
-            <p className="text-muted-foreground text-xs">
+            <p className="text-muted-foreground text-[10px]">
               {step === 'generating' ? 'Based on your preferences' : 'Taking your feedback into account'}
             </p>
           </div>
@@ -506,12 +506,12 @@ At the end, add 2-3 credible references as clickable markdown links in this form
           {/* Workout Title as Header */}
           {workoutTitle && (
             <div className="text-center">
-              <h2 className="text-lg font-semibold text-foreground">{workoutTitle}</h2>
+              <h2 className="text-base font-semibold text-foreground">{workoutTitle}</h2>
             </div>
           )}
           
           <div className="bg-muted/30 rounded-lg p-4 flex-1 overflow-y-auto min-h-[200px]">
-            <div className="text-foreground whitespace-pre-wrap text-sm leading-relaxed">
+            <div className="text-foreground whitespace-pre-wrap text-xs leading-relaxed">
               {workoutSuggestion.split(/(\[.*?\]\(.*?\))/g).map((part, index) => {
                 const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
                 if (linkMatch) {
@@ -535,7 +535,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
           
           <div className="flex gap-2 shrink-0">
             <Button 
-              className="flex-1 bg-gradient-safety hover:opacity-90 text-sm"
+              className="flex-1 bg-gradient-safety hover:opacity-90 text-xs"
               onClick={handleStartWorkout}
             >
               Start Workout
@@ -543,7 +543,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
             <Button 
               variant="secondary"
               onClick={() => setStep('feedback')}
-              className="flex-1 text-sm"
+              className="flex-1 text-xs"
             >
               Modify Workout
             </Button>
@@ -555,21 +555,21 @@ At the end, add 2-3 credible references as clickable markdown links in this form
         <div className="flex-1 flex flex-col space-y-3">
           {/* Show current workout context */}
           <div className="bg-primary/5 rounded-lg p-3 border border-primary/10">
-            <p className="text-foreground font-medium text-sm mb-1">
+            <p className="text-foreground font-medium text-xs mb-1">
               {workoutTitle && `Modifying: ${workoutTitle}`}
             </p>
             {workoutSummary && (
-              <p className="text-muted-foreground text-xs">
+              <p className="text-muted-foreground text-[10px]">
                 {workoutSummary}
               </p>
             )}
           </div>
           
           <div className="bg-muted/30 rounded-lg p-3">
-            <p className="text-foreground font-medium mb-2 text-sm">
+            <p className="text-foreground font-medium mb-2 text-xs">
               How can we improve this workout for you?
             </p>
-            <p className="text-muted-foreground text-xs">
+            <p className="text-muted-foreground text-[10px]">
               Share what you'd like to change - different exercises, duration, intensity, or any other preferences.
             </p>
           </div>
@@ -577,20 +577,20 @@ At the end, add 2-3 credible references as clickable markdown links in this form
             value={feedbackInput}
             onChange={(e) => setFeedbackInput(e.target.value)}
             placeholder="I'd prefer exercises I can do sitting down... or maybe something more challenging..."
-            className="min-h-[60px] text-sm p-2 border rounded-md bg-background"
+            className="min-h-[60px] text-xs p-2 border rounded-md bg-background"
           />
           <div className="flex gap-2">
             <Button 
               variant="outline"
               onClick={() => setStep('result')}
-              className="flex-1 text-sm"
+              className="flex-1 text-xs"
             >
               Cancel
             </Button>
             <Button 
               onClick={handleFeedback}
               disabled={!feedbackInput.trim()}
-              className="flex-1 gap-1 text-sm"
+              className="flex-1 gap-1 text-xs"
             >
               <Send className="h-3 w-3" />
               Improve Workout
@@ -615,7 +615,7 @@ At the end, add 2-3 credible references as clickable markdown links in this form
           <Button 
             onClick={handleQuickStart}
             disabled={!isComplete}
-            className="text-sm bg-gradient-safety hover:opacity-90 px-6"
+            className="text-xs bg-gradient-safety hover:opacity-90 px-6"
           >
             Start Quick Workout
           </Button>
