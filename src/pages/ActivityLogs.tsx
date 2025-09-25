@@ -118,6 +118,20 @@ const ActivityLogs = () => {
 
       if (error) throw error;
 
+      // Also remove from favorites if it exists there
+      if (favoriteWorkouts.has(activityName)) {
+        await supabase
+          .from('favorite_workouts')
+          .delete()
+          .eq('user_id', user?.id)
+          .eq('workout_title', activityName);
+
+        // Update local favorites state
+        const updatedFavorites = new Set(favoriteWorkouts);
+        updatedFavorites.delete(activityName);
+        setFavoriteWorkouts(updatedFavorites);
+      }
+
       // Update local state
       setActivities(prev => prev.filter(activity => activity.id !== activityId));
 
