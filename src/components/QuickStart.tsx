@@ -91,40 +91,6 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
     };
   }, [profile?.user_id]);
 
-  // Reset all favorites
-  const resetFavorites = async () => {
-    if (!profile?.user_id) return;
-    
-    try {
-      const { error } = await supabase
-        .from('favorite_workouts')
-        .delete()
-        .eq('user_id', profile.user_id);
-
-      if (error) throw error;
-      
-      setFavoriteWorkouts([]);
-      toast({
-        title: "Favorites cleared",
-        description: "All favorite workouts have been removed.",
-      });
-    } catch (error) {
-      console.error('Error clearing favorites:', error);
-      toast({
-        title: "Error",
-        description: "Failed to clear favorites. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Auto-reset favorites on component mount
-  useEffect(() => {
-    if (profile?.user_id) {
-      resetFavorites();
-    }
-  }, []);
-
   const handleQuickStart = async () => {
     if (!isComplete) return;
     
