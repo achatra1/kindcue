@@ -67,6 +67,28 @@ export const QuickStart = ({ profile, userName, userId }: QuickStartProps) => {
     };
 
     fetchFavoriteWorkouts();
+
+    // Set up real-time subscription to sync with ActivityLogs changes
+    const channel = supabase
+      .channel('favorite_workouts_sync')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'favorite_workouts',
+          filter: `user_id=eq.${profile?.user_id}`,
+        },
+        () => {
+          // Refetch when favorites are updated from any component
+          fetchFavoriteWorkouts();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [profile?.user_id]);
 
   const handleQuickStart = async () => {
