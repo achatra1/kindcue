@@ -1,0 +1,21 @@
+KindCue PRD and features assessment can be found at: https://docs.google.com/spreadsheets/d/1LTP1RYSZgFp4kYEsb5MmbQaduASy4uvYGga1V7dVtqQ/edit?usp=drive_link
+
+This repo holds the KindCue web app, built as a single-page React application with an LLM/agentic backend and a hosted Postgres database (via Supabase).
+
+
+Frontend
+Vite – build tooling / dev server
+React – SPA front-end
+TypeScript – type safety across the app
+shadcn-ui – unstyled, accessible UI primitives
+Tailwind CSS – utility-first styling framework
+
+Backend / Data
+Supabase (inferred from the supabase/ folder and PLpgSQL usage)
+Postgres database (workouts, user data, history, etc.)
+SQL / PLpgSQL functions and possibly RLS policies 
+GitHub
+
+AI Layer
+Actual LLM provider & keys are configured via environment variables (see .env in the root of the repo).
+The app uses GPT4oMini for workout generation
